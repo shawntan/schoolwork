@@ -1,5 +1,5 @@
-This is the README file for U000000X's submission
-
+This is the README file for U096883L's submission
+Email: u0906883@nus.edu.sg
 == General Notes about this assignment ==
 
 Place your comments or requests here for Min and Ziheng to read.
@@ -16,13 +16,13 @@ and formatted correctly.
 
 Please initial one of the following statements.
 
-[ ] I, U000000X, certify that I have followed the CS 3245 Information
+[X] I, U096883L, certify that I have followed the CS 3245 Information
 Retrieval class guidelines for homework assignments.  In particular, I
 expressly vow that I have followed the Facebook rule in discussing
 with others in doing the assignment and did not take notes (digital or
 printed) from the discussions.  
 
-[ ] I, U000000X, did not follow the class rules regarding homework
+[ ] I, U096883L, did not follow the class rules regarding homework
 assignment, because of the following reason:
 
 <Please fill in>

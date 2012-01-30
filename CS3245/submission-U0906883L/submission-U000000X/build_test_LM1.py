@@ -6,7 +6,7 @@ import getopt
 import urllib
 
 
-N = 5
+N = 6
 CHAR_SET = set()
 
 def build_LM(in_file):
@@ -25,21 +25,21 @@ def ngram_model(entries):
 		prob_count[cat] = prob_count[cat] + 1 if cat in prob_count else 1
 		for i in range(len(url)):
 			last = i + N
-			if last < len(url):
+			if last <= len(url):
 				ngram = url[i:last]
 				category[ngram] = category[ngram] + 1 if ngram in category else 1
 				CHAR_SET.add(ngram)
 	return cats,prob_count
 
 
-def test_url(model,url):
+def test_url(model,url,orig_url):
 	freq_counts,prob_count = model
 	max_prob, category = 0, None
 	for cat in freq_counts:
 		combined_prob = 1
 		for i in range(len(url)):
 			last = i + N
-			if last < len(url):
+			if last <= len(url):
 				ngram = url[i:last]
 				if ngram in freq_counts[cat]:
 					prob = (freq_counts[cat][ngram] + 1.0)/float(prob_count[cat] + len(CHAR_SET))
@@ -48,7 +48,7 @@ def test_url(model,url):
 				combined_prob *= prob
 		max_prob = max(combined_prob,max_prob)
 		category = category if combined_prob < max_prob else cat
-	return category
+	return category+"\t"+orig_url
 		
 
 def preprocess(in_file):
@@ -60,9 +60,10 @@ def preprocess(in_file):
 	return lines 
 def process_line(line):
 	line = line[len('http://'):] 		#strip out http
-	line = re.sub("\d+","#",line)		#convert numbers to # sign
-	line = re.sub("[\.\/]","-",line)	#convert other symbols to dash
-	return line.lower()					#change all to lower case
+#	line = re.sub("\d+","#",line)		#convert numbers to # sign
+#	line = re.sub("[\.\/_\?\&]","-",line)	#convert other symbols to dash
+#	line = line.lower()
+	return  line 					#change all to lower case
 def test_LM(in_file, out_file, LM):
 	"""
 	test the language models on new URLs
@@ -71,10 +72,12 @@ def test_LM(in_file, out_file, LM):
 	"""
 	infile = open(in_file,'r')
 	output = open(out_file,'w')
-	urls = [process_line(l) for l in infile.readlines()]
+	orig_urls = infile.readlines()
+	urls = [process_line(l) for l in orig_urls]
 	infile.close()
 
-	for url in urls:output.write(test_url(LM,url)+'\n')
+	for i in range(len(urls)):
+		output.write(test_url(LM,urls[i],orig_urls[i]))
 	
 
 	output.close()
