@@ -27,12 +27,14 @@ int main(int argc, char ** argv) {
 		int j;
 		for(j=0;j<count;j++) {
 			if(j != i) {
-				printf("\tif( ");
+				printf("\telse if( ");
 				printf("%c < %c ",97+i,97+j);
 				int k;
 				for(k=0;k<count;k++) {
 					if(k!=j && k != i) {
-						printf(" && %c >= %c",97 + i,97 + k);
+						printf(" && (%c >= %c", 97+i, 97+k);
+					   	printf("||%c == %c", 97+k, 97+j);
+						printf(")");
 					}	
 				}
 				printf(" ) printf( \"%%d\\n\", %c );\n",97+i);
