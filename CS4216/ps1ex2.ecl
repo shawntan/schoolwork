@@ -1,22 +1,60 @@
-:-lib(ic).
 
-solve_lin(L) :- solve_lin1(L,C,Sum),sum(C) #= Sum,!.
+solve( true, ConstrIn, ConstrOut ) 	:- !,solveconstr(ConstrIn,ConstrOut).
+solve( A, ConstrIn, ConstrOut ) :-
+	arithmetic(A,B),!,
+	solveconstr([B|ConstrIn],ConstrOut).
+solve( (A,B), ConstrIn, ConstrOut ) :- !,
+	solve(A,ConstrIn,C1),
+	solveconstr(C1,C2),
+	solve(B,C2,C3),
+	solveconstr(C3,ConstrOut).
+solve( H, ConstrIn, ConstrOut ) :-
+	clause(H,Body),
+	solve(Body,ConstrIn,ConstrAux),
+	solveconstr(ConstrAux,ConstrOut).
 
-solve_lin1([H=Val],L,Val)	:- solve_eq(H=Val,L). 
-solve_lin1([H=Val|T],L1,Sum):- 
-	solve_eq(H=Val,L),
-	solve_lin1(T,J,S),
-	append(L,J,L1),
-	Sum is S + Val.
+arithmetic( (sepia_kernel : (X =:= Y)), X =:= Y ) :- !.
+arithmetic( (sepia_kernel : (X < Y)), X < Y ) :- !.
+arithmetic( (sepia_kernel : (X =< Y)), X =< Y ) :- !.
+arithmetic( (sepia_kernel : (X > Y)), X > Y ) :- !.
+arithmetic( (sepia_kernel : (X >= Y)), X >= Y ) :- !.
+arithmetic( (sepia_kernel : -(X,Y,Z)), -(X,Y,Z) ) :- !.
+arithmetic( (sepia_kernel : +(X,Y,Z)), +(X,Y,Z) ) :- !.
+arithmetic( (sepia_kernel : *(X,Y,Z)), *(X,Y,Z) ) :- !.
 
-solve_eq(Expr = Val,L) :- breaklist(Expr,L),sum(L) #= Val.
+iseval((X=:=Y)) :- ground(Y),!, X is Y.
+iseval((X=:=Y)) :- ground(X),!, Y is X.
+iseval(-(X,Y,Z)) :- ground(X-Y), !, Z is X-Y.
+iseval(-(X,Y,Z)) :- ground(X-Z), !, Y is X-Z.
+iseval(-(X,Y,Z)) :- ground(Y+Z), !, X is Y+Z.
+iseval(+(X,Y,Z)) :- ground(X+Y), !, Z is X+Y.
+iseval(+(X,Y,Z)) :- ground(Z-X), !, Y is Z-X.
+iseval(+(X,Y,Z)) :- ground(Z-Y), !, X is Z-Y.
+iseval(*(X,Y,Z)) :- ground(X*Y), !, Z is X*Y.
+iseval(*(X,Y,Z)) :- ground(Z//Y), !, X is Z//Y.
+iseval(*(X,Y,Z)) :- ground(Z//X), !, Y is Z//X.
 
-breaklist(A,[A]):- 
-	var(A);
-	A =.. [*,X,Y],(number(X);number(Y)).
-breaklist(A - B,[-B|Res]) :- breaklist(A,Res).
-breaklist(A + B,[B|Res]) :- breaklist(A,Res).
+solveconstraux([],[]).
+solveconstraux([C|T],L) :-
+	iseval(C),!,solveconstraux(T,L).
+solveconstraux([C|T],L) :-
+	iseval(C),!,C, solveconstraux(T,L).
+solveconstraux([C|T],[C|L]) :- solveconstraux(T,L).
 
-:- solve_lin([X*2 + Y = 3, 3*Y - 2*X = 1]),write(X),write(' '),write(Y),write('\n').
+solveconstr(L,L) :- solveconstraux(L,L),!.
+solveconstr(In,Out) :-
+	solveconstraux(In,Aux),solveconstr(Aux,Out).
+
+:-dynamic fact/2.
+fact(1,1).
+fact(X,R) :- X > 1, X1 =:= X-1, R =:= R1*X,fact(X1,R1).
+
+:-dynamic p/1.
+p(t) :- body.
+%:- solve(fact(5,R),[],_).
+%:- solve(fact(N,120,[],_)).
+
+
+%:- solve_lin([X*2 + Y = 3, 3*Y - 2*X = 1]),write(X),write(' '),write(Y),write('\n').
 %:- solve_lin([X + Y = 3, 3 * Y - X = 1]),write(X),write(' '),write(Y),write('\n').
 
