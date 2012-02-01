@@ -1,5 +1,4 @@
 permute([],[]) :- !.
-permute([A],[A]) :- !.
 permute(L,[A|P]) :- not var(L),delete(A,L,B),permute(B,P).
 permute(A,B) :- var(A), permute(B,A).
 
