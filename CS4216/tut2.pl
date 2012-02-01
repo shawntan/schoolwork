@@ -10,9 +10,16 @@ add(1,[],[],[1]):-!.
 add(C,[],L,X) :- add(C,[0],L,X),!.
 add(C,L,[],X) :- add(C,[0],L,X),!.
 add(C,[A|L1],[B|L2],[Le|X]) :-
-	S is A + B + C,
-	(S > 1 -> (C1 is 1,Le is S - 2);(C1 is 0,Le is S)),
-	add(C1,L1,L2,X).
+	add_digit(A,B,C,Le,C1),add(C1,L1,L2,X).
+
+add_digit(0,0,0,0,0).
+add_digit(0,0,1,1,0).
+add_digit(0,1,0,1,0).
+add_digit(0,1,1,0,1).
+add_digit(1,0,0,1,0).
+add_digit(1,0,1,0,1).
+add_digit(1,1,0,0,1).
+add_digit(1,1,1,1,1).
 
 decrement([1],[]) :- !.
 decrement([1|L1],[0|L1]) :- !.
@@ -24,6 +31,7 @@ multiply(M,N,S) :-
 	decrement(N,N1),
 	multiply(M,N1,S1),
 	add(S1,M,S).
+
 :-op(700,xfx,is_bin).
 is_bin(L,L) :- L = [_|_].
 is_bin(X,B1 + B2) :- 
