@@ -1,12 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int N = 10;
+int printmax(char* fun, char i) {
+	if (i == 0) printf("%c",97+i);
+	else {
+		printf("%s(",fun);
+		printmax(fun,i-1);
+		printf(",%c)",97+i);
+	}
+}
+
 int main(int argc, char ** argv) {
-	int count;
+	char count;
 	scanf("%d",&count);
 	printf("#include <stdio.h>\n");	
-	printf("#include <limits.h>\n");	
-	printf("int main() {\n");
+	printf("Z(a,b) { return a>=b?a:b;}\n");
+	printf("Y(a,b) { return a<=b?a:b;}\n");
+	printf("int N,n,S,A=(1<<31);\n");
+	printf("int W(int a,int b) {return Z(a,b)==N?(a==b?A:Y(a,b)):Z(a,b);}\n");
+	printf("main() {\n");
+
 	printf("\tint ");
 	int i;
 	for(i=0;i<count;i++) printf(" %c%s",97+i, i<count-1?",":";\n");
@@ -16,58 +30,20 @@ int main(int argc, char ** argv) {
 	printf("\", ");
 	for(i=0;i<count;i++) printf("&%c%s", 97+i ,i<count-1?", ":"");	
 	printf(");\n");
-	
-	printf("\tif( ");
-	for(i=1;i<count;i++) {
-		printf("a == %c %s",97+i,i==count-1?"":"&& ");
-	}
-	printf(") printf( \"NIL\\n\" );\n");
-	for(i=0;i<count;i++) {
-		int j;
-		for(j=0;j<count;j++) {
-			if(j != i) {
-				printf("\tif( ");
-				printf("%c < %c ",97+i,97+j);
-				int k;
-				for(k=0;k<count;k++) {
-					if(k!=j && k != i) {
-						printf(" && %c >= %c",97 + i,97 + k);
-					}	
-				}
-				printf(" ) printf( \"%%d\\n\", %c );\n",97+i);
-			}
-		}
-	}
 
-	printf("\n\tint max, min;\n");
 
-	for(i=0;i<count;i++) {
-		printf("\tif( ");
-		int j;
-		for(j=0;j<count;j++) {
-			if(j != i) {
-				printf("%c > %c %s", 97+i, 97+j
-						,j==count-1 ||
-						 (j==count-2 && j+1 == i)?"":"&& ");
-			}
-		}
-		printf(") max = %c;\n",97+i);
-	}
+	printf("\tN = ");
+	printmax("Z",count-1);
+	printf(";\n");
+	printf("\tn = ");	
+	printmax("Y",count-1);
+	printf(";\n");
+	printf("\tS = ");
+	printmax("W",count-1);
+	printf(";\n");
+	printf("\tS==A?printf(\"NIL\\n\"):printf(\"%%d\\n\",S);\n");
+	printf("\tprintf(\"%%u\\n\",N-n);\n");
+	printf("}\n");
 
-	for(i=0;i<count;i++) {
-		printf("\tif( ");
-		int j;
-		for(j=0;j<count;j++) {
-			if(j != i) {
-				printf("%c <= %c %s", 97+i, 97+j
-						,j==count-1 ||
-						 (j==count-2 && j+1 == i)?"":"&& ");
-			}
-		}
-		printf(") min = %c;\n",97+i);
-	}
-
-	printf("\tprintf(\"%%u\\n\",max - min);\n");
-	printf("\treturn 0;\n}\n");
 	return 0;
 }
