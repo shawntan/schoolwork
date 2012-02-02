@@ -39,20 +39,6 @@ The same idea applies also to bringing down all characters to the lower case.
 Using the same example, "AllStars" and "allstars" would again be seen as
 separate N-grams.
 
-Running an experiment yielded the following results:
-
-							Accuracy
-Original Specification		85%
-Stripping punctuation (SP)	90%
-Stripping numbers (SN)		85%
-Lowercase (L)				85%
-SN + SP						90%
-SN + SP + L					90%
-
-It should be noted that these statistics were taken on a test set of 20 URLs. As
-such, these results may not be conclusive. However, we can see that stripping
-out punctuation does help the accuracy of the classifier in this particular
-case.
 
 Question 4
 ==========
@@ -62,19 +48,5 @@ one that are not significant enough to determine the source of a given URL.
 Increasing N, may result in overfitting to the dataset - the language model
 would only contain N-grams seen during training, and would see new instances
 to be classified as new, and equally likely to have come from either source.
-
-Running some experiments by varying N yielded the following results, again
-using the same 20 test cases:
-
-N value			Accuracy
-1				35%
-2				80%
-3				85%
-4				85%
-5				85%
-6				90%
-
-We can see that in this sample, 6-grams work better than 5-grams to classify
-URLs.
 
 
