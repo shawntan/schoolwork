@@ -1,0 +1,80 @@
+Question 1
+==========
+No. There is to little information within the URL to be able to make an
+accurate classification using token-based n-grams. Moreover, webmasters
+typically use acronyms in order to keep URLs short. As such, unless a database
+of acronyms is readily available, a classifier would not be able to make a
+good inference of which category the URL belongs to.
+
+I would convert all numbers to a special <NUMBER> token, since numbers
+are usually used as IDs. Ignoring them would result in loss of valuable
+information, but keeping them as-is would result in that token having a low
+probability for any class. I would tokenise the given URL as such:
+www cnn com us <NUMBER> <NUMBER> hot hot hot video html
+
+Question 2
+==========
+More data would give a wider distribution of probability of the ngrams. This
+is assuming an even distribution of new data from various different sites. If
+this extra data is available, then the learned model would be able to make a
+better classification.
+
+Having more data for Arts may cause the learned classifier to be biased, and
+classify more instances as Arts. This is because the number of instances of
+Arts URLs observed are higher, increasing the ngram counts for certain ngrams.
+This might then result in a higher probability for these ngrams, and cause the
+probabilty for a given URL to be classified as an Arts URL to be higher
+
+Question 3
+==========
+Some improvement should be seen. For example, consider a URL with the words
+'all-stars' in them. This may be seen at another site with another method of
+dealing with spaces in their URLs -- 'all_stars' for example. These URLs are
+likely to belong to the Sports category, but before stripping out such
+punctuation, these would exist as different N-grams in the model: 'all-s',...
+and 'all_s' ... Stripping them out would combine number of observations of
+'allst','llsta',... N-grams, and as a result improve the classifiers accuracy.
+
+The same idea applies also to bringing down all characters to the lower case.
+Using the same example, "AllStars" and "allstars" would again be seen as
+separate N-grams.
+
+Running an experiment yielded the following results:
+
+							Accuracy
+Original Specification		85%
+Stripping punctuation (SP)	90%
+Stripping numbers (SN)		85%
+Lowercase (L)				85%
+SN + SP						90%
+SN + SP + L					90%
+
+It should be noted that these statistics were taken on a test set of 20 URLs. As
+such, these results may not be conclusive. However, we can see that stripping
+out punctuation does help the accuracy of the classifier in this particular
+case.
+
+Question 4
+==========
+Increasing or decreasing the N-gram may result in a poorer language model,
+since decreasing N would result in short character sequences of 2-3 or even
+one that are not significant enough to determine the source of a given URL.
+Increasing N, may result in overfitting to the dataset - the language model
+would only contain N-grams seen during training, and would see new instances
+to be classified as new, and equally likely to have come from either source.
+
+Running some experiments by varying N yielded the following results, again
+using the same 20 test cases:
+
+N value			Accuracy
+1				35%
+2				80%
+3				85%
+4				85%
+5				85%
+6				90%
+
+We can see that in this sample, 6-grams work better than 5-grams to classify
+URLs.
+
+
