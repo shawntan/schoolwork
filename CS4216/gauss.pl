@@ -1,7 +1,9 @@
-gaussian([],_).
-gaussian(Vars,RestEqn):-
-	gaussian_pass(Vars,RestEqn),
-	solve_eqs(RestEqn).
+gaussian([]).
+gaussian(Eqns):-
+	normalise(Eqns,NEqn,Vars),
+	write(NEqn),write(Vars),nl,
+	gaussian_pass(Vars,NEqn),
+	solve_eqs(NEqn).
 
 gaussian_pass([],[]).
 gaussian_pass([Var],[N*Var = Val]) :- Var is Val/N,!.
@@ -75,9 +77,9 @@ normalise_coeff(X,1,X).
 
 
  :- System = 
-	[3*Y = 6,
+	[2*X + 3*Y = 6,
 	 3*X + 3*Y = 9],
  	write(System),nl,
-	gaussian([X,Y],System),
+	gaussian(System),
 	write(System),nl,
 	write(X),nl,write(Y),nl. 
