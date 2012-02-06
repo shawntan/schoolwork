@@ -53,7 +53,7 @@ p(t) :- body.
 
 
 
-%:- solve(fact(5,R),[],_).
+:- solve(fact(5,R),[],_).
 %:- solve(fact(N,120,[],_)).
 
 
