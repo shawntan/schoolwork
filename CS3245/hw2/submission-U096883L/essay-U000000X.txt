@@ -1,0 +1,24 @@
+Please write your answers to the essay questions in this file.
+
+If you have supporting evidence from any experiments that you
+conducted, remember to document them here and leave the code (suitably
+commented out) in the actual *.py files.  You may receive a small
+number bonus points if you do so.
+
+1. You will observe that a large portion of the terms in the
+   dictionary are numbers. However, we normally do not use numbers as
+   query terms to search. Do you think it is a good idea to remove
+   these number entries from the dictionary and the postings lists?
+   Can you propose methods to normalize these numbers? How many
+   percentage of reduction in disk storage do you observe after
+   removing/normalizing these numbers?
+
+2. What do you think will happen if we remove stop words from the
+   dictionary and postings file? How does it affect the searching
+   phase?
+
+3. The NLTK tokenizer may not correctly tokenize all terms. What do
+   you observe from the resulting terms produced by sent_tokenize()
+   and word_tokenize()? Can you propose rules to further refine these
+   results?
+
