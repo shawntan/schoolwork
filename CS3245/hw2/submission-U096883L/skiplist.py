@@ -7,10 +7,17 @@ class Posting():
 	"""
 	Reversed storage on the file, files have to be added in reverse
 	"""
-	def __init__(self,filename,rw = 'r+'):
+	def __init__(self,filename,rw = 'r+',dic_file="dictionary"):
 		self.FILE = open(filename,rw)
-		self.dic = {} 
-		self.word_freq = {}
+		print "Open file"
+		self.dic_file = dic_file
+		try:
+			self.word_freq,self.dic = self.load_dic()
+		except IOError as e:
+			print "Starting new dictionary..."
+			self.dic = {} 
+			self.word_freq = {}
+
 
 	def add(self,word,file_id):
 		pos = self.FILE.tell()
@@ -27,7 +34,6 @@ class Posting():
 		file_id = file_id + (LEN_FILE_ID - len(file_id))*DELIM
 		pointer_ph = prev_pos + (LEN_FILEPOS-len(prev_pos))*DELIM
 		skip_ph = LEN_FILEPOS*DELIM
-		
 		self.FILE.write(
 			word + DELIM +
 			file_id + DELIM +
@@ -51,4 +57,27 @@ class Posting():
 		line =  self.FILE.readline()
 		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
 		return tup
+	
+	def save_dic(self):
+		f = open(self.dic_file,'w')
+		for key in self.dic:
+			f.write(key)
+			f.write(DELIM)
+			f.write(str(self.word_freq[key]))
+			f.write(DELIM)
+			f.write(str(self.dic[key]))
+			f.write('\n')
+		f.close()
+	def load_dic(self):
+		f = open(self.dic_file,'r')
+		word_freq = {}
+		dic = {}
+		for line in f:
+			vals = line.split()
+			word_freq[vals[0]] = int(vals[1])
+			dic[vals[0]] = int(vals[2])
+		return word_freq,dic
+
+
+
 
