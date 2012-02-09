@@ -30,14 +30,16 @@ def index_dir(directory,post_list):
 	file_list.reverse()
 	for i in file_list: index_file(directory,str(i),post_list)
 
-post_list = Posting('test','r')
-#index_dir('test_set',post_list)
-#post_list.save_dic()
+post_list = Posting('test','r+')
+index_dir('test_set',post_list)
+post_list.save_dic()
 	
 try:
 	for i in post_list.postings('ship'): print i
 except IOError as e:
 	print "Nooo read..."
+
+post_list.write_skip_pointers()
 
 
 	
