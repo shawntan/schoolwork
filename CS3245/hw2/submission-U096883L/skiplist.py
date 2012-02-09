@@ -4,24 +4,39 @@ LEN_FILE_ID = 15
 LEN_FILEPOS = 15
 DELIM = ' '
 SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
-
-
 MIN_COUNT = 10
-class Posting():
+
+
+class ReadPostings():
+	def __init__(self,filename,dic_file="dictionary",word):
+		self.FILE = open(filename,'r')
+	def load_dic(self):
+		f = open(self.dic_file,'r')
+		word_freq = {}
+		dic = {}
+		for line in f:
+			vals = line.split()
+			word_freq[vals[0]] = int(vals[1])
+			dic[vals[0]] = int(vals[2])
+		return word_freq,dic
+	
+
+	def readtuple(self,addr):
+		self.FILE.seek(addr)
+		line =  self.FILE.readline()
+		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
+		return tup
+	
+class WritePostings():
 	"""
 	Reversed storage on the file, files have to be added in reverse
 	"""
-	def __init__(self,filename,rw = 'r+',dic_file="dictionary"):
-		self.FILE = open(filename,rw)
-		print "Open file"
+	def __init__(self,filename,dic_file="dictionary"):
+		self.filename = filename
+		self.FILE = open(filename,'w')
 		self.dic_file = dic_file
-		try:
-			self.word_freq,self.dic = self.load_dic()
-		except IOError as e:
-			print "Starting new dictionary..."
-			self.dic = {} 
-			self.word_freq = {}
-
+		self.dic = {} 
+		self.word_freq = {}	
 
 	def add(self,word,file_id):
 		pos = self.FILE.tell()
@@ -49,21 +64,10 @@ class Posting():
 		)
 
 		self.FILE.seek(0,2)
+
+
 	
-	def postings(self,word):
-		if word in self.dic:
-			addr = self.dic[word]
-			while(addr != -1):
-				tup = self.readtuple(addr)
-				addr = int(tup[2])
-				yield tup
-	
-	def readtuple(self,addr):
-		self.FILE.seek(addr)
-		line =  self.FILE.readline()
-		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
-		return tup
-	
+
 	def save_dic(self):
 		f = open(self.dic_file,'w')
 		for key in self.dic:
@@ -75,17 +79,8 @@ class Posting():
 			f.write('\n')
 		f.close()
 	
-	def load_dic(self):
-		f = open(self.dic_file,'r')
-		word_freq = {}
-		dic = {}
-		for line in f:
-			vals = line.split()
-			word_freq[vals[0]] = int(vals[1])
-			dic[vals[0]] = int(vals[2])
-		return word_freq,dic
 
-	def write_skip_pointers(self):
+	def write_skip_pointers_and_close(self):
 		for key in self.dic:
 			postcount = self.word_freq[key]
 			skipcount = int(math.sqrt(self.word_freq[key]))
@@ -103,8 +98,21 @@ class Posting():
 						write_loc = int(prev_ptr) + SKIP_PTR_OFFSET
 						count = 0
 					prev_ptr = ptr
-
-
+		self.save_dic()
 		self.FILE.close()
-					
+
+	def postings(self,word):
+		fil = open(self.filename,'r')
+		if word in self.dic:
+			addr = self.dic[word]
+			while(addr != -1):
+				tup = self.readtuple(fil,addr)
+				addr = int(tup[2])
+				yield tup
+	
+	def readtuple(self,fil,addr):
+		fil.seek(addr)
+		line =  fil.readline()
+		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
+		return tup				
 
