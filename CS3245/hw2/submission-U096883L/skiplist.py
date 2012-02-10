@@ -7,10 +7,19 @@ SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
 MIN_COUNT = 10
 
 
+
 class ReadPostings():
-	def __init__(self,filename,dic_file="dictionary",word):
+	word_freq = None
+	dic = None
+	def __init__(self,word,filename,dic_file="dictionary"):
 		self.FILE = open(filename,'r')
+		self.dic_file = dic_file
+		if not ReadPostings.dic:
+			ReadPostings.word_freq,ReadPostings.dic = self.load_dic()
+		self.ptr = ReadPostings.dic[word]
+
 	def load_dic(self):
+		print "Loading dictionary"
 		f = open(self.dic_file,'r')
 		word_freq = {}
 		dic = {}
@@ -20,12 +29,69 @@ class ReadPostings():
 			dic[vals[0]] = int(vals[2])
 		return word_freq,dic
 	
+	def next(self):
+		if(self.ptr != -1):
+			tup = self.readtuple(self.ptr)
+			self.ptr = int(tup[2])
+			return tup
+	def skip(self,addr):
+		if(self.ptr != -1):
+			tup = self.readtuple(addr)
+			self.ptr = int(tup[2])
+			return tup
+		else:
+			self.FILE.close()
 
 	def readtuple(self,addr):
 		self.FILE.seek(addr)
 		line =  self.FILE.readline()
 		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
 		return tup
+
+	def and_merge(self,other):
+		print "Starting merge..." 
+		doc1,doc2 = self.next(),other.next()
+		while doc1 and doc2:
+			if doc1[1] == doc2[1]:
+				yield doc1
+				doc1,doc2 = self.next(),other.next()
+			else:
+				if len(doc1) > 3 and doc1[3] < doc2[1]:
+					doc1 = self.skip(int(doc1[4]))
+				elif len(doc2) > 3 and doc1[1] > doc2[3]:
+					doc2 = self.skip(int(doc2[4]))
+				elif doc1[1] < doc2[1]:
+					doc1 = self.next()
+				elif doc1[1] > doc2[1]:
+					doc2 = other.next()
+
+	def or_merge(self,other):
+		print "Staring merge..."
+		doc1,doc2 = self.next(),other.next()
+		while doc1 and doc2:
+			if doc1[1] == doc2[1]:
+				yield doc1
+				doc1,doc2 = self.next(),other.next()
+			else:
+				if doc1[1] < doc2[1]:
+					yield doc1
+					doc1 = self.next()
+				elif doc1[1] > doc2[1]:
+					yield doc2
+					doc2 = other.next()
+	
+	def andnot_merge(self,other):
+		print "Staring merge..."
+		doc1,doc2 = self.next(),other.next()
+		while doc1 and doc2:
+			if doc1[1] == doc2[1]:
+				doc1,doc2 = self.next(),other.next()
+			else:
+				if doc1[1] < doc2[1]:
+					yield doc1
+					doc1 = self.next()
+				elif doc1[1] > doc2[1]:
+					doc2 = other.next()
 	
 class WritePostings():
 	"""
@@ -63,7 +129,6 @@ class WritePostings():
 			"\n"
 		)
 
-		self.FILE.seek(0,2)
 
 
 	

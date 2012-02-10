@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 import nltk,re,os
 from nltk.stem.porter import PorterStemmer
-from skiplist import WritePostings
+from skiplist import WritePostings,ReadPostings
 
 
 DIR_DELIM = '/'
@@ -9,13 +9,15 @@ non_alphanum = re.compile('\W')
 number = re.compile('[0-9]')
 splitter = re.compile('[\s\d\.\-]+')
 stemmer = PorterStemmer()
+stop_words = set(nltk.corpus.stopwords.words('english'))
+
 def preprocess(word):
-	if word in nltk.corpus.stopwords.words('english'):return ''
 	w = non_alphanum.sub("",word)
 	w = w.lower()
-	w = stemmer.stem_word(w)
-#	w = number.sub("#",w)
-	return w
+	if w not in stop_words:
+		w = stemmer.stem_word(w)
+	#	w = number.sub("#",w)
+		return w
 
 
 def index_file(directory,filename,post_list):
@@ -33,12 +35,14 @@ def index_dir(directory,post_list):
 	file_list.sort()
 	file_list.reverse()
 	for i in file_list: index_file(directory,str(i),post_list)
-
+"""	
 post_list = WritePostings('posting.txt')
 index_dir('test_set',post_list)
 post_list.write_skip_pointers_and_close()
-	
+"""	
+read_net = ReadPostings('uncertainti','posting.txt')
+read_oil = ReadPostings('gener','posting.txt')
 
+for tup in read_oil.andnot_merge(read_net):
+	print tup
 
-
-	
