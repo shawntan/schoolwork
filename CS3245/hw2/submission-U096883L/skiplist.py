@@ -9,10 +9,10 @@ MIN_COUNT = 10
 
 class Postings():
 	estimate_size = {
-			(True,False,False): lambda post1,post2: min(post1.size(),post2.size()),
-			(True,True,True):   lambda post1,post2: post1.size()+post2.size(),
-			(False,True,False):   lambda post1,post2: post1.size(),
-			(False,False,True):   lambda post1,post2: post2.size(),
+			(True,False,False): lambda post1,post2: min(len(post1),len(post2)),
+			(True,True,True):   lambda post1,post2: len(post1)+len(post2),
+			(False,True,False):   lambda post1,post2: len(post1),
+			(False,False,True):   lambda post1,post2: len(post2),
 		}
 	def __init__(self,post1,post2,
 			equal_yield,	#yield when both has
@@ -33,6 +33,8 @@ class Postings():
 				self.post1_yield,
 				self.post2_yield
 			](self.post1,self.post2)
+	def __repr__(self):
+		return "<%s %s>"%(repr(self.post1),repr(self.post2))
 
 	def __iter__(self):
 		"""
@@ -42,30 +44,40 @@ class Postings():
 		 -	AND NOT = False,True,False
 		 			= False,False,True
 		"""
-		doc1,doc2 = self.post1.next(),self.post2.next()
-		while doc1 and doc2:
-			if doc1[1] == doc2[1]:
-				if self.equal_yield: yield doc1
-				doc1,doc2 = self.post1.next(),self.post2.next()
-			else:
-				if self.post1_skip and len(doc1) > 3 and doc1[3] < doc2[1]:
-					doc1 = self.post1.skip(int(doc1[4]))
-				elif self.post2_skip and len(doc2) > 3 and doc1[1] > doc2[3]:
-					doc2 = self.post2.skip(int(doc2[4]))
-				elif doc1[1] < doc2[1]:
-					if self.post1_yield: yield doc1 
-					doc1 = self.post1.next()
-				elif doc1[1] > doc2[1]:
-					if self.post2_yield: yield doc2
-					doc2 = self.post2.next()
+		doc1,doc2 = iter(self.post1).next(), iter(self.post2).next()
+		try:
+			while True:
+				if doc1[1] == doc2[1]:
+					if self.equal_yield: yield doc1
+					doc1,doc2 = self.post1.next(),self.post2.next()
+				else:
+					if self.post1_skip and len(doc1) > 3 and doc1[3] < doc2[1]:
+						doc1 = self.post1.skip(int(doc1[4]))
+					elif self.post2_skip and len(doc2) > 3 and doc1[1] > doc2[3]:
+						doc2 = self.post2.skip(int(doc2[4]))
+					elif doc1[1] < doc2[1]:
+						if self.post1_yield: yield doc1 
+						doc1 = self.post1.next()
+					elif doc1[1] > doc2[1]:
+						if self.post2_yield: yield doc2
+						doc2 = self.post2.next()
+		except StopIteration:
+			pass
 		#Either self.post1 or self.post2 has no more documents, so should be ordered
-		while doc1 and self.post1_yield: 
-			yield doc1
-			doc1 = self.post1.next()
-		while doc2 and self.post2_yield:
-			yield doc2
-			doc2 = self.post2.next()
-
+		if self.post1_yield:
+			try:
+				while True: 
+					yield doc1
+					doc1 = self.post1.next()
+			except StopIteration:
+				pass
+		if self.post2_yield:
+			try:
+				while True:
+					yield doc2
+					doc2 = self.post2.next()
+			except StopIteration:
+				pass
 
 
 class ReadPostings(Postings):
@@ -90,7 +102,8 @@ class ReadPostings(Postings):
 		return word_freq,dic
 	def __len__(self):
 		return ReadPostings.word_freq[self.word]
-
+	def __iter__(self):
+		return self
 	def next(self):
 		return self.skip(self.ptr)
 	def skip(self,addr):
@@ -108,7 +121,7 @@ class ReadPostings(Postings):
 					if v != '' and v!= '\n')
 		return tup
 	def __repr__(self):
-		return "<%s,%d>"%(self.word,self.size())
+		return "<%s,%d>"%(self.word,len(self))
 
 
 class AllPostings(Postings):
@@ -213,7 +226,10 @@ class WritePostings():
 
 if __name__ == "__main__":
 	word1 = ReadPostings('oil','posting.txt')
-	word2 = ReadPostings('oil','posting.txt')
+	word2 = ReadPostings('nymex','posting.txt')
 	oandt = Postings(word1,word2,True,False,False)
 
-	
+	print len(oandt)
+
+	for i in oandt:
+		print i

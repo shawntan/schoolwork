@@ -1,5 +1,5 @@
 import re
-from skiplist import ReadPostings,AllPostings
+from skiplist import Postings,ReadPostings,AllPostings
 from index import preprocess
 op = {
 	'AND':	2,
@@ -13,7 +13,7 @@ def parse(query):
 	query = re.sub("\("," ( ",query)
 	query = re.sub("\)"," ) ",query)
 	print query
-	return parse_tokens(query.split())[0]
+	return combine_postings(*parse_tokens(query.split())[0])
 def stream(term):
 	return ReadPostings(preprocess(term),"posting.txt")
 def parse_tokens(tokens):
@@ -56,19 +56,31 @@ def combine_sub(op,sub1,sub2):
 		elif op == op2:
 			return (op,ssub1+ssub2)
 		else:
-			ssub1.append(sub2)
+			ssub1.append(combine_postings(*sub2))
 			return (op,ssub1) 
 	else:
 		if op == op1 == op2:
 			return (op,ssub1+ssub2)
 		elif op == op1:
-			ssub1.append(sub2)
+			ssub1.append(combine_postings(*sub2))
 			return (op,ssub1)
 		elif op == op2:
-			ssub2.append(sub1)
+			ssub2.append(combine_postings(*sub1))
 			return (op,ssub2)
 		else:
-			return (op,[sub1,sub2])
+			return (op,[combine_postings(*sub1),combine_postings(*sub2)])
+def combine_postings(op,values):
+	values = sorted(values,key=len,reverse=True)
+	if op == 'AND':
+		y1,y2,y3 = True,False,False
+	elif op == 'OR':
+		y1,y2,y3 = True,True,True
+	
+	result = values.pop()
+	while values:
+		result = Postings(result,values.pop(),y1,y2,y3)
+	return result
+
 	
 if __name__=="__main__":
 	test = "pay AND april AND senate"
