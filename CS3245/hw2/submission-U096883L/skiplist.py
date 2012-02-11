@@ -1,4 +1,4 @@
-import math
+import math,os
 LEN_WORD = 31
 LEN_FILE_ID = 15
 LEN_FILEPOS = 15
@@ -7,8 +7,68 @@ SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
 MIN_COUNT = 10
 
 
+class Postings():
+	estimate_size = {
+			(True,False,False): lambda post1,post2: min(post1.size(),post2.size()),
+			(True,True,True):   lambda post1,post2: post1.size()+post2.size(),
+			(False,True,False):   lambda post1,post2: post1.size(),
+			(False,False,True):   lambda post1,post2: post2.size(),
+		}
+	def __init__(self,post1,post2,
+			equal_yield,	#yield when both has
+			post1_yield,    #yield when post1 has but other doesn't
+			post2_yield     #yield when post2 has but self doesn't
+		):
+		self.post1 = post1
+		self.post2 = post2
+		self.equal_yield = equal_yield
+		self.post1_yield = post1_yield
+		self.post2_yield = post2_yield
+		self.post1_skip = 'skip' in dir(post1) if not post1_yield else False
+		self.post2_skip = 'skip' in dir(post2) if not post2_yield else False
+	
+	def __len__(self):
+		return Postings.estimate_size[
+				self.equal_yield,
+				self.post1_yield,
+				self.post2_yield
+			](self.post1,self.post2)
 
-class ReadPostings():
+	def __iter__(self):
+		"""
+		General merge method with parameters to cater for:
+		 -	AND = True,False,False
+		 -	OR  = True,True,True
+		 -	AND NOT = False,True,False
+		 			= False,False,True
+		"""
+		doc1,doc2 = self.post1.next(),self.post2.next()
+		while doc1 and doc2:
+			if doc1[1] == doc2[1]:
+				if self.equal_yield: yield doc1
+				doc1,doc2 = self.post1.next(),self.post2.next()
+			else:
+				if self.post1_skip and len(doc1) > 3 and doc1[3] < doc2[1]:
+					doc1 = self.post1.skip(int(doc1[4]))
+				elif self.post2_skip and len(doc2) > 3 and doc1[1] > doc2[3]:
+					doc2 = self.post2.skip(int(doc2[4]))
+				elif doc1[1] < doc2[1]:
+					if self.post1_yield: yield doc1 
+					doc1 = self.post1.next()
+				elif doc1[1] > doc2[1]:
+					if self.post2_yield: yield doc2
+					doc2 = self.post2.next()
+		#Either self.post1 or self.post2 has no more documents, so should be ordered
+		while doc1 and self.post1_yield: 
+			yield doc1
+			doc1 = self.post1.next()
+		while doc2 and self.post2_yield:
+			yield doc2
+			doc2 = self.post2.next()
+
+
+
+class ReadPostings(Postings):
 	word_freq = None
 	dic = None
 	def __init__(self,word,filename,dic_file="dictionary"):
@@ -17,23 +77,22 @@ class ReadPostings():
 		if not ReadPostings.dic:
 			ReadPostings.word_freq,ReadPostings.dic = self.load_dic()
 		self.ptr = ReadPostings.dic[word]
-
+		self.word = word
+	
 	def load_dic(self):
 		print "Loading dictionary"
-		f = open(self.dic_file,'r')
 		word_freq = {}
 		dic = {}
-		for line in f:
+		for line in open(self.dic_file,'r'):
 			vals = line.split()
 			word_freq[vals[0]] = int(vals[1])
 			dic[vals[0]] = int(vals[2])
 		return word_freq,dic
-	
+	def __len__(self):
+		return ReadPostings.word_freq[self.word]
+
 	def next(self):
-		if(self.ptr != -1):
-			tup = self.readtuple(self.ptr)
-			self.ptr = int(tup[2])
-			return tup
+		return self.skip(self.ptr)
 	def skip(self,addr):
 		if(self.ptr != -1):
 			tup = self.readtuple(addr)
@@ -41,58 +100,32 @@ class ReadPostings():
 			return tup
 		else:
 			self.FILE.close()
-
+			raise StopIteration
 	def readtuple(self,addr):
 		self.FILE.seek(addr)
 		line =  self.FILE.readline()
-		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
+		tup = tuple(v for v in line.split(DELIM)
+					if v != '' and v!= '\n')
 		return tup
+	def __repr__(self):
+		return "<%s,%d>"%(self.word,self.size())
 
-	def and_merge(self,other):
-		print "Starting merge..." 
-		doc1,doc2 = self.next(),other.next()
-		while doc1 and doc2:
-			if doc1[1] == doc2[1]:
-				yield doc1
-				doc1,doc2 = self.next(),other.next()
-			else:
-				if len(doc1) > 3 and doc1[3] < doc2[1]:
-					doc1 = self.skip(int(doc1[4]))
-				elif len(doc2) > 3 and doc1[1] > doc2[3]:
-					doc2 = self.skip(int(doc2[4]))
-				elif doc1[1] < doc2[1]:
-					doc1 = self.next()
-				elif doc1[1] > doc2[1]:
-					doc2 = other.next()
 
-	def or_merge(self,other):
-		print "Staring merge..."
-		doc1,doc2 = self.next(),other.next()
-		while doc1 and doc2:
-			if doc1[1] == doc2[1]:
-				yield doc1
-				doc1,doc2 = self.next(),other.next()
-			else:
-				if doc1[1] < doc2[1]:
-					yield doc1
-					doc1 = self.next()
-				elif doc1[1] > doc2[1]:
-					yield doc2
-					doc2 = other.next()
-	
-	def andnot_merge(self,other):
-		print "Staring merge..."
-		doc1,doc2 = self.next(),other.next()
-		while doc1 and doc2:
-			if doc1[1] == doc2[1]:
-				doc1,doc2 = self.next(),other.next()
-			else:
-				if doc1[1] < doc2[1]:
-					yield doc1
-					doc1 = self.next()
-				elif doc1[1] > doc2[1]:
-					doc2 = other.next()
-	
+class AllPostings(Postings):
+	def __init__(self,directory):
+		self.file_list = os.listdir(directory)
+		self.file_list.sort()
+		self.file_iter = (('*',i) for i in self.file_list)
+	def next(self):
+		try:
+			return self.file_iter.next()
+		except StopIteration as s:
+			pass
+	def size(self):
+		return len(self.file_list)
+
+
+
 class WritePostings():
 	"""
 	Reversed storage on the file, files have to be added in reverse
@@ -128,10 +161,6 @@ class WritePostings():
 			skip_ph + DELIM +
 			"\n"
 		)
-
-
-
-	
 
 	def save_dic(self):
 		f = open(self.dic_file,'w')
@@ -178,6 +207,13 @@ class WritePostings():
 	def readtuple(self,fil,addr):
 		fil.seek(addr)
 		line =  fil.readline()
-		tup = tuple(v for v in line.split(DELIM) if v != '' and v!= '\n')
-		return tup				
+		tup = tuple(v for v in line.split(DELIM)
+					if v != '' and v!= '\n')
+		return tup
 
+if __name__ == "__main__":
+	word1 = ReadPostings('oil','posting.txt')
+	word2 = ReadPostings('oil','posting.txt')
+	oandt = Postings(word1,word2,True,False,False)
+
+	

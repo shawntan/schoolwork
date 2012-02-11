@@ -35,14 +35,19 @@ def index_dir(directory,post_list):
 	file_list.sort()
 	file_list.reverse()
 	for i in file_list: index_file(directory,str(i),post_list)
-"""	
-post_list = WritePostings('posting.txt')
-index_dir('test_set',post_list)
-post_list.write_skip_pointers_and_close()
-"""	
-read_net = ReadPostings('uncertainti','posting.txt')
-read_oil = ReadPostings('gener','posting.txt')
 
-for tup in read_oil.andnot_merge(read_net):
-	print tup
+if __name__ == "__main__":
+	"""	
+	post_list = WritePostings('posting.txt')
+	index_dir('test_set',post_list)
+	post_list.write_skip_pointers_and_close()
+	"""	
+	read1 = ReadPostings('problem','posting.txt')
+	read2 = ReadPostings('inc','posting.txt')
+	read3 = ReadPostings('end','posting.txt')
+
+
+	for tup in read2.merge(
+			read1.merge(read3,True,False,False),True,False,False):
+		print tup
 
