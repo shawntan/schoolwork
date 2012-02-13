@@ -37,11 +37,11 @@ def index_dir(directory,post_list):
 	for i in file_list: index_file(directory,str(i),post_list)
 
 if __name__ == "__main__":
-	"""	
 	post_list = WritePostings('posting.txt')
-	index_dir('test_set',post_list)
+	index_dir('/usr/share/nltk_data/corpora/reuters/training/',post_list)
 	post_list.write_skip_pointers_and_close()
-	"""	
+
+	"""
 	read1 = ReadPostings('problem','posting.txt')
 	read2 = ReadPostings('inc','posting.txt')
 	read3 = ReadPostings('end','posting.txt')
@@ -50,4 +50,4 @@ if __name__ == "__main__":
 	for tup in read2.merge(
 			read1.merge(read3,True,False,False),True,False,False):
 		print tup
-
+	"""
