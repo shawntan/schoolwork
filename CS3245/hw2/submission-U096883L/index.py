@@ -1,7 +1,7 @@
 #!/usr/bin/python2
-import nltk,re,os
+import nltk,re,os,sys,getopt
 from nltk.stem.porter import PorterStemmer
-from skiplist import WritePostings,ReadPostings
+from skiplist import Postings,WritePostings,ReadPostings
 
 
 DIR_DELIM = '/'
@@ -37,17 +37,23 @@ def index_dir(directory,post_list):
 	for i in file_list: index_file(directory,str(i),post_list)
 
 if __name__ == "__main__":
-	post_list = WritePostings('posting.txt')
-	index_dir('/usr/share/nltk_data/corpora/reuters/training/',post_list)
+	options = sys.argv[1:]
+	opts,_ = getopt.getopt(options,"d:i:p:")
+	params = {}
+	for x,y in opts:params[x] = y
+	"""
+	post_list = WritePostings(params['-p'])
+	index_dir(params['-i'],post_list)
 	post_list.write_skip_pointers_and_close()
-
 	"""
-	read1 = ReadPostings('problem','posting.txt')
-	read2 = ReadPostings('inc','posting.txt')
-	read3 = ReadPostings('end','posting.txt')
+	word1 = ReadPostings('oil',params['-p'],params['-d'])
+	word2 = ReadPostings('nymex',params['-p'],params['-d'])
+	oandt = Postings(word1,word2,True,False,False)
+	
+	print len(word1)
+	print len(word2)
+	print len(oandt)
 
+	for i in oandt:
+		print i
 
-	for tup in read2.merge(
-			read1.merge(read3,True,False,False),True,False,False):
-		print tup
-	"""
