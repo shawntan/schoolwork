@@ -1,0 +1,3 @@
+rm 	~/.eclipse_history
+export RLWRAP_EDITOR="vim +%L"
+rlwrap -m  /opt/eclipse-clp/bin/x86_64_linux/eclipse $@
