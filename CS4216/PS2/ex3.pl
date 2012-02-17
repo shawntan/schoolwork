@@ -21,4 +21,5 @@ all_perms(A) :-
 	),
 	(
 		foreach(Con,Constraints) do Con
-	).
+	),
+	.
