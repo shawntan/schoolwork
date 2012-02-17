@@ -1,6 +1,14 @@
+domains(Ranges) :- 
+	findall(A,all_solns(A),Solutions),
+	(
+		fromto(	(Solutions,Ranges),
+				(Solns,[Range|RestRans]),
+				(RestSolns,RestRans),
+				([[]|_],[])
+		) do minmax(Solns,Range),cutcolumn(Solns,RestSolns)
+	).
 
-
-all_perms(A) :- 
+all_solns(A) :- 
 	Variables = [X,Y,Z],
 	Domain = [
 		[1,2,3,4,5],
@@ -9,7 +17,8 @@ all_perms(A) :-
 	],
 	Constraints = [
 		X < Y,
-		Y < Z
+		Y < Z,
+		X + Y =:= Z
 	],
 	length(Domain,N),length(A,N),
 	(
@@ -18,8 +27,19 @@ all_perms(A) :-
 				(RestV,RestD,RestA),
 			   	([],[],[])	
 		) do member(E,D), X is E
-	),
-	(
+	),(
 		foreach(Con,Constraints) do Con
-	),
-	.
+	).
+
+
+minmax(List,(Min..Max)) :-
+	findall(A,member([A|_],List),D),
+	min(D,Min),
+	max(D,Max).
+
+cutcolumn(List,Result) :-
+	fromto(	(List,Result),
+			([[_|RestVals]|RestList],[RestVals|RestResult]),
+			(RestList,RestResult),
+			([],[])) do true.
+
