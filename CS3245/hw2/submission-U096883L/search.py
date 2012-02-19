@@ -77,16 +77,28 @@ def combine_sub(op,sub1,sub2):
 			return (op,ssub2)
 		else:
 			return (op,[combine_postings(*sub1),combine_postings(*sub2)])
+all_posts=AllPostings("/home/shawn/nltk_data/corpora/reuters/training/")
 def combine_postings(op,values):
 	values = sorted(values,key=len,reverse=True)
-	if op == 'AND':
-		y1,y2,y3 = True,False,False
-	elif op == 'OR':
-		y1,y2,y3 = True,True,True
-	
 	result = values.pop()
 	while values:
-		result = Postings(result,values.pop(),y1,y2,y3)
+		res1 = values.pop()
+		if op=='AND':
+			if result.negate:
+				y1,y2,y3 = False,False,True
+			elif res1.negate:
+				y1,y2,y3 = False,True,False
+			else:
+				y1,y2,y3 = True,False,False
+		elif op=='OR':
+			if result.negate:
+				result.negate = False
+				result = Postings(all_posts,result,False,True,False,len(all_posts))
+			elif res1.negate:
+				result.negate = False
+				res1 = Postings(all_posts,res1,False,True,False,len(all_posts))
+			y1,y2,y3 = True,True,True
+		result = Postings(result,res1,y1,y2,y3,len(all_posts))
 	return result
 	
 if __name__=="__main__":

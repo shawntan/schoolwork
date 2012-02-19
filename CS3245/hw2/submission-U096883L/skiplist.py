@@ -7,19 +7,18 @@ SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
 MIN_COUNT = 10
 
 class Postings():
-	max_size = None
 	negate = False
 	estimate_size = {
-			(True,False,False): lambda post1,post2: min(len(post1),len(post2)),
-			(True,True,True):   lambda post1,post2: len(post1)+len(post2),
-			(False,True,False):   lambda post1,post2: min(len(post1),max_size-len(post2)),
-			(False,False,True):   lambda post1,post2: min(len(post2),max_size-len(post1))
+			(True,False,False): lambda self,post1,post2: min(len(post1),len(post2)),
+			(True,True,True):   lambda self,post1,post2: len(post1)+len(post2),
+			(False,True,False):   lambda self,post1,post2: min(len(post1),self.max_size-len(post2)),
+			(False,False,True):   lambda self,post1,post2: min(len(post2),self.max_size-len(post1))
 		}
 	def __init__(self,post1,post2,
 			equal_yield,	#yield when both has
 			post1_yield,    #yield when post1 has but other doesn't
-			post2_yield     #yield when post2 has but self doesn't
-		):
+			post2_yield,    #yield when post2 has but self doesn't
+			max_size):
 		self.post1 = post1
 		self.post2 = post2
 		self.equal_yield = equal_yield
@@ -27,13 +26,15 @@ class Postings():
 		self.post2_yield = post2_yield
 		self.post1_skip = 'skip' in dir(post1) if not post1_yield else False
 		self.post2_skip = 'skip' in dir(post2) if not post2_yield else False
+		self.max_size = max_size
+
 	
 	def __len__(self):
 		return Postings.estimate_size[
 				self.equal_yield,
 				self.post1_yield,
 				self.post2_yield
-			](self.post1,self.post2)
+			](self,self.post1,self.post2)
 	def __repr__(self):
 		return "<%s%s %s%s>"%(
 				'NOT' if self.post1.negate else '',
@@ -133,6 +134,8 @@ class AllPostings(Postings):
 	def __init__(self,directory):
 		self.file_list = os.listdir(directory)
 		self.file_list.sort()
+	def __len__(self):
+		return len(self.file_list)
 	def __iter__(self):
 		return (('*',i) for i in self.file_list)
 	def size(self):
