@@ -6,13 +6,14 @@ DELIM = ' '
 SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
 MIN_COUNT = 10
 
-
 class Postings():
+	max_size = None
+	negate = False
 	estimate_size = {
 			(True,False,False): lambda post1,post2: min(len(post1),len(post2)),
 			(True,True,True):   lambda post1,post2: len(post1)+len(post2),
-			(False,True,False):   lambda post1,post2: len(post1),
-			(False,False,True):   lambda post1,post2: len(post2),
+			(False,True,False):   lambda post1,post2: min(len(post1),max_size-len(post2)),
+			(False,False,True):   lambda post1,post2: min(len(post2),max_size-len(post1))
 		}
 	def __init__(self,post1,post2,
 			equal_yield,	#yield when both has
@@ -34,7 +35,11 @@ class Postings():
 				self.post2_yield
 			](self.post1,self.post2)
 	def __repr__(self):
-		return "<%s %s>"%(repr(self.post1),repr(self.post2))
+		return "<%s%s %s%s>"%(
+				'NOT' if self.post1.negate else '',
+				repr(self.post1),
+				'NOT' if self.post2.negate else '',
+				repr(self.post2))
 
 	def __iter__(self):
 		"""
@@ -128,15 +133,10 @@ class AllPostings(Postings):
 	def __init__(self,directory):
 		self.file_list = os.listdir(directory)
 		self.file_list.sort()
-		self.file_iter = (('*',i) for i in self.file_list)
-	def next(self):
-		try:
-			return self.file_iter.next()
-		except StopIteration as s:
-			pass
+	def __iter__(self):
+		return (('*',i) for i in self.file_list)
 	def size(self):
 		return len(self.file_list)
-
 
 
 class WritePostings():

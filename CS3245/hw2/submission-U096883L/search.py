@@ -1,6 +1,7 @@
 import re
 from skiplist import Postings,ReadPostings,AllPostings
 from index import preprocess
+corpus_dir = None
 op = {
 	'AND':	2,
 	'OR':	2,
@@ -21,10 +22,17 @@ def parse_tokens(tokens):
 	output = []
 	buf = []
 	def pop_and_combine():
-		print op_stack
 		if op_stack[-1] == 'NOT':
+			op_stack.pop()
 			subt = output.pop()
-			sub = (op_stack.pop(),subt if subt[0] else subt[1][0] )
+			if subt[1]:
+				subt = combine_postings(*subt)
+				subt.negate = True
+				sub = (None,[subt])
+			else:
+				subt[1][0].negate=True
+				sub = subt
+			#sub = (op_stack.pop(),subt if subt[0] else subt[1][0])
 		else:
 			sub = combine_sub(op_stack.pop(),output.pop(),output.pop())
 		output.append(sub)
@@ -80,9 +88,7 @@ def combine_postings(op,values):
 	while values:
 		result = Postings(result,values.pop(),y1,y2,y3)
 	return result
-
 	
 if __name__=="__main__":
-	test = "pay AND april AND senate"
-	print test
+	test = "pay AND NOT(april AND NOT senate)"
 	print parse(test)
