@@ -1,5 +1,17 @@
-domains(Ranges) :- 
-	findall(A,all_solns(A),Solutions),
+propagate(Cons,Doms,{NewDomains}):-
+	arrayify(Cons,Constraints),
+	arrayify(Doms,VarsDomains),
+	var_dom(VarsDomains,Variables,Domains),
+	domains(Variables,Domains,Constraints,NewDs),
+	(
+		fromto(	(Variables,NewDs,NewDomains),
+				([V|RestVar],[D|RestDom],(V:D,RestDomains)),
+				(RestVar,RestDom,RestDomains),
+				([VLast],[DomLast],VLast:DomLast)) do true
+	),!.
+
+domains(Variables,Domains,Constraints,Ranges) :-
+	findall(A,all_solns(Variables,Domains,Constraints,A),Solutions),
 	(
 		fromto(	(Solutions,Ranges),
 				(Solns,[Range|RestRans]),
@@ -8,21 +20,10 @@ domains(Ranges) :-
 		) do minmax(Solns,Range),cutcolumn(Solns,RestSolns)
 	).
 
-all_solns(A) :- 
-	Variables = [X,Y,Z],
-	Domain = [
-		[1,2,3,4,5],
-		[4,5,6,7],
-		[0,1,2,3,4,5,6]
-	],
-	Constraints = [
-		X < Y,
-		Y < Z,
-		X + Y =:= Z
-	],
-	length(Domain,N),length(A,N),
+all_solns(Variables,Domains,Constraints,A) :- 
+	length(Domains,N),length(A,N),
 	(
-		fromto(	(Variables,Domain,A),
+		fromto(	(Variables,Domains,A),
 	   			([X|RestV],[D|RestD],[E|RestA]),
 				(RestV,RestD,RestA),
 			   	([],[],[])	
@@ -30,7 +31,6 @@ all_solns(A) :-
 	),(
 		foreach(Con,Constraints) do Con
 	).
-
 
 minmax(List,(Min..Max)) :-
 	findall(A,member([A|_],List),D),
@@ -43,3 +43,14 @@ cutcolumn(List,Result) :-
 			(RestList,RestResult),
 			([],[])) do true.
 
+arrayify({G},Res) :-!, arrayify(G,Res).
+arrayify((X,Y),[X|Rest]) :-!, arrayify(Y,Rest).
+arrayify(Y,[Y]).
+
+consec(N,N,[N]).
+consec(N,M,[N|Rest]) :- N<M,N1 is N+1,consec(N1,M,Rest),!.
+
+var_dom([],[],[]).
+var_dom([Var:Start..End|Tail],[Var|VarRest],[Dom|DomRest]) :-
+	consec(Start,End,Dom),
+	var_dom(Tail,VarRest,DomRest).
