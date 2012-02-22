@@ -86,49 +86,6 @@ class Postings():
 				pass
 
 
-class ReadPostings(Postings):
-	word_freq = None
-	dic = None
-	def __init__(self,word,filename,dic_file="dictionary"):
-		self.FILE = open(filename,'r')
-		self.dic_file = dic_file
-		if not ReadPostings.dic:
-			ReadPostings.word_freq,ReadPostings.dic = self.load_dic()
-		self.ptr = ReadPostings.dic[word]
-		self.word = word
-	
-	def load_dic(self):
-		print "Loading dictionary"
-		word_freq = {}
-		dic = {}
-		for line in open(self.dic_file,'r'):
-			vals = line.split()
-			word_freq[vals[0]] = int(vals[1])
-			dic[vals[0]] = int(vals[2])
-		return word_freq,dic
-	def __len__(self):
-		return ReadPostings.word_freq[self.word]
-	def __iter__(self):
-		return self
-	def next(self):
-		return self.skip(self.ptr)
-	def skip(self,addr):
-		if(self.ptr != -1):
-			tup = self.readtuple(addr)
-			self.ptr = int(tup[2])
-			return tup
-		else:
-			self.FILE.close()
-			raise StopIteration
-	def readtuple(self,addr):
-		self.FILE.seek(addr)
-		line =  self.FILE.readline()
-		tup = tuple(v for v in line.split(DELIM)
-					if v != '' and v!= '\n')
-		return tup
-	def __repr__(self):
-		return "<%s,%d>"%(self.word,len(self))
-
 
 class AllPostings(Postings):
 	def __init__(self,directory):

@@ -27,7 +27,7 @@ def parse_tokens(tokens):
 			subt = output.pop()
 			if subt[1]:
 				subt = combine_postings(*subt)
-				subt.negate = True
+				subt.complement = True
 				sub = (None,[subt])
 			else:
 				subt[1][0].negate=True
@@ -102,5 +102,5 @@ def combine_postings(op,values):
 	return result
 	
 if __name__=="__main__":
-	test = "pay AND NOT(april AND NOT senate)"
+	test = "pay AND NOT(april AND senate)"
 	print parse(test)
