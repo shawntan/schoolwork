@@ -51,11 +51,12 @@ class MergePostings():
 	def __iter__(self):
 		self.merge(self.op,self.post1,self.post2)
 		return self.merged
+	def __repr__(self):
+		return "%s(%s %s)"%('NOT' if self.complement else '',self.post1,self.post2)
 	def estimate_size(self):
 		return self.est_size 
 
 class Postings(MergePostings):
-	complement = False
 	def __init__(self,word):
 		global dictionary,word_freq,POSTINGS_FILE
 		self.FILE = open(POSTINGS_FILE,'r')
@@ -81,7 +82,7 @@ class Postings(MergePostings):
 		tup = tuple(v for v in line.split())
 		return tup 
 	def __repr__(self):
-		return "<%s,%d>"%(self.word,self.estimate_size())
+		return "%s<%s,%d>"%('NOT' if self.complement else '',self.word,self.estimate_size())
 class AllPostings(MergePostings):
 	def __init__(self):
 		self.word = '*'

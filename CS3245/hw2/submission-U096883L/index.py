@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 import nltk,re,os,sys,getopt
 from nltk.stem.porter import PorterStemmer
-from skiplist import Postings,WritePostings,ReadPostings
 
 
 DIR_DELIM = '/'
