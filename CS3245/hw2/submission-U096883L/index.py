@@ -1,12 +1,12 @@
 #!/usr/bin/python2
 import nltk,re,os,sys,getopt
 from nltk.stem.porter import PorterStemmer
-
-
+from writepostings import *
+initialise('/home/shawn/nltk_data/corpora/reuters/training','postings.txt','dictionary.txt')
 DIR_DELIM = '/'
 non_alphanum = re.compile('\W') 
 number = re.compile('[0-9]')
-splitter = re.compile('[\s\d\.\-]+')
+splitter = re.compile('[\s\d\.\-\/]+')
 stemmer = PorterStemmer()
 stop_words = set(nltk.corpus.stopwords.words('english'))
 
@@ -41,18 +41,9 @@ if __name__ == "__main__":
 	params = {}
 	for x,y in opts:params[x] = y
 	"""
-	post_list = WritePostings(params['-p'])
 	index_dir(params['-i'],post_list)
 	post_list.write_skip_pointers_and_close()
 	"""
-	word1 = ReadPostings('oil',params['-p'],params['-d'])
-	word2 = ReadPostings('nymex',params['-p'],params['-d'])
-	oandt = Postings(word1,word2,True,False,False)
-	
-	print len(word1)
-	print len(word2)
-	print len(oandt)
-
-	for i in oandt:
-		print i
-
+	post_list = WritePostings()
+	index_dir('/home/shawn/nltk_data/corpora/reuters/training',post_list)
+	post_list.write_skip_pointers_and_close()

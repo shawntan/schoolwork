@@ -1,19 +1,20 @@
+import math
 POSTINGS_FILE	= None
 DICTIONARY_FILE	= None
 CORPUS_DIR		= None
+LEN_WORD = 31
+LEN_FILE_ID = 15
+LEN_FILEPOS = 15
+DELIM = ' '
+SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
+MIN_COUNT = 10
+
+
 def initialise(corpus,postings,dictionary):
+	global POSTINGS_FILE,DICTIONARY_FILE
 	POSTINGS_FILE = postings
 	DICTIONARY_FILE = dictionary
 	CORPUS_DIR = corpus
-
-class Postings():
-	def __init__(self,word):
-
-	def estimated_size(self):
-		pass
-	def __iter__(self):
-		pass
-
 
 
 class WritePostings():
@@ -100,5 +101,4 @@ class WritePostings():
 		tup = tuple(v for v in line.split(DELIM)
 					if v != '' and v!= '\n')
 		return tup
-
 
