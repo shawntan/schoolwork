@@ -1,4 +1,4 @@
-import math
+import math,os
 POSTINGS_FILE	= None
 DICTIONARY_FILE	= None
 CORPUS_DIR		= None
@@ -9,9 +9,8 @@ DELIM = ' '
 SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS
 MIN_COUNT = 10
 
-
 def initialise(corpus,postings,dictionary):
-	global POSTINGS_FILE,DICTIONARY_FILE
+	global POSTINGS_FILE,DICTIONARY_FILE,CORPUS_DIR
 	POSTINGS_FILE = postings
 	DICTIONARY_FILE = dictionary
 	CORPUS_DIR = corpus
@@ -55,6 +54,9 @@ class WritePostings():
 
 	def save_dic(self):
 		f = open(self.dic_file,'w')
+		doc_list = os.listdir(CORPUS_DIR)
+		doc_list.sort()
+		f.write(' '.join(doc_list))
 		for key in self.dic:
 			f.write(key)
 			f.write(DELIM)
@@ -63,7 +65,6 @@ class WritePostings():
 			f.write(str(self.dic[key]))
 			f.write('\n')
 		f.close()
-	
 
 	def write_skip_pointers_and_close(self):
 		for key in self.dic:
@@ -98,7 +99,6 @@ class WritePostings():
 	def readtuple(self,fil,addr):
 		fil.seek(addr)
 		line =  fil.readline()
-		tup = tuple(v for v in line.split(DELIM)
-					if v != '' and v!= '\n')
+		tup = tuple(v for v in line.split())
 		return tup
 

@@ -6,18 +6,19 @@ CORPUS_DIR		= None
 dictionary		= {}
 word_freq		= {}
 doc_list 		= None
-def initialise(corpus,post_file,dict_file):
-	global POSTINGS_FILE,DICTIONARY_FILE,CORPUS_DIR,doc_list
+
+def initialise(post_file,dict_file):
+	global POSTINGS_FILE,DICTIONARY_FILE
 	POSTINGS_FILE = post_file
 	DICTIONARY_FILE = dict_file
-	CORPUS_DIR = corpus
-	doc_list = os.listdir(corpus)
-	doc_list.sort()
 	load_dict()
+
 def load_dict():
 	#print "Loading dictionary"
-	global word_freq,dictionary
-	for line in open(DICTIONARY_FILE,'r'):
+	global doc_list,word_freq,dictionary
+	FILE = open(DICTIONARY_FILE,'r')
+	doc_list = FILE.readline().split()
+	for line in FILE:
 		vals = line.split()
 		word_freq[vals[0]] = int(vals[1])
 		dictionary[vals[0]] = int(vals[2])

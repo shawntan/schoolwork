@@ -1,7 +1,6 @@
 from index import preprocess,stop_words
 from postings import *
-import re
-initialise('/home/shawn/nltk_data/corpora/reuters/training','postings.txt','dictionary.txt')
+import re,sys,getopt
 def parse(query):
 	query = query.strip()
 	query = re.sub("\("," ( ",query)
@@ -25,7 +24,7 @@ def apply_op(op_stack,output):
 		out = MergePostings(op,first,second)
 	output.append(out)
 
-all_postings = AllPostings()
+all_postings = None
 def process_token(tok):
 	if tok.lower() in stop_words: return all_postings
 	tok = preprocess(tok)
@@ -49,11 +48,22 @@ def parse_tokens(tokens):
 	while op_stack: apply_op(op_stack,output)
 	return output[0]
 if __name__=='__main__':
+
+	options = sys.argv[1:]
+	opts,_ = getopt.getopt(options,"d:p:q:o:")
+	params = dict(opts)
+	try:
+		initialise(params['-p'],params['-d'])
+		all_postings = AllPostings()
+		output_file = open(params['-o'],'w')
+		for query in open(params['-q'],'r'):
+			res = [int(q[1]) for q in parse(query)]
+			res.sort()
+			output_file.write(' '.join(str(i) for i in res) + '\n')
+	except KeyError:
+		print "Key in parameters -d -p -q -o"
 	"""
 	for i in parse("billion AND dollar OR bill"):
 		print i
 	"""
-	for query in open('query.txt','r'):
-		res = [int(q[1]) for q in parse(query)]
-		res.sort()
-		print ' '.join(str(i) for i in res)
+

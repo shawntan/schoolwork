@@ -2,7 +2,6 @@
 import nltk,re,os,sys,getopt
 from nltk.stem.porter import PorterStemmer
 from writepostings import *
-initialise('/home/shawn/nltk_data/corpora/reuters/training','postings.txt','dictionary.txt')
 DIR_DELIM = '/'
 non_alphanum = re.compile('\W') 
 number = re.compile('[0-9]')
@@ -38,12 +37,12 @@ def index_dir(directory,post_list):
 if __name__ == "__main__":
 	options = sys.argv[1:]
 	opts,_ = getopt.getopt(options,"d:i:p:")
-	params = {}
-	for x,y in opts:params[x] = y
-	"""
-	index_dir(params['-i'],post_list)
-	post_list.write_skip_pointers_and_close()
-	"""
-	post_list = WritePostings()
-	index_dir('/home/shawn/nltk_data/corpora/reuters/training',post_list)
-	post_list.write_skip_pointers_and_close()
+	params = dict(opts)
+	try:
+		initialise(params['-i'],params['-p'],params['-d'])
+		
+		post_list = WritePostings()
+		index_dir(params['-i'],post_list)
+		post_list.write_skip_pointers_and_close()
+	except KeyError:
+		print "Key in parameters -i -d -p"
