@@ -5,17 +5,17 @@ from writepostings import *
 DIR_DELIM = '/'
 non_alphanum = re.compile('\W') 
 number = re.compile('[0-9]')
-splitter = re.compile('[\s\d\.\-\/]+')
+splitter = re.compile('[\s\.\-\/]+')
 stemmer = PorterStemmer()
 stop_words = set(nltk.corpus.stopwords.words('english'))
 
 def preprocess(word):
 	w = non_alphanum.sub("",word)
 	w = w.lower()
-	if w not in stop_words:
-		w = stemmer.stem_word(w)
-	#	w = number.sub("#",w)
-		return w
+	if w in stop_words: return 
+	w = stemmer.stem_word(w)
+	w = number.sub("",w)
+	return w
 
 
 def index_file(directory,filename,post_list):

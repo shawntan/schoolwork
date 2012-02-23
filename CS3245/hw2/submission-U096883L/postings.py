@@ -107,7 +107,10 @@ class Postings(MergePostings):
 		self.est_size = word_freq[word]
 		self.word = word
 	def __iter__(self):
-		return self
+		if self.complement:
+			return merge(AllPostings(),self,False,True,False)
+		else:
+			return self
 	def next(self):
 		return self.skip(self.ptr)
 	def skip(self,addr):

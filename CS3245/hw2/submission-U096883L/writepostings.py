@@ -57,6 +57,7 @@ class WritePostings():
 		doc_list = os.listdir(CORPUS_DIR)
 		doc_list.sort()
 		f.write(' '.join(doc_list))
+		f.write('\n')
 		for key in self.dic:
 			f.write(key)
 			f.write(DELIM)

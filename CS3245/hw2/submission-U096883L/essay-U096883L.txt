@@ -13,9 +13,14 @@ number bonus points if you do so.
    percentage of reduction in disk storage do you observe after
    removing/normalizing these numbers?
 
+	36504	post_num.txt
+	38456	post_hex.txt
+	42552	post_none.txt
+
 2. What do you think will happen if we remove stop words from the
    dictionary and postings file? How does it affect the searching
    phase?
+	47660	post_no_stop
 
 3. The NLTK tokenizer may not correctly tokenize all terms. What do
    you observe from the resulting terms produced by sent_tokenize()
