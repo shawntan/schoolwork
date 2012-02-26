@@ -13,17 +13,69 @@ number bonus points if you do so.
    percentage of reduction in disk storage do you observe after
    removing/normalizing these numbers?
 
-	36504	post_num.txt
-	38456	post_hex.txt
-	42552	post_none.txt
+	Due to the many different possible combinations of numbers, and the
+generally low frequency with which a unique number appears, storing numbers
+would take up a significant amount of storage space given a large corpus.
+
+	On the other hand, removing numbers may remove important details that
+users may want to search for, like product model numbers, or when users want
+to do a "reverse-lookup" of a phone number they have.
+
+	One possible way of normalising numbers might be to convert any occurrence
+of a number to a '#'. This will still cause loss of information, but
+formatting of numbers can be kept. For example, a phone number like +65
+6123-4567 would be converted to +## ####-####. Any search for phone numbers in
+that format would give that site.
+
+Below are the experimental results for the different ways of indexing (sizes
+in KB):
+
+							Dictionary	Postings List	
+	No removal of numbers	550			43521
+	No numbers				395			37338
+	Replacing with '#'		397			39331
+
+The dictionary sees a 30% drop when we remove occurrences of numbers, while
+only 9% in the postings list. This shows that the number of occurences of each
+number is not great, and the unique number of numerical occurences in
+proportion to the rest of the vocabulary is pretty significant. The results
+also show that replacing numerical occurences with '#' does not increase the
+dictionary or the postings list by much.
+
+Another way of dealing with numerical occurences is to sort them into bins
+with ranges of equal occurrence frequencies, and index using these bins. This
+may take more computation during indexing, but users would be able to look up
+numbers close to their query.
 
 2. What do you think will happen if we remove stop words from the
    dictionary and postings file? How does it affect the searching
    phase?
-	47660	post_no_stop
 
+	Removal of stopwords will only affect the dictionary by a factor of the
+size of the stopword list. However, since stopwords are commonly occuring
+words that appear frequently, we should expect to see a dramatic decrease in
+the size of the postings list.
+
+Below are the results when we tried removing AND not removing stopwords (sizes
+in KB):
+							Dictionary	Postings List
+	No removal of stopwords	548			53708
+	Stopwords removed		544			42552
+
+The postings list has a 20% decrease in disk space size, while the change in
+dictionary size was about 4KB, a small proportion of the dictionary size. This
+confirms our earlier hypothesis.
+	
 3. The NLTK tokenizer may not correctly tokenize all terms. What do
    you observe from the resulting terms produced by sent_tokenize()
    and word_tokenize()? Can you propose rules to further refine these
    results?
+ sent_tokenize() assumes text between periods are sentences, and therefore
+parses terms like Mr. or acronyms like W.H.O. wrongly. This could be solved by
+having a threshold minimum value for sentence length, or having a list of
+terms to ignore as sentence-enders.
 
+word_tokenize() does not tokenize hyphenated words. This may pose problems
+during indexing as terms such as US-Japan should be tokenized into separate
+terms. A simple fix would be to include '-' as a delimiter as well, but this
+might result in hyphenated words like co-operate being split.
