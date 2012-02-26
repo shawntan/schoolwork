@@ -12,9 +12,9 @@ stop_words = set(nltk.corpus.stopwords.words('english'))
 def preprocess(word):
 	w = non_alphanum.sub("",word)
 	w = w.lower()
-	if w in stop_words: pass 
+	if w in stop_words: return
 	w = stemmer.stem_word(w)
-#	w = number.sub("#",w)
+	w = number.sub("",w)
 	return w
 
 

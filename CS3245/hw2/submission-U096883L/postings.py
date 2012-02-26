@@ -54,7 +54,7 @@ class MergePostings(AllPostings):
 			return post
 		else:
 			tmp = self.post2
-			if isinstance(self.post1,Postings) or self.post1.op != self.op: #treat as 1 entity
+			if 'op' not in dir(self.post1) or self.post1.op != self.op: #treat as 1 entity
 				if self.post1.estimate_size() > post.estimate_size():
 					self.post2 = self.post1
 					self.post1 = post
@@ -173,5 +173,3 @@ def merge(post1,post2,eq_yield,post1_yield,post2_yield):
 	if post2_yield:
 		if doc2:yield doc2
 		for v in post2: yield v
-
-
