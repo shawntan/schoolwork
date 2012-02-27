@@ -83,7 +83,7 @@ class MergePostings(AllPostings):
 				p1 = post1 if not post1.complement else merge(AllPostings(),post1,False,True,False)
 				p2 = post2 if not post2.complement else merge(AllPostings(),post2,False,True,False)
 				self.merged = merge(p1,p2,True,True,True)
-	
+
 	def __iter__(self):
 		self.merge(self.op,self.post1,self.post2)
 		return self.merged

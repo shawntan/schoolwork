@@ -40,7 +40,6 @@ if __name__ == "__main__":
 	params = dict(opts)
 	try:
 		initialise(params['-i'],params['-p'],params['-d'])
-		
 		post_list = WritePostings()
 		index_dir(params['-i'],post_list)
 		post_list.write_skip_pointers_and_close()

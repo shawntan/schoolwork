@@ -7,18 +7,19 @@ def parse(query):
 	query = re.sub("\)"," ) ",query)
 	return parse_tokens(query.split())
 prec = {
-		'AND': 20,
-		'OR':20,
-		'NOT':30,
-		'(':100,
-		'^':200,
-		}
+	'AND': 20,
+	'OR':20,
+	'NOT':30,
+	'(':100,
+	'^':200,
+}
+right = set(['NOT'])
 
 def apply_op(op_stack,output):
 	op = op_stack.pop()
 	if op=='NOT':
 		out = output.pop()
-		out.complement = True
+		out.complement = not out.complement
 	else:
 		second,first = output.pop(),output.pop()
 		out = MergePostings(op,first,second)
@@ -40,8 +41,12 @@ def parse_tokens(tokens):
 			while op_stack[-1] != '(':apply_op(op_stack,output)
 			op_stack.pop()
 		elif tok in prec:
-			while op_stack and op_stack[-1] != '(' and prec[op_stack[-1]] >= prec[tok]:	
-				apply_op(op_stack,output)
+			if tok in right:
+				while op_stack and op_stack[-1] != '(' and prec[op_stack[-1]] > prec[tok]:
+					apply_op(op_stack,output)
+			else:
+				while op_stack and op_stack[-1] != '(' and prec[op_stack[-1]] >= prec[tok]:
+					apply_op(op_stack,output)
 			op_stack.append(tok)
 		else:
 			output.append(process_token(tok))
