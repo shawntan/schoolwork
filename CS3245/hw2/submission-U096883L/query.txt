@@ -9,4 +9,3 @@ national AND association AND of AND realtors AND NOT mortgage
 (national AND association AND of AND realtors) AND NOT mortgage
 (national AND association AND of AND realtors) AND NOT (mortgage OR resales)
 billion AND dollar OR bill
-NOT NOT bill

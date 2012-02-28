@@ -14,8 +14,9 @@ word	doc_id	next_pointer	[skip_doc_id]	[skip_pointer]
 
 Here, pointers are the byte position in the file which the entry is located.
 A dictionary of terms to last seen position is maintained -- every time a 
-new term is written to the postings file, this is updated. A dictionary containing each term's
-count is also maintained. Once the entire directory of documents are indexed,
+new term is written to the postings file, this is updated. A dictionary
+containing each term's count is also maintained. Once the entire directory
+of documents are indexed,
 the dictionary is written out to file, and the entries in the posting retraced
 to fill in the skipped doc_id and skip pointer at the sqrt(n) positions of
 each document listing.

@@ -34,6 +34,11 @@ def process_token(tok):
 	except KeyError:
 		return EmpPostings()
 def parse_tokens(tokens):
+	"""
+	Implementation of the shunting-yard algorithm, with
+	modifications to handle unary right associative 
+	operators
+	"""
 	output = []
 	op_stack = []
 	for tok in tokens:
@@ -62,9 +67,12 @@ if __name__=='__main__':
 		all_postings = AllPostings()
 		output_file = open(params['-o'],'w')
 		for query in open(params['-q'],'r'):
-			res = [int(q[1]) for q in parse(query)]
-			res.sort()
-			output_file.write(' '.join(str(i) for i in res) + '\n')
+			try:
+				res = [int(q[1]) for q in parse(query)]
+				res.sort()
+				output_file.write(' '.join(str(i) for i in res) + '\n')
+			except Exception:
+				output_file.write('\n')
 	except KeyError:
 		print "Key in parameters -d -p -q -o"
 	"""

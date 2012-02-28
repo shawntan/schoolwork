@@ -14,7 +14,7 @@ def preprocess(word):
 	w = w.lower()
 	if w in stop_words: return
 	w = stemmer.stem_word(w)
-	w = number.sub("",w)
+#	w = number.sub("",w)
 	return w
 
 

@@ -1,0 +1,596 @@
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 11:54:04 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 11:54:04 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 11:56:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:01:01 shawnarch /USR/SBIN/CROND[7514]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 12:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:06:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:13 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:54 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:19:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:21:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:26:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:27:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:30:11 shawnarch kernel: [46295.250227] a.out[9541]: segfault at 8 ip 00007fc0587b8c61 sp 00007fffe909b268 error 4 in libc-2.15.so[7fc058738000+195000]
+Feb 28 12:31:04 shawnarch kernel: [46347.451471] a.out[9618]: segfault at 8 ip 00007f030ed85c61 sp 00007fff56e95e58 error 4 in libc-2.15.so[7f030ed05000+195000]
+Feb 28 12:31:05 shawnarch kernel: [46348.965470] a.out[9627]: segfault at 8 ip 00007f84acb14c61 sp 00007fffffa9acd8 error 4 in libc-2.15.so[7f84aca94000+195000]
+Feb 28 12:31:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:31:14 shawnarch kernel: [46358.191028] a.out[9646]: segfault at 8 ip 00007f838cf71c61 sp 00007fffd2d02678 error 4 in libc-2.15.so[7f838cef1000+195000]
+Feb 28 12:34:12 shawnarch kernel: [46535.718191] a.out[9863]: segfault at 8 ip 00007ff3cd8c2c61 sp 00007fffc69b3238 error 4 in libc-2.15.so[7ff3cd842000+195000]
+Feb 28 12:34:50 shawnarch kernel: [46573.445184] a.out[9927]: segfault at 8 ip 00007fb0a9ff1c61 sp 00007fff7dd2d688 error 4 in libc-2.15.so[7fb0a9f71000+195000]
+Feb 28 12:35:02 shawnarch kernel: [46586.086477] a.out[9953]: segfault at 8 ip 00007f0eb3dadc61 sp 00007fff387682a8 error 4 in libc-2.15.so[7f0eb3d2d000+195000]
+Feb 28 12:35:28 shawnarch kernel: [46611.849570] a.out[9993]: segfault at 8 ip 00007f7eea7eec61 sp 00007fff08dee518 error 4 in libc-2.15.so[7f7eea76e000+195000]
+Feb 28 12:36:28 shawnarch kernel: [46671.289154] a.out[10064]: segfault at 8 ip 00007fe337d4dc61 sp 00007fff0399dbd8 error 4 in libc-2.15.so[7fe337ccd000+195000]
+Feb 28 12:36:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:38:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:40:54 shawnarch kernel: [46937.908844] a.out[10468]: segfault at 8 ip 00007fba78443c61 sp 00007fff12932218 error 4 in libc-2.15.so[7fba783c3000+195000]
+Feb 28 12:41:21 shawnarch kernel: [46964.390555] a.out[10518]: segfault at 8 ip 00007fce7bdf3c61 sp 00007fffc4e59238 error 4 in libc-2.15.so[7fce7bd73000+195000]
+Feb 28 12:41:30 shawnarch kernel: [46974.113933] a.out[10535]: segfault at 8 ip 00007fc29a675c61 sp 00007fff3c695c68 error 4 in libc-2.15.so[7fc29a5f5000+195000]
+Feb 28 12:41:35 shawnarch kernel: [46978.980774] a.out[10553]: segfault at 8 ip 00007f64c9d4bc61 sp 00007fff36034988 error 4 in libc-2.15.so[7f64c9ccb000+195000]
+Feb 28 12:42:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:12 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:48:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:57:20 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:59:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:01:01 shawnarch /USR/SBIN/CROND[11757]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 13:01:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:07:09 shawnarch kernel: [48513.034703] a.out[12313]: segfault at 9 ip 00007f0a20807e18 sp 00007fff1de9d230 error 4 in libc-2.15.so[7f0a207c2000+195000]
+Feb 28 13:07:17 shawnarch kernel: [48520.475347] a.out[12329]: segfault at 9 ip 00007f334fafae18 sp 00007fffee8b2d40 error 4 in libc-2.15.so[7f334fab5000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48522.390393] a.out[12338]: segfault at 9 ip 00007f3dfef4ae18 sp 00007fffc40dc8c0 error 4 in libc-2.15.so[7f3dfef05000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48523.222485] a.out[12347]: segfault at 9 ip 00007fe16928ae18 sp 00007fff1608c270 error 4 in libc-2.15.so[7fe169245000+195000]
+Feb 28 13:08:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:08:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:12:58 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:15:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:40 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:18:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:21:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:23:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:24:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:25:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:28:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:29:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:33:45 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:34:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:37:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:44:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:17 shawnarch kernel: [50800.829426] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841652] ehci_hcd 0000:00:1a.7: BAR 0: set to [mem 0xfc226c00-0xfc226fff] (PCI address [0xfc226c00-0xfc226fff])
+Feb 28 13:45:17 shawnarch kernel: [50800.841657] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841674] ehci_hcd 0000:00:1a.7: restoring config space at offset 0xf (was 0x400, writing 0x40b)
+Feb 28 13:45:17 shawnarch kernel: [50800.841695] ehci_hcd 0000:00:1a.7: restoring config space at offset 0x1 (was 0x2900000, writing 0x2900102)
+Feb 28 13:45:17 shawnarch kernel: [50800.841720] ehci_hcd 0000:00:1a.7: PME# disabled
+Feb 28 13:45:17 shawnarch kernel: [50800.841726] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841729] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841737] ehci_hcd 0000:00:1a.7: PCI INT D -> GSI 23 (level, low) -> IRQ 23
+Feb 28 13:45:17 shawnarch kernel: [50800.841744] ehci_hcd 0000:00:1a.7: setting latency timer to 64
+Feb 28 13:45:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:47:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:18 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: renewing lease of 172.27.221.233
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: acknowledged 172.27.221.233 from 137.132.155.236
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: leased 172.27.221.233 for 14400 seconds
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 13:51:39 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:39 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 13:52:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:52:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:54:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:55:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:57:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:01:01 shawnarch /USR/SBIN/CROND[15652]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 14:03:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:04:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:06:41 shawnarch kernel: [52084.625957] a.out[15733]: segfault at 0 ip 0000000000400694 sp 00007fffd44f2b10 error 4 in a.out[400000+1000]
+Feb 28 14:07:13 shawnarch kernel: [52116.878685] a.out[15746]: segfault at 0 ip 0000000000400641 sp 00007fff376b7c50 error 4 in a.out[400000+1000]
+Feb 28 14:08:27 shawnarch kernel: [52191.136058] a.out[15778]: segfault at 0 ip 00000000004006ab sp 00007ffff84e9590 error 4 in a.out[400000+1000]
+Feb 28 14:08:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:11:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:12:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:16:24 shawnarch kernel: [52667.815896] a.out[15912]: segfault at 0 ip 000000000040067f sp 00007fff0b880f90 error 4 in a.out[400000+1000]
+Feb 28 14:16:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:18:01 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:20:04 shawnarch kernel: [52887.834845] a.out[15999]: segfault at 611000 ip 00000000004006f2 sp 00007fffd01acba0 error 4 in a.out[400000+1000]
+Feb 28 14:20:50 shawnarch kernel: [52933.738519] a.out[16012]: segfault at 611000 ip 00000000004006de sp 00007ffffbfabf90 error 4 in a.out[400000+1000]
+Feb 28 14:21:40 shawnarch kernel: [52983.735892] a.out[16028]: segfault at 611000 ip 00000000004006de sp 00007fff5ab94bb0 error 4 in a.out[400000+1000]
+Feb 28 14:21:44 shawnarch kernel: [52987.737949] a.out[16041]: segfault at 611000 ip 00000000004006de sp 00007fff800f2ab0 error 4 in a.out[400000+1000]
+Feb 28 14:23:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:57 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:26:43 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:28:49 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:29:05 shawnarch kernel: [53428.489376] a.out[16154]: segfault at 611000 ip 00000000004006d8 sp 00007fff0cb25d50 error 4 in a.out[400000+1000]
+Feb 28 14:29:31 shawnarch kernel: [53454.647843] a.out[16167]: segfault at 611000 ip 00000000004006ef sp 00007fff67f25c40 error 4 in a.out[400000+1000]
+Feb 28 14:31:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:31:20 shawnarch kernel: [53564.132886] a.out[16189]: segfault at 611000 ip 000000000040071a sp 00007fffd0fee1b0 error 4 in a.out[400000+1000]
+Feb 28 14:32:47 shawnarch kernel: [53650.645373] a.out[16205]: segfault at 611000 ip 000000000040071a sp 00007fff57a0d880 error 4 in a.out[400000+1000]
+Feb 28 14:35:20 shawnarch kernel: [53804.069285] a.out[16282]: segfault at 611000 ip 000000000040071a sp 00007fff735560d0 error 4 in a.out[400000+1000]
+Feb 28 14:35:34 shawnarch kernel: [53818.253950] a.out[16296]: segfault at 611000 ip 0000000000400724 sp 00007fff70804ca0 error 4 in a.out[400000+1000]
+Feb 28 14:40:09 shawnarch kernel: [54092.475533] a.out[16331]: segfault at 611000 ip 0000000000400724 sp 00007fffc08fc280 error 4 in a.out[400000+1000]
+Feb 28 15:00:09 shawnarch -- MARK --
+Feb 28 15:01:01 shawnarch /USR/SBIN/CROND[16780]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 15:01:05 shawnarch dhcpcd[11365]: eth0: fe80::18cf:6e9e:2713:4401: expired Router Advertisement
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 11:54:04 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 11:54:04 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 11:56:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:01:01 shawnarch /USR/SBIN/CROND[7514]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 12:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:06:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:13 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:54 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:19:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:21:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:26:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:27:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:30:11 shawnarch kernel: [46295.250227] a.out[9541]: segfault at 8 ip 00007fc0587b8c61 sp 00007fffe909b268 error 4 in libc-2.15.so[7fc058738000+195000]
+Feb 28 12:31:04 shawnarch kernel: [46347.451471] a.out[9618]: segfault at 8 ip 00007f030ed85c61 sp 00007fff56e95e58 error 4 in libc-2.15.so[7f030ed05000+195000]
+Feb 28 12:31:05 shawnarch kernel: [46348.965470] a.out[9627]: segfault at 8 ip 00007f84acb14c61 sp 00007fffffa9acd8 error 4 in libc-2.15.so[7f84aca94000+195000]
+Feb 28 12:31:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:31:14 shawnarch kernel: [46358.191028] a.out[9646]: segfault at 8 ip 00007f838cf71c61 sp 00007fffd2d02678 error 4 in libc-2.15.so[7f838cef1000+195000]
+Feb 28 12:34:12 shawnarch kernel: [46535.718191] a.out[9863]: segfault at 8 ip 00007ff3cd8c2c61 sp 00007fffc69b3238 error 4 in libc-2.15.so[7ff3cd842000+195000]
+Feb 28 12:34:50 shawnarch kernel: [46573.445184] a.out[9927]: segfault at 8 ip 00007fb0a9ff1c61 sp 00007fff7dd2d688 error 4 in libc-2.15.so[7fb0a9f71000+195000]
+Feb 28 12:35:02 shawnarch kernel: [46586.086477] a.out[9953]: segfault at 8 ip 00007f0eb3dadc61 sp 00007fff387682a8 error 4 in libc-2.15.so[7f0eb3d2d000+195000]
+Feb 28 12:35:28 shawnarch kernel: [46611.849570] a.out[9993]: segfault at 8 ip 00007f7eea7eec61 sp 00007fff08dee518 error 4 in libc-2.15.so[7f7eea76e000+195000]
+Feb 28 12:36:28 shawnarch kernel: [46671.289154] a.out[10064]: segfault at 8 ip 00007fe337d4dc61 sp 00007fff0399dbd8 error 4 in libc-2.15.so[7fe337ccd000+195000]
+Feb 28 12:36:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:38:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:40:54 shawnarch kernel: [46937.908844] a.out[10468]: segfault at 8 ip 00007fba78443c61 sp 00007fff12932218 error 4 in libc-2.15.so[7fba783c3000+195000]
+Feb 28 12:41:21 shawnarch kernel: [46964.390555] a.out[10518]: segfault at 8 ip 00007fce7bdf3c61 sp 00007fffc4e59238 error 4 in libc-2.15.so[7fce7bd73000+195000]
+Feb 28 12:41:30 shawnarch kernel: [46974.113933] a.out[10535]: segfault at 8 ip 00007fc29a675c61 sp 00007fff3c695c68 error 4 in libc-2.15.so[7fc29a5f5000+195000]
+Feb 28 12:41:35 shawnarch kernel: [46978.980774] a.out[10553]: segfault at 8 ip 00007f64c9d4bc61 sp 00007fff36034988 error 4 in libc-2.15.so[7f64c9ccb000+195000]
+Feb 28 12:42:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:12 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:48:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:57:20 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:59:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:01:01 shawnarch /USR/SBIN/CROND[11757]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 13:01:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:07:09 shawnarch kernel: [48513.034703] a.out[12313]: segfault at 9 ip 00007f0a20807e18 sp 00007fff1de9d230 error 4 in libc-2.15.so[7f0a207c2000+195000]
+Feb 28 13:07:17 shawnarch kernel: [48520.475347] a.out[12329]: segfault at 9 ip 00007f334fafae18 sp 00007fffee8b2d40 error 4 in libc-2.15.so[7f334fab5000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48522.390393] a.out[12338]: segfault at 9 ip 00007f3dfef4ae18 sp 00007fffc40dc8c0 error 4 in libc-2.15.so[7f3dfef05000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48523.222485] a.out[12347]: segfault at 9 ip 00007fe16928ae18 sp 00007fff1608c270 error 4 in libc-2.15.so[7fe169245000+195000]
+Feb 28 13:08:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:08:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:12:58 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:15:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:40 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:18:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:21:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:23:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:24:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:25:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:28:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:29:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:33:45 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:34:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:37:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:44:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:17 shawnarch kernel: [50800.829426] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841652] ehci_hcd 0000:00:1a.7: BAR 0: set to [mem 0xfc226c00-0xfc226fff] (PCI address [0xfc226c00-0xfc226fff])
+Feb 28 13:45:17 shawnarch kernel: [50800.841657] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841674] ehci_hcd 0000:00:1a.7: restoring config space at offset 0xf (was 0x400, writing 0x40b)
+Feb 28 13:45:17 shawnarch kernel: [50800.841695] ehci_hcd 0000:00:1a.7: restoring config space at offset 0x1 (was 0x2900000, writing 0x2900102)
+Feb 28 13:45:17 shawnarch kernel: [50800.841720] ehci_hcd 0000:00:1a.7: PME# disabled
+Feb 28 13:45:17 shawnarch kernel: [50800.841726] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841729] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841737] ehci_hcd 0000:00:1a.7: PCI INT D -> GSI 23 (level, low) -> IRQ 23
+Feb 28 13:45:17 shawnarch kernel: [50800.841744] ehci_hcd 0000:00:1a.7: setting latency timer to 64
+Feb 28 13:45:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:47:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:18 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: renewing lease of 172.27.221.233
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: acknowledged 172.27.221.233 from 137.132.155.236
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: leased 172.27.221.233 for 14400 seconds
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 13:51:39 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:39 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 13:52:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:52:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:54:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:55:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:57:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:01:01 shawnarch /USR/SBIN/CROND[15652]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 14:03:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:04:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:06:41 shawnarch kernel: [52084.625957] a.out[15733]: segfault at 0 ip 0000000000400694 sp 00007fffd44f2b10 error 4 in a.out[400000+1000]
+Feb 28 14:07:13 shawnarch kernel: [52116.878685] a.out[15746]: segfault at 0 ip 0000000000400641 sp 00007fff376b7c50 error 4 in a.out[400000+1000]
+Feb 28 14:08:27 shawnarch kernel: [52191.136058] a.out[15778]: segfault at 0 ip 00000000004006ab sp 00007ffff84e9590 error 4 in a.out[400000+1000]
+Feb 28 14:08:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:11:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:12:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:16:24 shawnarch kernel: [52667.815896] a.out[15912]: segfault at 0 ip 000000000040067f sp 00007fff0b880f90 error 4 in a.out[400000+1000]
+Feb 28 14:16:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:18:01 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:20:04 shawnarch kernel: [52887.834845] a.out[15999]: segfault at 611000 ip 00000000004006f2 sp 00007fffd01acba0 error 4 in a.out[400000+1000]
+Feb 28 14:20:50 shawnarch kernel: [52933.738519] a.out[16012]: segfault at 611000 ip 00000000004006de sp 00007ffffbfabf90 error 4 in a.out[400000+1000]
+Feb 28 14:21:40 shawnarch kernel: [52983.735892] a.out[16028]: segfault at 611000 ip 00000000004006de sp 00007fff5ab94bb0 error 4 in a.out[400000+1000]
+Feb 28 14:21:44 shawnarch kernel: [52987.737949] a.out[16041]: segfault at 611000 ip 00000000004006de sp 00007fff800f2ab0 error 4 in a.out[400000+1000]
+Feb 28 14:23:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:57 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:26:43 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:28:49 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:29:05 shawnarch kernel: [53428.489376] a.out[16154]: segfault at 611000 ip 00000000004006d8 sp 00007fff0cb25d50 error 4 in a.out[400000+1000]
+Feb 28 14:29:31 shawnarch kernel: [53454.647843] a.out[16167]: segfault at 611000 ip 00000000004006ef sp 00007fff67f25c40 error 4 in a.out[400000+1000]
+Feb 28 14:31:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:31:20 shawnarch kernel: [53564.132886] a.out[16189]: segfault at 611000 ip 000000000040071a sp 00007fffd0fee1b0 error 4 in a.out[400000+1000]
+Feb 28 14:32:47 shawnarch kernel: [53650.645373] a.out[16205]: segfault at 611000 ip 000000000040071a sp 00007fff57a0d880 error 4 in a.out[400000+1000]
+Feb 28 14:35:20 shawnarch kernel: [53804.069285] a.out[16282]: segfault at 611000 ip 000000000040071a sp 00007fff735560d0 error 4 in a.out[400000+1000]
+Feb 28 14:35:34 shawnarch kernel: [53818.253950] a.out[16296]: segfault at 611000 ip 0000000000400724 sp 00007fff70804ca0 error 4 in a.out[400000+1000]
+Feb 28 14:40:09 shawnarch kernel: [54092.475533] a.out[16331]: segfault at 611000 ip 0000000000400724 sp 00007fffc08fc280 error 4 in a.out[400000+1000]
+Feb 28 15:00:09 shawnarch -- MARK --
+Feb 28 15:01:01 shawnarch /USR/SBIN/CROND[16780]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 15:01:05 shawnarch dhcpcd[11365]: eth0: fe80::18cf:6e9e:2713:4401: expired Router Advertisement
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 11:54:04 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 11:54:04 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 11:56:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:01:01 shawnarch /USR/SBIN/CROND[7514]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 12:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:06:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:13 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:54 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:19:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:21:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:26:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:27:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:30:11 shawnarch kernel: [46295.250227] a.out[9541]: segfault at 8 ip 00007fc0587b8c61 sp 00007fffe909b268 error 4 in libc-2.15.so[7fc058738000+195000]
+Feb 28 12:31:04 shawnarch kernel: [46347.451471] a.out[9618]: segfault at 8 ip 00007f030ed85c61 sp 00007fff56e95e58 error 4 in libc-2.15.so[7f030ed05000+195000]
+Feb 28 12:31:05 shawnarch kernel: [46348.965470] a.out[9627]: segfault at 8 ip 00007f84acb14c61 sp 00007fffffa9acd8 error 4 in libc-2.15.so[7f84aca94000+195000]
+Feb 28 12:31:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:31:14 shawnarch kernel: [46358.191028] a.out[9646]: segfault at 8 ip 00007f838cf71c61 sp 00007fffd2d02678 error 4 in libc-2.15.so[7f838cef1000+195000]
+Feb 28 12:34:12 shawnarch kernel: [46535.718191] a.out[9863]: segfault at 8 ip 00007ff3cd8c2c61 sp 00007fffc69b3238 error 4 in libc-2.15.so[7ff3cd842000+195000]
+Feb 28 12:34:50 shawnarch kernel: [46573.445184] a.out[9927]: segfault at 8 ip 00007fb0a9ff1c61 sp 00007fff7dd2d688 error 4 in libc-2.15.so[7fb0a9f71000+195000]
+Feb 28 12:35:02 shawnarch kernel: [46586.086477] a.out[9953]: segfault at 8 ip 00007f0eb3dadc61 sp 00007fff387682a8 error 4 in libc-2.15.so[7f0eb3d2d000+195000]
+Feb 28 12:35:28 shawnarch kernel: [46611.849570] a.out[9993]: segfault at 8 ip 00007f7eea7eec61 sp 00007fff08dee518 error 4 in libc-2.15.so[7f7eea76e000+195000]
+Feb 28 12:36:28 shawnarch kernel: [46671.289154] a.out[10064]: segfault at 8 ip 00007fe337d4dc61 sp 00007fff0399dbd8 error 4 in libc-2.15.so[7fe337ccd000+195000]
+Feb 28 12:36:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:38:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:40:54 shawnarch kernel: [46937.908844] a.out[10468]: segfault at 8 ip 00007fba78443c61 sp 00007fff12932218 error 4 in libc-2.15.so[7fba783c3000+195000]
+Feb 28 12:41:21 shawnarch kernel: [46964.390555] a.out[10518]: segfault at 8 ip 00007fce7bdf3c61 sp 00007fffc4e59238 error 4 in libc-2.15.so[7fce7bd73000+195000]
+Feb 28 12:41:30 shawnarch kernel: [46974.113933] a.out[10535]: segfault at 8 ip 00007fc29a675c61 sp 00007fff3c695c68 error 4 in libc-2.15.so[7fc29a5f5000+195000]
+Feb 28 12:41:35 shawnarch kernel: [46978.980774] a.out[10553]: segfault at 8 ip 00007f64c9d4bc61 sp 00007fff36034988 error 4 in libc-2.15.so[7f64c9ccb000+195000]
+Feb 28 12:42:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:12 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:48:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:57:20 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:59:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:01:01 shawnarch /USR/SBIN/CROND[11757]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 13:01:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:07:09 shawnarch kernel: [48513.034703] a.out[12313]: segfault at 9 ip 00007f0a20807e18 sp 00007fff1de9d230 error 4 in libc-2.15.so[7f0a207c2000+195000]
+Feb 28 13:07:17 shawnarch kernel: [48520.475347] a.out[12329]: segfault at 9 ip 00007f334fafae18 sp 00007fffee8b2d40 error 4 in libc-2.15.so[7f334fab5000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48522.390393] a.out[12338]: segfault at 9 ip 00007f3dfef4ae18 sp 00007fffc40dc8c0 error 4 in libc-2.15.so[7f3dfef05000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48523.222485] a.out[12347]: segfault at 9 ip 00007fe16928ae18 sp 00007fff1608c270 error 4 in libc-2.15.so[7fe169245000+195000]
+Feb 28 13:08:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:08:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:12:58 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:15:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:40 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:18:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:21:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:23:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:24:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:25:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:28:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:29:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:33:45 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:34:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:37:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:44:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:17 shawnarch kernel: [50800.829426] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841652] ehci_hcd 0000:00:1a.7: BAR 0: set to [mem 0xfc226c00-0xfc226fff] (PCI address [0xfc226c00-0xfc226fff])
+Feb 28 13:45:17 shawnarch kernel: [50800.841657] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841674] ehci_hcd 0000:00:1a.7: restoring config space at offset 0xf (was 0x400, writing 0x40b)
+Feb 28 13:45:17 shawnarch kernel: [50800.841695] ehci_hcd 0000:00:1a.7: restoring config space at offset 0x1 (was 0x2900000, writing 0x2900102)
+Feb 28 13:45:17 shawnarch kernel: [50800.841720] ehci_hcd 0000:00:1a.7: PME# disabled
+Feb 28 13:45:17 shawnarch kernel: [50800.841726] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841729] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841737] ehci_hcd 0000:00:1a.7: PCI INT D -> GSI 23 (level, low) -> IRQ 23
+Feb 28 13:45:17 shawnarch kernel: [50800.841744] ehci_hcd 0000:00:1a.7: setting latency timer to 64
+Feb 28 13:45:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:47:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:18 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: renewing lease of 172.27.221.233
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: acknowledged 172.27.221.233 from 137.132.155.236
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: leased 172.27.221.233 for 14400 seconds
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 13:51:39 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:39 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 13:52:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:52:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:54:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:55:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:57:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:01:01 shawnarch /USR/SBIN/CROND[15652]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 14:03:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:04:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:06:41 shawnarch kernel: [52084.625957] a.out[15733]: segfault at 0 ip 0000000000400694 sp 00007fffd44f2b10 error 4 in a.out[400000+1000]
+Feb 28 14:07:13 shawnarch kernel: [52116.878685] a.out[15746]: segfault at 0 ip 0000000000400641 sp 00007fff376b7c50 error 4 in a.out[400000+1000]
+Feb 28 14:08:27 shawnarch kernel: [52191.136058] a.out[15778]: segfault at 0 ip 00000000004006ab sp 00007ffff84e9590 error 4 in a.out[400000+1000]
+Feb 28 14:08:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:11:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:12:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:16:24 shawnarch kernel: [52667.815896] a.out[15912]: segfault at 0 ip 000000000040067f sp 00007fff0b880f90 error 4 in a.out[400000+1000]
+Feb 28 14:16:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:18:01 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:20:04 shawnarch kernel: [52887.834845] a.out[15999]: segfault at 611000 ip 00000000004006f2 sp 00007fffd01acba0 error 4 in a.out[400000+1000]
+Feb 28 14:20:50 shawnarch kernel: [52933.738519] a.out[16012]: segfault at 611000 ip 00000000004006de sp 00007ffffbfabf90 error 4 in a.out[400000+1000]
+Feb 28 14:21:40 shawnarch kernel: [52983.735892] a.out[16028]: segfault at 611000 ip 00000000004006de sp 00007fff5ab94bb0 error 4 in a.out[400000+1000]
+Feb 28 14:21:44 shawnarch kernel: [52987.737949] a.out[16041]: segfault at 611000 ip 00000000004006de sp 00007fff800f2ab0 error 4 in a.out[400000+1000]
+Feb 28 14:23:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:25:57 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:26:43 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:28:49 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:29:05 shawnarch kernel: [53428.489376] a.out[16154]: segfault at 611000 ip 00000000004006d8 sp 00007fff0cb25d50 error 4 in a.out[400000+1000]
+Feb 28 14:29:31 shawnarch kernel: [53454.647843] a.out[16167]: segfault at 611000 ip 00000000004006ef sp 00007fff67f25c40 error 4 in a.out[400000+1000]
+Feb 28 14:31:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:31:20 shawnarch kernel: [53564.132886] a.out[16189]: segfault at 611000 ip 000000000040071a sp 00007fffd0fee1b0 error 4 in a.out[400000+1000]
+Feb 28 14:32:47 shawnarch kernel: [53650.645373] a.out[16205]: segfault at 611000 ip 000000000040071a sp 00007fff57a0d880 error 4 in a.out[400000+1000]
+Feb 28 14:35:20 shawnarch kernel: [53804.069285] a.out[16282]: segfault at 611000 ip 000000000040071a sp 00007fff735560d0 error 4 in a.out[400000+1000]
+Feb 28 14:35:34 shawnarch kernel: [53818.253950] a.out[16296]: segfault at 611000 ip 0000000000400724 sp 00007fff70804ca0 error 4 in a.out[400000+1000]
+Feb 28 14:40:09 shawnarch kernel: [54092.475533] a.out[16331]: segfault at 611000 ip 0000000000400724 sp 00007fffc08fc280 error 4 in a.out[400000+1000]
+Feb 28 15:00:09 shawnarch -- MARK --
+Feb 28 15:01:01 shawnarch /USR/SBIN/CROND[16780]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 15:01:05 shawnarch dhcpcd[11365]: eth0: fe80::18cf:6e9e:2713:4401: expired Router Advertisement
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 11:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 11:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 11:54:04 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 11:54:04 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 11:56:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:01:01 shawnarch /USR/SBIN/CROND[7514]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 12:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:06:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:07:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:13 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:14:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:17:54 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:19:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:21:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:26:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:27:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:30:11 shawnarch kernel: [46295.250227] a.out[9541]: segfault at 8 ip 00007fc0587b8c61 sp 00007fffe909b268 error 4 in libc-2.15.so[7fc058738000+195000]
+Feb 28 12:31:04 shawnarch kernel: [46347.451471] a.out[9618]: segfault at 8 ip 00007f030ed85c61 sp 00007fff56e95e58 error 4 in libc-2.15.so[7f030ed05000+195000]
+Feb 28 12:31:05 shawnarch kernel: [46348.965470] a.out[9627]: segfault at 8 ip 00007f84acb14c61 sp 00007fffffa9acd8 error 4 in libc-2.15.so[7f84aca94000+195000]
+Feb 28 12:31:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:31:14 shawnarch kernel: [46358.191028] a.out[9646]: segfault at 8 ip 00007f838cf71c61 sp 00007fffd2d02678 error 4 in libc-2.15.so[7f838cef1000+195000]
+Feb 28 12:34:12 shawnarch kernel: [46535.718191] a.out[9863]: segfault at 8 ip 00007ff3cd8c2c61 sp 00007fffc69b3238 error 4 in libc-2.15.so[7ff3cd842000+195000]
+Feb 28 12:34:50 shawnarch kernel: [46573.445184] a.out[9927]: segfault at 8 ip 00007fb0a9ff1c61 sp 00007fff7dd2d688 error 4 in libc-2.15.so[7fb0a9f71000+195000]
+Feb 28 12:35:02 shawnarch kernel: [46586.086477] a.out[9953]: segfault at 8 ip 00007f0eb3dadc61 sp 00007fff387682a8 error 4 in libc-2.15.so[7f0eb3d2d000+195000]
+Feb 28 12:35:28 shawnarch kernel: [46611.849570] a.out[9993]: segfault at 8 ip 00007f7eea7eec61 sp 00007fff08dee518 error 4 in libc-2.15.so[7f7eea76e000+195000]
+Feb 28 12:36:28 shawnarch kernel: [46671.289154] a.out[10064]: segfault at 8 ip 00007fe337d4dc61 sp 00007fff0399dbd8 error 4 in libc-2.15.so[7fe337ccd000+195000]
+Feb 28 12:36:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:38:15 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:40:54 shawnarch kernel: [46937.908844] a.out[10468]: segfault at 8 ip 00007fba78443c61 sp 00007fff12932218 error 4 in libc-2.15.so[7fba783c3000+195000]
+Feb 28 12:41:21 shawnarch kernel: [46964.390555] a.out[10518]: segfault at 8 ip 00007fce7bdf3c61 sp 00007fffc4e59238 error 4 in libc-2.15.so[7fce7bd73000+195000]
+Feb 28 12:41:30 shawnarch kernel: [46974.113933] a.out[10535]: segfault at 8 ip 00007fc29a675c61 sp 00007fff3c695c68 error 4 in libc-2.15.so[7fc29a5f5000+195000]
+Feb 28 12:41:35 shawnarch kernel: [46978.980774] a.out[10553]: segfault at 8 ip 00007f64c9d4bc61 sp 00007fff36034988 error 4 in libc-2.15.so[7f64c9ccb000+195000]
+Feb 28 12:42:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:12 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:43:48 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:48:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:57:20 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 12:59:14 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:01:01 shawnarch /USR/SBIN/CROND[11757]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 13:01:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:07:09 shawnarch kernel: [48513.034703] a.out[12313]: segfault at 9 ip 00007f0a20807e18 sp 00007fff1de9d230 error 4 in libc-2.15.so[7f0a207c2000+195000]
+Feb 28 13:07:17 shawnarch kernel: [48520.475347] a.out[12329]: segfault at 9 ip 00007f334fafae18 sp 00007fffee8b2d40 error 4 in libc-2.15.so[7f334fab5000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48522.390393] a.out[12338]: segfault at 9 ip 00007f3dfef4ae18 sp 00007fffc40dc8c0 error 4 in libc-2.15.so[7f3dfef05000+195000]
+Feb 28 13:07:19 shawnarch kernel: [48523.222485] a.out[12347]: segfault at 9 ip 00007fe16928ae18 sp 00007fff1608c270 error 4 in libc-2.15.so[7fe169245000+195000]
+Feb 28 13:08:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:08:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:12:58 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:15:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:06 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:17:40 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:18:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:21:41 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:23:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:24:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:25:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:26:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:28:02 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:29:32 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:33:45 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:34:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:37:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:44:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:17 shawnarch kernel: [50800.829426] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841652] ehci_hcd 0000:00:1a.7: BAR 0: set to [mem 0xfc226c00-0xfc226fff] (PCI address [0xfc226c00-0xfc226fff])
+Feb 28 13:45:17 shawnarch kernel: [50800.841657] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841674] ehci_hcd 0000:00:1a.7: restoring config space at offset 0xf (was 0x400, writing 0x40b)
+Feb 28 13:45:17 shawnarch kernel: [50800.841695] ehci_hcd 0000:00:1a.7: restoring config space at offset 0x1 (was 0x2900000, writing 0x2900102)
+Feb 28 13:45:17 shawnarch kernel: [50800.841720] ehci_hcd 0000:00:1a.7: PME# disabled
+Feb 28 13:45:17 shawnarch kernel: [50800.841726] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841729] ehci_hcd 0000:00:1a.7: power state changed by ACPI to D0
+Feb 28 13:45:17 shawnarch kernel: [50800.841737] ehci_hcd 0000:00:1a.7: PCI INT D -> GSI 23 (level, low) -> IRQ 23
+Feb 28 13:45:17 shawnarch kernel: [50800.841744] ehci_hcd 0000:00:1a.7: setting latency timer to 64
+Feb 28 13:45:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:45:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:47:52 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:18 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:49:56 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: renewing lease of 172.27.221.233
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: acknowledged 172.27.221.233 from 137.132.155.236
+Feb 28 13:51:17 shawnarch dhcpcd[11365]: eth0: leased 172.27.221.233 for 14400 seconds
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed (null) -> renew
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   address 172.27.221.233
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   prefix 22 (255.255.252.0)
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   gateway 172.27.220.1
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.254'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   nameserver '137.132.0.252'
+Feb 28 13:51:17 shawnarch NetworkManager[11359]: <info>   domain name 'nus.edu.sg'
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Activating service name='org.freedesktop.nm_dispatcher' (using servicehelper)
+Feb 28 13:51:17 shawnarch dbus[495]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+Feb 28 13:51:39 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:51:39 shawnarch NetworkManager[11359]: <info> (eth0): DHCPv4 state changed renew -> (null)
+Feb 28 13:52:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:52:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:53:23 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:54:53 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:55:27 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 13:57:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:01:01 shawnarch /USR/SBIN/CROND[15652]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 14:03:50 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:04:47 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:05:51 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:06:41 shawnarch kernel: [52084.625957] a.out[15733]: segfault at 0 ip 0000000000400694 sp 00007fffd44f2b10 error 4 in a.out[400000+1000]
+Feb 28 14:07:13 shawnarch kernel: [52116.878685] a.out[15746]: segfault at 0 ip 0000000000400641 sp 00007fff376b7c50 error 4 in a.out[400000+1000]
+Feb 28 14:08:27 shawnarch kernel: [52191.136058] a.out[15778]: segfault at 0 ip 00000000004006ab sp 00007ffff84e9590 error 4 in a.out[400000+1000]
+Feb 28 14:08:35 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:30 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:09:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:11:22 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:12:34 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:11 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:13:28 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:16:24 shawnarch kernel: [52667.815896] a.out[15912]: segfault at 0 ip 000000000040067f sp 00007fff0b880f90 error 4 in a.out[400000+1000]
+Feb 28 14:16:26 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:17:33 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:18:01 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:20:04 shawnarch kernel: [52887.834845] a.out[15999]: segfault at 611000 ip 00000000004006f2 sp 00007fffd01acba0 error 4 in a.out[400000+1000]
+Feb 28 14:20:50 shawnarch kernel: [52933.738519] a.out[16012]: segfault at 611000 ip 00000000004006de sp 00007ffffbfabf90 error 4 in a.out[400000+1000]
+Feb 28 14:21:40 shawnarch kernel: [52983.735892] a.out[16028]: segfault at 611000 ip 00000000004006de sp 00007fff5ab94bb0 error 4 in a.out[400000+1000]
+Feb 28 14:26:43 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:28:49 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:29:05 shawnarch kernel: [53428.489376] a.out[16154]: segfault at 611000 ip 00000000004006d8 sp 00007fff0cb25d50 error 4 in a.out[400000+1000]
+Feb 28 14:29:31 shawnarch kernel: [53454.647843] a.out[16167]: segfault at 611000 ip 00000000004006ef sp 00007fff67f25c40 error 4 in a.out[400000+1000]
+Feb 28 14:31:05 shawnarch dhcpcd[11365]: eth0: Router Advertisement from fe80::18cf:6e9e:2713:4401
+Feb 28 14:31:20 shawnarch kernel: [53564.132886] a.out[16189]: segfault at 611000 ip 000000000040071a sp 00007fffd0fee1b0 error 4 in a.out[400000+1000]
+Feb 28 14:32:47 shawnarch kernel: [53650.645373] a.out[16205]: segfault at 611000 ip 000000000040071a sp 00007fff57a0d880 error 4 in a.out[400000+1000]
+Feb 28 14:35:20 shawnarch kernel: [53804.069285] a.out[16282]: segfault at 611000 ip 000000000040071a sp 00007fff735560d0 error 4 in a.out[400000+1000]
+Feb 28 14:35:34 shawnarch kernel: [53818.253950] a.out[16296]: segfault at 611000 ip 0000000000400724 sp 00007fff70804ca0 error 4 in a.out[400000+1000]
+Feb 28 14:40:09 shawnarch kernel: [54092.475533] a.out[16331]: segfault at 611000 ip 0000000000400724 sp 00007fffc08fc280 error 4 in a.out[400000+1000]
+Feb 28 15:00:09 shawnarch -- MARK --
+Feb 28 15:01:01 shawnarch /USR/SBIN/CROND[16780]: (root) CMD (run-parts /etc/cron.hourly)
+Feb 28 15:01:05 shawnarch dhcpcd[11365]: eth0: fe80::18cf:6e9e:2713:4401: expired Router Advertisement
