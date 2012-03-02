@@ -29,7 +29,12 @@ helper(A) :-
 			X = empty
 		)
 	),
-	(fromto((0,1),(Cin,Iin),(Cout,Iout),(C,9)),param(A) do
+	(fromto(
+		(0,1),
+		(Cin,Iin),
+		(Cout,Iout),
+		(C,9)
+	),param(A) do
 		(subscript(A,[Iin],X),
 			( X = lady ->
 				B = 1;
