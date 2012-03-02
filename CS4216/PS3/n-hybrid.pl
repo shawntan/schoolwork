@@ -1,29 +1,29 @@
 :-lib(suspend).
-queens(QueenStruct,Number) :-
-	dim(QueenStruct,[Number]),
-	constraints(QueenStruct,Number),
-	search(QueenStruct).
-constraints(QueenStruct,Number) :-
+queers(QueerStruct,Number) :-
+	dim(QueerStruct,[Number]),
+	constraints(QueerStruct,Number),
+	search(QueerStruct).
+constraints(QueerStruct,Number) :-
 	( for(I,1,Number),
-		param(QueenStruct,Number)
+		param(QueerStruct,Number)
 		do
-		QueenStruct[I] :: 1..Number,
-		( for(J,1,I-1),param(I,QueenStruct) do
-			QueenStruct[I] $\= QueenStruct[J]
+		QueerStruct[I] :: 1..Number,
+		( for(J,1,I-1),param(I,QueerStruct) do
+			QueerStruct[I] $\= QueerStruct[J]
 		),
 		(I > 1 ->
-			QueenStruct[I] - QueenStruct[I-1] $> 2 or QueenStruct[I] - QueenStruct[I-1] $< -2;
+			QueerStruct[I] - QueerStruct[I-1] $> 2 or QueerStruct[I] - QueerStruct[I-1] $< -2;
 			true
 		),
 		(I > 2 ->
-			QueenStruct[I] - QueenStruct[I-2] $> 1 or QueenStruct[I] - QueenStruct[I-2] $< -1;
+			QueerStruct[I] - QueerStruct[I-2] $> 1 or QueerStruct[I] - QueerStruct[I-2] $< -1;
 			true
 		)
 
 	).
-search(QueenStruct) :-
-	dim(QueenStruct,[N]),
-	( foreacharg(Col,QueenStruct),
+search(QueerStruct) :-
+	dim(QueerStruct,[N]),
+	( foreacharg(Col,QueerStruct),
 		param(N)
 		do
 		select_val(1,N,Col)
