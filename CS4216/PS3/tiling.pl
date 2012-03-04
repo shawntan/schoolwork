@@ -1,9 +1,10 @@
 :-lib(suspend).
 solve(N,Blanks,Grid):-
-	constraints(N,Blanks,TileCount,Grid,VarList),
-	write(Grid),nl,
-	write(VarList),nl,
-	search(TileCount,VarList).
+	constraints(N,Blanks,TileCount,Grid1,VarList),
+	search(TileCount,VarList),
+	(
+		foreacharg(R,Grid1),foreach(RL,Grid) do flatten_array(R,RL)
+	).
 
 constraints(N,Missing,TileCount,Grid,VarList):-
 	dim(Grid,[N,N]),
@@ -13,7 +14,7 @@ constraints(N,Missing,TileCount,Grid,VarList):-
 	integer(T,TileCount),
 	length(VarList,CellCount),
 	(
-		multifor([I,J],1,N),param(Grid,Missing,N,VarList),fromto(VarList,InVars,OutVars,[]),param(VarList) do
+		multifor([I,J],1,N),param(Grid,Missing,N,VarList,TileCount),fromto(VarList,InVars,OutVars,[]),param(VarList) do
 		(
 			(member((I-J),Missing) ->
 				OutVars = InVars,
@@ -21,14 +22,15 @@ constraints(N,Missing,TileCount,Grid,VarList):-
 				(
 					subscript(Grid,[I,J],C),
 					InVars = [C|OutVars],
-					(C $= L or C $= R or C $= U or C $= D),
-					(I>1 -> subscript(Grid,[I-1,J],L);L is -1),
-					(I<N -> subscript(Grid,[I+1,J],R);R is -2),
-					(J>1 -> subscript(Grid,[I,J-1],U);U is -3),
-					(J<N -> subscript(Grid,[I,J+1],D);D is -4),
-					L $\= R,L $\= U,L $\= D,
+					C :: 1..TileCount,
+					((I>1) -> L = Grid[I-1,J];L is -1),
+					((I<N) -> R = Grid[I+1,J];R is -2),
+					((J>1) -> U = Grid[I,J-1];U is -3),
+					((J<N) -> D = Grid[I,J+1];D is -4),
+					L $\= R,L $\= U,L $\= D, %all different
 					R $\= U,R $\= D,
-					U $\= D
+					U $\= D,
+					(C $= L or C $= R or C $= U or C $= D)
 				)
 			)
 		)
@@ -50,16 +52,16 @@ select_val(1,N,Col) :-
 		fromto(fail,C,(C;(Col=I)),Q),for(I,1,N),param(Col) do true
 	),Q.
 
-memberlist([],_).
-memberlist([H|T],L) :- suspend(member(H,L)), memberlist(T,L).
+sus_member(E,L) :- sus_member(E,L,0).
+sus_member(_,[],C):- C.
+sus_member(E,[H|T],C):- sus_member(E,T,C or (E $= H)).
 
-sorted([]).
-sorted([_]).
-sorted([H1,H2|T]) :- H1 $< H2, sorted([H2|T]).
+memberlist([],_).
+memberlist([H|T],L) :- sus_member(H,L), memberlist(T,L).
 
 distinct(K,L) :-
 	length(M,K),
-	sorted(M), % could be replaced by all_distinct(M), leads to more solutions.
+	(for(I,1,K),foreach(A,M) do A=I),
 	memberlist(M,L),
 	memberlist(L,M).
 
