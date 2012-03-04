@@ -27,3 +27,19 @@ solve_cells_([(X,Y)|Cells],[((X,Y),((X1,Y1)))|RestTiles]) :-
 solve_cells(N,Blanks,Results) :-
 	generate_cells(N,Blanks,Cells),
 	solve_cells_(Cells,Results).
+massage_soln(N,Cells,Result) :-
+	dim(Result,[N,N]),
+	(
+		fromto(
+			(1,Cells),
+			(I,[((X,Y),(X1,Y1))|OutCells]),
+			(J,OutCells),
+			(_,[])
+		),param(Result) do 
+			subscript(Result,[X,Y],I),
+			subscript(Result,[X1,Y1],I),
+			J is I + 1
+	).
+solve(N,Blanks,Result) :-
+	solve_cells(N,Blanks,Pairs),
+	massage_soln(N,Pairs,Result).
