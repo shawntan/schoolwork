@@ -14,20 +14,17 @@ constraints(N,Missing,Grid,VarList):-
 	(
 		multifor([I,J],1,N),param(Grid,N,Missing),foreach(Var,VarList) do
 			(member((I-J),Missing) ->
-				subscript(Grid,[I,J],x),Var=0;
+				subscript(Grid,[I,J],0),Var=0;
 				(
-					subscript(Grid,[I,J],C),
-					Var = C,
-					(J > 1 -> subscript(Grid,[I,J-1],Up);	Up		= edge),
-					(J < N -> subscript(Grid,[I,J+1],Down);	Down	= edge),
-					(I > 1 -> subscript(Grid,[I-1,J],Left);	Left	= edge),
-					(I < N -> subscript(Grid,[I+1,J],Right);Right	= edge),
-					(
-						(C $=  Up and C $\= Left and C $\= Down and C $\= Right) or
-						(C $\= Up and C $=  Left and C $\= Down and C $\= Right) or
-						(C $\= Up and C $\= Left and C $=  Down and C $\= Right) or
-						(C $\= Up and C $\= Left and C $\= Down and C $=  Right)
-					)
+						(
+						subscript(Grid,[I,J],C),
+						(J>1->subscript(Grid,[I,J-1],U);U=0),
+						(J<N->subscript(Grid,[I,J+1],L);L=0),
+						(I>1->subscript(Grid,[I-1,J],D);D=0),
+						(I<N->subscript(Grid,[I+1,J],R);R=0),
+						distinct(4,[C,U,L,D,R])
+						);
+						true
 				)
 			)
 	).
@@ -40,6 +37,7 @@ sorted([_]).
 sorted([H1,H2|T]) :- H1 $< H2, sorted([H2|T]).
 
 distinct(K,L) :-
-   length(M,K),
-   sorted(M), % could be replaced by all_distinct(M), leads to more solutions.
-   memberlist(M,L), memberlist(L,M).
+	length(M,K),
+	sorted(M), % could be replaced by all_distinct(M), leads to more solutions.
+	memberlist(M,L),
+	memberlist(L,M).
