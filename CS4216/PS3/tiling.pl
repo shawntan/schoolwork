@@ -42,4 +42,18 @@ massage_soln(N,Cells,Result) :-
 	).
 solve(N,Blanks,Result) :-
 	solve_cells(N,Blanks,Pairs),
-	massage_soln(N,Pairs,Result).
+	massage_soln(N,Pairs,Arrays),
+	(foreach(X-Y,Blanks),param(Arrays) do subscript(Arrays,[X,Y],x)),
+	length(Result,N),
+	(
+		fromto(
+			(Result,1),
+			([RRow|RestRes],I),
+			(RestRes,I1),
+			([],_)
+		),param(Arrays) do 
+			subscript(Arrays,[I],ARow),
+			flatten_array(ARow,RRow),
+			I1 is I+1
+	).
+		
