@@ -43,3 +43,11 @@ distinct(K,L) :-
    length(M,K),
    sorted(M), % could be replaced by all_distinct(M), leads to more solutions.
    memberlist(M,L), memberlist(L,M).
+
+:-constraints(3,[2-2],G,V),
+	nl,nl,
+	write(G),
+	subscript(G,[2,1],1),nl,
+	write(G),
+	nl,nl.
+
