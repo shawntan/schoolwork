@@ -29,5 +29,14 @@ search(QueerStruct) :-
 		select_val(1,N,Col)
 	).
 select_val(1,N,Col) :-
-	(fromto(fail,C,(C;(Col=I)),Q),for(I,1,N),param(Col) do true),Q.
+	(
+		fromto(
+			fail,
+			C,
+			(C;(Col=I)),
+			Q
+		),
+			for(I,1,N),param(Col) do
+		   	true
+	),Q.
 

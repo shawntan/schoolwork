@@ -1,59 +1,47 @@
-all_cells(0,0,[]).
-all_cells(0,H,OtherCells) :- H1 is H-1,all_cells(H1,H1,OtherCells),!.
-all_cells(L,L,[(L,L)|OtherCells]) :- L1 is L-1,all_cells(L1,L,OtherCells),!.
-all_cells(L,W,[(L,W),(W,L)|OtherCells]) :- L1 is L-1,all_cells(L1,W,OtherCells),!.
+:-lib(suspend).
+solve(N,Blanks,Result):-
+	constraints(Grid),
+	search(Grid),
+	massage(Grid,Result).
 
-remove_blanks([],_,[]).
-remove_blanks([(X,Y)|Cells],Blanks,NewCells):-
-	member(X-Y,Blanks),
-	remove_blanks(Cells,Blanks,NewCells),!.
-remove_blanks([Cell|Cells],Blanks,[Cell|NewCells]) :-
-	remove_blanks(Cells,Blanks,NewCells),!.
-
-generate_cells(N,Blanks,Cells) :-
-	all_cells(N,N,AllCells),
-	sort(AllCells,SortCells),
-	remove_blanks(SortCells,Blanks,Cells).
-
-solve_cells_([],[]).
-solve_cells_([(X,Y)|Cells],[((X,Y),((X1,Y1)))|RestTiles]) :-
+constraints(N,Missing,Grid,VarList):-
+	dim(Grid,[N,N]),
+	length(Missing,M),
+	CellCount is (N*N)-M,
+	T is CellCount/2,
+	integer(T,TileCount),
+	length(VarList,CellCount),
 	(
-		(X1 is X,Y1 is Y+1);
-		(Y1 is Y,X1 is X+1)
+		multifor([I,J],1,N),param(Grid,N,Missing,VarList) do
+				(member(I-J,Missing) ->
+					subscript(Grid,[I,J],x);
+					(
+						subscript(Grid,[I,J],C),
+						member(C,VarList),
+						(J > 1 -> subscript(Grid,[I,J-1],Up);Up = edge),
+						(J < N -> subscript(Grid,[I,J+1],Down);Down = edge),
+						(I > 1 -> subscript(Grid,[I-1,J],Left);Left = edge),
+						(I < N -> subscript(Grid,[I+1,J],Right);Right = edge),
+						(
+							C $=  Up and C $\= Left and C $\= Down and C $\= Right or
+							C $\= Up and C $=  Left and C $\= Down and C $\= Right or
+							C $\= Up and C $\= Left and C $=  Down and C $\= Right or
+							C $\= Up and C $\= Left and C $\= Down and C $=  Right
+						)
+					)
+				)
 	),
-	delete((X1,Y1),Cells,RestCells),
-	solve_cells_(RestCells,RestTiles).
+	distinct(TileCount,VarList).
 
-solve_cells(N,Blanks,Results) :-
-	generate_cells(N,Blanks,Cells),
-	solve_cells_(Cells,Results).
-massage_soln(N,Cells,Result) :-
-	dim(Result,[N,N]),
-	(
-		fromto(
-			(1,Cells),
-			(I,[((X,Y),(X1,Y1))|OutCells]),
-			(J,OutCells),
-			(_,[])
-		),param(Result) do 
-			subscript(Result,[X,Y],I),
-			subscript(Result,[X1,Y1],I),
-			J is I + 1
-	).
-solve(N,Blanks,Result) :-
-	solve_cells(N,Blanks,Pairs),
-	massage_soln(N,Pairs,Arrays),
-	(foreach(X-Y,Blanks),param(Arrays) do subscript(Arrays,[X,Y],x)),
-	length(Result,N),
-	(
-		fromto(
-			(Result,1),
-			([RRow|RestRes],I),
-			(RestRes,I1),
-			([],_)
-		),param(Arrays) do 
-			subscript(Arrays,[I],ARow),
-			flatten_array(ARow,RRow),
-			I1 is I+1
-	).
-		
+memberlist([],_).
+memberlist([H|T],L) :- member(H,L), memberlist(T,L).
+
+sorted([]).
+sorted([_]).
+sorted([H1,H2|T]) :- H1 $< H2, sorted([H2|T]).
+
+distinct(K,L) :-
+   length(M,K),
+   write(M),nl,
+   sorted(M), % could be replaced by all_distinct(M), leads to more solutions.
+   memberlist(M,L), memberlist(L,M).
