@@ -14,16 +14,21 @@ solve(N,Blanks,Grid):-
 	).
 
 constraints(N,Missing,TileCount,Grid,VarList):-
-	dim(Grid,[N,N]),
 	length(Missing,M),
 	CellCount is (N*N)-M,
 	T is CellCount/2,
 	integer(T,TileCount),
 	length(VarList,CellCount),
+	dim(Grid,[N,N]),
 	(
 		multifor([I,J],1,N),param(Grid,Missing,N,VarList,TileCount),fromto(VarList,InVars,OutVars,[]),param(VarList) do
 		(
 			subscript(Grid,[I,J],C),
+			Isuc is I+1,Ipre is I-1,Jsuc is J+1,Jpre is J-1,
+			((I>1,not(member(Ipre-J,Missing))) -> subscript(Grid,[Ipre,J],L);L is -1),
+			((I<N,not(member(Isuc-J,Missing))) -> subscript(Grid,[Isuc,J],R);R is -2),
+			((J>1,not(member(I-Jpre,Missing))) -> subscript(Grid,[I,Jpre],U);U is -3),
+			((J<N,not(member(I-Jsuc,Missing))) -> subscript(Grid,[I,Jsuc],D);D is -4),
 			(member((I-J),Missing) ->
 				(
 					OutVars = InVars,
@@ -31,26 +36,33 @@ constraints(N,Missing,TileCount,Grid,VarList):-
 				);(
 					C :: 1..TileCount,
 					InVars = [C|OutVars],
-					C #= L or C #= R or C #= U or C #= D
+					C #= L or C #= R or C #= U or C #= D,
+					diff_others(I,J,Missing,Grid)
 				)
 			),
-			Isuc is I+1,Ipre is I-1,Jsuc is J+1,Jpre is J-1,
-			((I>1,not(member(Ipre-J,Missing))) -> subscript(Grid,[Ipre,J],L);L is -1),
-			((I<N,not(member(Isuc-J,Missing))) -> subscript(Grid,[Isuc,J],R);R is -2),
-			((J>1,not(member(I-Jpre,Missing))) -> subscript(Grid,[I,Jpre],U);U is -3),
-			((J<N,not(member(I-Jsuc,Missing))) -> subscript(Grid,[I,Jsuc],D);D is -4),
-			((Isuc =< N,Jsuc =< N,not(member(Isuc-Jsuc,Missing))) -> subscript(Grid,[Isuc,Jsuc],DR);DR is -1),
-			((Isuc =< N,Jpre >= 1,not(member(Isuc-Jpre,Missing))) -> subscript(Grid,[Isuc,Jpre],UR);UR is -2),
-			((Ipre >= 1,Jsuc =< N,not(member(Ipre-Jsuc,Missing))) -> subscript(Grid,[Ipre,Jsuc],DL);DL is -3),
-			((Ipre >= 1,Jpre >= 1,not(member(Ipre-Jpre,Missing))) -> subscript(Grid,[Ipre,Jpre],UL);UL is -4),
-			alldifferent([L,R,U,D]),
-			alldifferent([DR,UR,DL,UL])
+			alldifferent([L,R,U,D])
 			%L #\= R,L $\= U,L $\= D, %all different
 			%R #\= U,R $\= D,
 			%U #\= D
 		)
 	),
 	distinct(TileCount,VarList).
+
+diff_others(I,J,Missing,Grid):-
+	dim(Grid,[N,N]),
+	(
+		multifor([X,Y],1,N),param(I,J,Missing,Grid) do 
+		(
+			not(((X=:=I),(Y-J > -2,Y-J < 2));((Y=:=J),(X-I> -2,X-I < 2))) ->
+				(
+					not(member((X-Y),Missing))->
+						(subscript(Grid,[I,J],A),
+						subscript(Grid,[X,Y],B),
+						A $\= B);
+						true
+				);true
+		)
+	).
 
 search(TileCount,VarList) :-
 	search(VarList,0,first_fail,indomain,complete,[]).
