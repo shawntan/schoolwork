@@ -1,9 +1,16 @@
-:-lib(suspend).
+:-lib(ic).
 solve(N,Blanks,Grid):-
 	constraints(N,Blanks,TileCount,Grid1,VarList),
 	search(TileCount,VarList),
 	(
-		foreacharg(R,Grid1),foreach(RL,Grid) do flatten_array(R,RL)
+		foreacharg(R,Grid1),foreach(RL,Grid) do 
+		(
+			foreacharg(V,R),foreach(V1,RL) do 
+				(V = 0 ->
+					V1 = x;
+					V1 = V
+				)
+		)
 	).
 
 constraints(N,Missing,TileCount,Grid,VarList):-
@@ -16,36 +23,40 @@ constraints(N,Missing,TileCount,Grid,VarList):-
 	(
 		multifor([I,J],1,N),param(Grid,Missing,N,VarList,TileCount),fromto(VarList,InVars,OutVars,[]),param(VarList) do
 		(
+			subscript(Grid,[I,J],C),
 			(member((I-J),Missing) ->
-				OutVars = InVars,
-				subscript(Grid,[I,J],0);
 				(
-					subscript(Grid,[I,J],C),
-					InVars = [C|OutVars],
+					OutVars = InVars,
+					C is 0
+				);(
 					C :: 1..TileCount,
-					((I>1) -> L = Grid[I-1,J];L is -1),
-					((I<N) -> R = Grid[I+1,J];R is -2),
-					((J>1) -> U = Grid[I,J-1];U is -3),
-					((J<N) -> D = Grid[I,J+1];D is -4),
-					L $\= R,L $\= U,L $\= D, %all different
-					R $\= U,R $\= D,
-					U $\= D,
-					(C $= L or C $= R or C $= U or C $= D)
+					InVars = [C|OutVars],
+					C $= L or C $= R or C $= U or C $= D
 				)
-			)
+			),
+			((I>1) -> subscript(Grid,[I-1,J],L);L is -1),
+			((I<N) -> subscript(Grid,[I+1,J],R);R is -2),
+			((J>1) -> subscript(Grid,[I,J-1],U);U is -3),
+			((J<N) -> subscript(Grid,[I,J+1],D);D is -4),
+			alldifferent([L,R,U,D])
+			%L $\= R,L $\= U,L $\= D, %all different
+			%R $\= U,R $\= D,
+			%U $\= D
 		)
 	),
 	distinct(TileCount,VarList).
 
 search(TileCount,VarList) :-
 	(
-		foreach(V,VarList),param(TileCount) do
+		foreach(V,VarList),param(TileCount,VarList) do
 		(
 			not(ground(V)) ->
-				select_val(1,TileCount,V);
+				select_val(1,TileCount,V),
+				write(VarList),nl;
 				true
 		)
 	).
+
 
 select_val(1,N,Col) :-
 	(
@@ -58,6 +69,10 @@ sus_member(E,[H|T],C):- sus_member(E,T,C or (E $= H)).
 
 memberlist([],_).
 memberlist([H|T],L) :- sus_member(H,L), memberlist(T,L).
+
+sorted([]).
+sorted([_]).
+sorted([H1,H2|T]) :- H1 $< H2, sorted([H2|T]).
 
 distinct(K,L) :-
 	length(M,K),
