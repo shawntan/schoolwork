@@ -27,35 +27,43 @@ constraints(N,Missing,TileCount,Grid,VarList):-
 			(member((I-J),Missing) ->
 				(
 					OutVars = InVars,
-					C is 0
+					C = x
 				);(
 					C :: 1..TileCount,
 					InVars = [C|OutVars],
-					C $= L or C $= R or C $= U or C $= D
+					C #= L or C #= R or C #= U or C #= D
 				)
 			),
-			((I>1) -> subscript(Grid,[I-1,J],L);L is -1),
-			((I<N) -> subscript(Grid,[I+1,J],R);R is -2),
-			((J>1) -> subscript(Grid,[I,J-1],U);U is -3),
-			((J<N) -> subscript(Grid,[I,J+1],D);D is -4),
-			alldifferent([L,R,U,D])
-			%L $\= R,L $\= U,L $\= D, %all different
-			%R $\= U,R $\= D,
-			%U $\= D
+			Isuc is I+1,Ipre is I-1,Jsuc is J+1,Jpre is J-1,
+			((I>1,not(member(Ipre-J,Missing))) -> subscript(Grid,[Ipre,J],L);L is -1),
+			((I<N,not(member(Isuc-J,Missing))) -> subscript(Grid,[Isuc,J],R);R is -2),
+			((J>1,not(member(I-Jpre,Missing))) -> subscript(Grid,[I,Jpre],U);U is -3),
+			((J<N,not(member(I-Jsuc,Missing))) -> subscript(Grid,[I,Jsuc],D);D is -4),
+			((Isuc =< N,Jsuc =< N,not(member(Isuc-Jsuc,Missing))) -> subscript(Grid,[Isuc,Jsuc],DR);DR is -1),
+			((Isuc =< N,Jpre >= 1,not(member(Isuc-Jpre,Missing))) -> subscript(Grid,[Isuc,Jpre],UR);UR is -2),
+			((Ipre >= 1,Jsuc =< N,not(member(Ipre-Jsuc,Missing))) -> subscript(Grid,[Ipre,Jsuc],DL);DL is -3),
+			((Ipre >= 1,Jpre >= 1,not(member(Ipre-Jpre,Missing))) -> subscript(Grid,[Ipre,Jpre],UL);UL is -4),
+			alldifferent([L,R,U,D]),
+			alldifferent([DR,UR,DL,UL])
+			%L #\= R,L $\= U,L $\= D, %all different
+			%R #\= U,R $\= D,
+			%U #\= D
 		)
 	),
 	distinct(TileCount,VarList).
 
 search(TileCount,VarList) :-
-	(
-		foreach(V,VarList),param(TileCount,VarList) do
-		(
-			not(ground(V)) ->
-				select_val(1,TileCount,V),
-				write(VarList),nl;
-				true
-		)
-	).
+	search(VarList,0,first_fail,indomain,complete,[]).
+
+%search(TileCount,VarList) :-
+%	(
+%		foreach(V,VarList),param(TileCount,VarList) do
+%		(
+%			not(ground(V)) ->
+%				select_val(1,TileCount,V),
+%				true
+%		)
+%	).
 
 
 select_val(1,N,Col) :-
@@ -65,14 +73,14 @@ select_val(1,N,Col) :-
 
 sus_member(E,L) :- sus_member(E,L,0).
 sus_member(_,[],C):- C.
-sus_member(E,[H|T],C):- sus_member(E,T,C or (E $= H)).
+sus_member(E,[H|T],C):- sus_member(E,T,C or (E #= H)).
 
 memberlist([],_).
 memberlist([H|T],L) :- sus_member(H,L), memberlist(T,L).
 
 sorted([]).
 sorted([_]).
-sorted([H1,H2|T]) :- H1 $< H2, sorted([H2|T]).
+sorted([H1,H2|T]) :- H1 #< H2, sorted([H2|T]).
 
 distinct(K,L) :-
 	length(M,K),
