@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #define DEFAULT_LINES (10)
-#define CHUNK_SIZE 16
+#define CHUNK_SIZE 252
 void reverse_line(int); // prototype for your function
 void startprog(void);
 void endprog(void);
@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
 	if (argc == 3 && !strcmp(argv[1], "-n"))
 		n = atoi(argv[2]);
 	else if (argc == 1) n = DEFAULT_LINES;
-	else {
+	else
+	{
 		fprintf(stderr, "Usage: %s [-n lines]\n", argv[0]);
 		exit(1); // command line error
 	}
@@ -26,7 +27,8 @@ int main(int argc, char *argv[])
 	exit(0); // no errors
 }
 
-struct buf_chunk {
+struct buf_chunk
+{
 	char buf[CHUNK_SIZE];
 	struct buf_chunk *next;
 };
@@ -97,7 +99,8 @@ void reverse_line(int n)
 	char c;
 	stack[ptr] = new_buffer();
 	set_new_head(stack[ptr]);
-	while((c=getchar()) != EOF) {
+	while((c=getchar()) != EOF)
+	{
 		if(c == '\n')
 		{
 			ptr = (ptr + 1)%n;
