@@ -3,10 +3,23 @@
 #include <stdlib.h>
 #include <malloc.h>
 #define DEFAULT_LINES (10)
-#define CHUNK_SIZE 252
+#define INIT_SIZE 32
+#define GROW_FACTOR 2
 void reverse_line(int); // prototype for your function
 void startprog(void);
 void endprog(void);
+
+int roundoff(unsigned int len)
+{
+	len--;
+	len |= len >> 1;
+	len |= len >> 2;
+	len |= len >> 4;
+	len |= len >> 8;
+	len |= len >> 16;
+	len++;
+	return len;
+}
 
 int main(int argc, char *argv[])
 {
@@ -27,74 +40,71 @@ int main(int argc, char *argv[])
 	exit(0); // no errors
 }
 
-struct buf_chunk
+typedef struct
 {
-	char buf[CHUNK_SIZE];
-	struct buf_chunk *next;
-};
-typedef struct buf_chunk buffer_c;
-
-buffer_c *curr_buffer;
-unsigned char offset;
+	char *buf;
+	unsigned int len;
+} buffer_c;
 
 buffer_c* new_buffer()
 {
-	buffer_c *tmp = (buffer_c *)malloc(sizeof(buffer_c));
-	tmp->next = NULL;
-	return tmp;
+	char *buf = (char *)malloc(INIT_SIZE);
+	buffer_c *b = (buffer_c *)malloc(sizeof(buffer_c));
+	printf("New Allocate %p\n",buf);
+	b->buf = buf;
+	b->len = INIT_SIZE;
+	return b;
 }
-void trunc_bufchain(buffer_c *last)
+void increase_buffer(buffer_c* b)
 {
-	buffer_c *curr;
-	buffer_c *tmp;
-	curr = last->next;
-	last->next = NULL;
-	while(curr!=NULL) {
-		tmp = curr->next;
-		free(curr);
-		curr = tmp;
-	}
+	char *buf = (char *)malloc(GROW_FACTOR * (b->len));
+	printf("Reallocate %p\n",buf);
+	memcpy(buf,b->buf,b->len);
+	free(b->buf);
+	b->buf = buf;
+	b->len = GROW_FACTOR*b->len;
 }
-void set_new_head(buffer_c *head)
+
+buffer_c *curr_buf;
+unsigned int curr_ptr=0; 
+void truncate_buffer()
 {
-	if(curr_buffer) trunc_bufchain(curr_buffer);
-	curr_buffer = head;
-	offset = 0;
+	unsigned int size = roundoff(curr_ptr+1);
+	if(curr_buf->len <= size) return;
+	printf("Truncating..");
+	char *buf = (char *)malloc(size);
+	printf("Allocate %p\n",buf);
+	memcpy(buf,curr_buf->buf,curr_ptr+1);
+	printf("Freeing %p\n",curr_buf->buf);
+	free(curr_buf->buf);
+	printf("Freed\n");
+	curr_buf->buf = buf;
+	curr_buf->len = size;
+	printf("%d\n",curr_ptr+1);
+	printf("%d\n",size);
+}
+void put_buffer(buffer_c* b)
+{
+	printf("%s",b->buf);
 }
 void read_char(char c)
 {
-	curr_buffer->buf[offset++] = c;
-	if (offset==CHUNK_SIZE)
-	{
-		if(curr_buffer->next == NULL) curr_buffer->next = new_buffer();
-		curr_buffer = curr_buffer->next;
-		offset=0;
-	}
-	curr_buffer->buf[offset] = '\0';
+	curr_buf->buf[curr_ptr++] = c;
+	if(curr_ptr >= curr_buf->len) increase_buffer(curr_buf);
+	curr_buf->buf[curr_ptr] = '\0';
+	//printf("%s\n",curr_buf->buf);
 }
-void put_buffer(buffer_c *head)
+void set_new_head(buffer_c *b)
 {
-	buffer_c *cur;
-	cur = head;
-	int i;
-	do {
-		i=0;
-		while(i < CHUNK_SIZE)
-		{
-			putchar(cur->buf[i++]);
-			if(i < CHUNK_SIZE && cur->buf[i] == '\0') return;
-		}
-		cur = cur->next;
-	} while(cur);
+	curr_buf = b;
+	curr_ptr = 0;
 }
-
-
 
 void reverse_line(int n)
 {
-	buffer_c **stack = (buffer_c **)malloc(sizeof(buffer_c*)*n);
+	buffer_c *stack[n];
 	int i;
-	for(i=0;i<n;i++) stack[i] = NULL;
+	for(i=0;i<n;i++) stack[i] = NULL; //fillall with null
 	int ptr = 0,count=0;
 	char c;
 	stack[ptr] = new_buffer();
@@ -103,6 +113,7 @@ void reverse_line(int n)
 	{
 		if(c == '\n')
 		{
+			truncate_buffer();
 			ptr = (ptr + 1)%n;
 			if(stack[ptr]==NULL) stack[ptr] = new_buffer();
 			set_new_head(stack[ptr]);
@@ -110,11 +121,11 @@ void reverse_line(int n)
 		}
 		else read_char(c);
 	}
-	while(count--) {
+	while(count--)
+	{
 		ptr = (n + ptr-1)%n;
 		put_buffer(stack[ptr]);
 		putchar('\n');
 	}
 	return;
 }
-
