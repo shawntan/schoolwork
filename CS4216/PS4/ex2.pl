@@ -1,39 +1,58 @@
 :-lib(suspend).
-%layout(Tree,L,M,LaidTree) :-
-traverse(Leaf,Depth,L,_,NewLeaf,X,Y,_) :-
-	atom(Leaf),
-	Y is Depth*L,
-	NewLeaf =.. [Leaf,X,Y].
-traverse(Tree,Depth,L,M,NewTree,X,Y,Width) :-
-	Tree =.. [Node|Params],
-	length(Params,ParamLen),
-	length(NewParams,ParamLen),
-	length(XCoords,ParamLen),
-	Depth1 is Depth + 1,
+:-lib(branch_and_bound).
+constraints(L,M,Tree,NewTree,Width) :-
+	traverse(0,L,Tree,NewTree,VarList),
+	x_constraints(VarList,M,Width).
+x_constraints(XList,M,Width) :-
 	(
-		foreach(Sub,Params),
-		foreach(NewPar,NewParams),
-		foreach(X,XCoords),
-		param(L,M,Depth1,Width) do
-			traverse(Sub,Depth1,L,M,NewPar,X,Y,Width)
-	),
-	XCoords = [FirstChildX|_],
-	append(_,[LastChildX],XCoords),
-	X $= FirstChildX + (LastChildX - FirstChildX)/2,
-	x_constraints(XCoords,M,Width),
+		foreach([H|T],XList),param(M,Width) do
+		H $>=0,
+		(
+			fromto(
+				(H,T),
+				(P,[C|Rest]),
+				(C,Rest),
+				(Last,[])
+			),param(M) do
+			C $>= P + M
+		),
+		Last $=< Width
+	).
+traverse(Depth,L,Leaf,NewLeaf,[[X]]) :- atom(Leaf),Y is Depth*L, NewLeaf =.. [Leaf,X,Y].
+traverse(Depth,L,Tree,NewTree,XList) :-
+	Tree =.. [Node|Children],
+	Depth1 is Depth+1,
 	Y is Depth*L,
-	append(NewParams,[X,Y],NewParams1),
-	NewTree =.. [Node|NewParams1].
-
-x_constraints([H|T],M,Width) :-
-	H $>= 0,
 	(
 		fromto(
-			(H,T),
-			(V1,[V2|RestVars]),
-			(V2,RestVars),
-			(Last,[])
-		),param(M) do
-			V2 $>= V1 + M
+			(Children,[],Args),
+			([C|T],VarIn,[Arg|ArgOut]),
+			(T,VarOut,ArgOut),
+			([],VarList,[])
+		),param(Depth1,L) do
+		traverse(Depth1,L,C,Arg,Vs),
+		combine_list(VarIn,Vs,VarOut)
 	),
-	Last $=< Width.
+	append(Args,[X,Y],NewArgs),
+	align_center(X,VarList),
+	NewTree =.. [Node|NewArgs],
+	XList = [[X]|VarList].
+align_center(X,Desc):-
+	Desc = [Children|_],
+	Children = [First|_],
+	append(_,[Last],Children),
+	X $= First + (Last-First)/2.
+
+combine_list(Lists1,Lists2,CombList) :-
+	(
+		fromto(
+			(Lists1,Lists2,CombList),
+			(In1,In2,[Comb|OutRes]),
+			(Out1,Out2,OutRes),
+			([],[],[])
+		) do
+		(In1 = [] -> I1 = [],Out1=[];In1 = [I1|Out1]),
+		(In2 = [] -> I2 = [],Out2=[];In2 = [I2|Out2]),
+		append(I1,I2,Comb)
+	).
+
