@@ -2,6 +2,7 @@
 import nltk,re,os,sys,getopt
 from nltk.stem.porter import PorterStemmer
 from writepostings import *
+from itertools import izip
 DIR_DELIM = '/'
 non_alphanum = re.compile('\W') 
 number = re.compile('[0-9]')
@@ -14,19 +15,19 @@ def preprocess(word):
 	w = w.lower()
 	if w in stop_words: return
 	w = stemmer.stem_word(w)
-#	w = number.sub("",w)
+	w = number.sub("",w)
 	return w
-
 
 def index_file(directory,filename,post_list):
 	f = open(directory + DIR_DELIM + filename,'r')
-	words = set()
-	for line in f:
-		for w in splitter.split(line):
-			w = preprocess(w)
-			if w:
-				words.add(w)
-	for word in words:post_list.add(word,filename.split(DIR_DELIM)[-1])
+	words = splitter.split(f.read())
+	words.reverse()
+	index = len(words)-1
+	for w in words:
+		w = preprocess(w)
+		if w:
+			post_list.add(w,index,filename.split(DIR_DELIM)[-1])
+		index -= 1
 
 def index_dir(directory,post_list):
 	file_list = os.listdir(directory)
