@@ -1,10 +1,10 @@
 import os
+from dictionary import *
 DELIM = ' '
 POSTINGS_FILE	= None
 DICTIONARY_FILE	= None
 CORPUS_DIR		= None
-dictionary		= {}
-word_freq		= {}
+dictionary		= None
 doc_list 		= None
 
 def initialise(post_file,dict_file):
@@ -13,15 +13,15 @@ def initialise(post_file,dict_file):
 	DICTIONARY_FILE = dict_file
 	load_dict()
 
+
+"""
+Take note of total filenmame list: You just deleted it.
+"""
 def load_dict():
 	#print "Loading dictionary"
-	global doc_list,word_freq,dictionary
-	FILE = open(DICTIONARY_FILE,'r')
-	doc_list = FILE.readline().split()
-	for line in FILE:
-		vals = line.split()
-		word_freq[vals[0]] = int(vals[1])
-		dictionary[vals[0]] = int(vals[2])
+	global dictionary,DICTIONARY_FILE
+	dictionary = Dictionary()
+	dictionary.read(DICTIONARY_FILE)
 
 class AllPostings():
 	complement = False

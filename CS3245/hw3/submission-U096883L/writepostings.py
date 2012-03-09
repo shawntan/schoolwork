@@ -24,11 +24,11 @@ class WritePostings():
 		self.filename = POSTINGS_FILE 
 		self.FILE = open(POSTINGS_FILE,'w')
 		self.dic_file = DICTIONARY_FILE
-		self.dic = {} 
-		self.word_freq = {}	
+		self.dic = Dictionary()
 
 	def add(self,word,file_id):
 		pos = self.FILE.tell()
+		"""
 		if word not in self.dic:
 			self.word_freq[word] = 0
 			prev_pos = str(-1)
@@ -37,6 +37,8 @@ class WritePostings():
 
 		self.dic[word] = pos
 		self.word_freq[word] += 1
+		"""
+		prev_pos = str(self.dic.set_ptr(pos))
 
 		word = word + (LEN_WORD - len(word))*DELIM
 		file_id = file_id + (LEN_FILE_ID - len(file_id))*DELIM
@@ -53,19 +55,7 @@ class WritePostings():
 		)
 
 	def save_dic(self):
-		f = open(self.dic_file,'w')
-		doc_list = os.listdir(CORPUS_DIR)
-		doc_list.sort()
-		f.write(' '.join(doc_list))
-		f.write('\n')
-		for key in self.dic:
-			f.write(key)
-			f.write(DELIM)
-			f.write(str(self.word_freq[key]))
-			f.write(DELIM)
-			f.write(str(self.dic[key]))
-			f.write('\n')
-		f.close()
+		self.dic.write(self.dic_file)
 
 	def write_skip_pointers_and_close(self):
 		for key in self.dic:
@@ -74,7 +64,8 @@ class WritePostings():
 			if postcount > MIN_COUNT:
 				prev_ptr = None
 				count = 0
-				write_loc = self.dic[key]+ SKIP_PTR_OFFSET
+				(_,freq,addr),_,_ = self.dic[key]
+				write_loc = addr + SKIP_PTR_OFFSET
 				for word,file_id,ptr in self.postings(key):
 					count += 1
 					if count == skipcount+1:
@@ -90,8 +81,8 @@ class WritePostings():
 
 	def postings(self,word):
 		fil = open(self.filename,'r')
-		if word in self.dic:
-			addr = self.dic[word]
+		(_,freq,addr),_,_ = self.dic[word]
+		if freq:
 			while(addr != -1):
 				tup = self.readtuple(fil,addr)
 				addr = int(tup[2])
