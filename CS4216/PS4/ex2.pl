@@ -1,8 +1,17 @@
-:-lib(suspend).
+:-lib(ic).
 :-lib(branch_and_bound).
-constraints(L,M,Tree,NewTree,Width) :-
+constraints(L,M,Tree,NewTree,Width,VarList) :-
 	traverse(0,L,Tree,NewTree,VarList),
-	x_constraints(VarList,M,Width).
+	x_constraints(VarList,M,Width),
+	term_variables(VarList,Vars),
+	ic:max(Vars,Width),
+	search(Vars).
+search([]) :- !.
+search(Vars):-
+	delete(X,Vars,Rem),
+	get_min(X,X),
+	write(Vars),nl,
+	search(Rem).
 x_constraints(XList,M,Width) :-
 	(
 		foreach([H|T],XList),param(M,Width) do
