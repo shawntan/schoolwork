@@ -32,6 +32,8 @@ class AllPostings():
 		return ((None,i) for i in doc_list)
 	def estimate_size(self):
 		return self.est_size
+
+
 class EmpPostings(AllPostings):
 	def __init__(self):
 		self.word = '~'
@@ -40,6 +42,28 @@ class EmpPostings(AllPostings):
 		return (i for i in [])
 	def estimate_size(self):
 		return 0
+
+
+
+class PhrasePostings(AllPostings):
+
+	def __init__(self,termlist):
+		self.terms = termlist
+		termlist = iter(termlist)
+		self.merged = Postings(termlist.next())
+		self.size = self.merged.estimate_size()
+		self.postings = [self.merged]
+		for term in termlist:
+			p = Postings(term)
+			self.merged = merge(self.merged,p,True,False,False,lambda x,y: x-y+1)
+			self.size = min(self.size,p.estimate_size())
+			self.postings.append(p)
+	def __repr__(self):
+		return "\"%s\""%(' '.join(repr(i) for i in self.postings))
+	def __iter__(self):
+		return self.merged
+	def estimate_size(self):
+		return self.size
 
 
 class MergePostings(AllPostings):
@@ -72,7 +96,6 @@ class MergePostings(AllPostings):
 			yeq = True if not post1.complement and not post2.complement else False
 			y1 = post2.complement if not yeq else False
 			y2 = post1.complement if not yeq else False
-			
 			if not (yeq,y1,y2) == (False,False,False): self.merged = merge(post1,post2,yeq,y1,y2)
 			else: self.merged = merge(AllPostings(),merge(post1,post2,True,True,True),False,True,False)
 		elif op == 'OR':
@@ -100,27 +123,29 @@ class MergePostings(AllPostings):
 
 class Postings(MergePostings):
 	def __init__(self,word):
-		global dictionary,word_freq,POSTINGS_FILE
+		global dictionary,POSTINGS_FILE
 		self.FILE = open(POSTINGS_FILE,'r')
 		self.dic_file = dictionary 
-		self.ptr = dictionary[word]
-		self.est_size = word_freq[word]
+		(_,self.est_size,self.ptr),_,_ = dictionary[word]
 		self.word = word
 	def __iter__(self):
 		if self.complement:
 			return merge(AllPostings(),self,False,True,False)
 		else:
 			return self
+
 	def next(self):
 		return self.skip(self.ptr)
+
 	def skip(self,addr):
 		if(self.ptr != -1):
 			tup = self.readtuple(addr)
-			self.ptr = int(tup[2])
+			self.ptr = int(tup[3])
 			return tup
 		else:
 			self.FILE.close()
 			raise StopIteration
+
 	def readtuple(self,addr):
 		self.FILE.seek(addr)
 		line =  self.FILE.readline()
@@ -132,44 +157,58 @@ class Postings(MergePostings):
 		return self.est_size if not self.complement else len(doc_list) - self.est_size
 
 
-def merge(post1,post2,eq_yield,post1_yield,post2_yield):
+def merge(post1,post2,eq_yield,post1_yield,post2_yield,fun=lambda x,y:0):
 	"""
 	General merge method with parameters to cater for:
-	 -	AND = True,False,False
-	 -	OR  = True,True,True
-	 -	AND NOT = False,True,False
-	 			= False,False,True
+	-	AND = True,False,False
+	-	OR  = True,True,True
+	-	AND NOT = False,True,False
+				= False,False,True
 	"""
 	#print post1,post2,eq_yield,post1_yield,post2_yield
-	post1_skip,post2_skip = 'skip' in dir(post1),'skip' in dir(post2)
+	post1_skip,post2_skip = 'skip' in dir(post1), 'skip' in dir(post2)
 	post1,post2 = iter(post1) if not post1_skip else post1, iter(post2) if not post2_skip else post2
 	doc1,doc2 = post1.next(), post2.next()
 	try:
 		while True:
-			if doc1[1] == doc2[1]:
-				if eq_yield: yield doc1
+			#print doc1,doc2,fun(int(doc1[1]),int(doc2[1]))
+			if doc_comp(doc1[2],doc1[1],doc2[2],doc2[1],fun)==0:
+				if eq_yield: yield doc2 #important to yield doc2. for phrasal queries
 				doc1,doc2 = None,None
 				doc1,doc2 = post1.next(),post2.next()
 			else:
-				if post1_skip and len(doc1) > 3 and doc1[3] < doc2[1]:
-					doc1 = post1.skip(int(doc1[4]))
-				elif post2_skip and len(doc2) > 3 and doc1[1] > doc2[3]:
-					doc2 = post2.skip(int(doc2[4]))
-				elif doc1[1] < doc2[1]:
-					if post1_yield: yield doc1 
+				if   post1_skip and len(doc1) > 4 and doc_comp(doc1[5],doc1[4],doc2[2],doc2[1],fun) < 0:
+					doc1 = post1.skip(int(doc1[6]))
+				elif post2_skip and len(doc2) > 4 and doc_comp(doc2[5],doc2[4],doc1[2],doc1[1],fun) < 0:
+					doc2 = post2.skip(int(doc2[6]))
+				elif doc_comp(doc1[2],doc1[1],doc2[2],doc2[1],fun) < 0:
+					if post1_yield: yield doc1
 					doc1 = None
 					doc1 = post1.next()
-				elif doc1[1] > doc2[1]:
+				elif doc_comp(doc1[2],doc1[1],doc2[2],doc2[1],fun) > 0:
 					if post2_yield: yield doc2
 					doc2 = None
 					doc2 = post2.next()
 	except StopIteration:
 		pass
 	#Either post1 or post2 has no more documents, so should be ordered
-
 	if post1_yield:
-		if doc1:yield doc1
+		if doc1: yield doc1
 		for v in post1: yield v
 	if post2_yield:
-		if doc2:yield doc2
+		if doc2: yield doc2
 		for v in post2: yield v
+
+def doc_comp(doc1,tpos1,doc2,tpos2,term_comp):
+	tpos1,tpos2 = int(tpos1),int(tpos2)
+	if doc1 == doc2:
+		return term_comp(tpos1,tpos2)
+	elif doc1 < doc2: return -1
+	elif doc2 < doc1: return  1
+
+
+if __name__ == "__main__":
+	initialise('postings.txt','dictionary.txt')
+	p = PhrasePostings("donald trump said".split())
+	for i in p:
+		print i
