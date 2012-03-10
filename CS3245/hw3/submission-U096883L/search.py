@@ -3,15 +3,17 @@ from postings import *
 import re,sys,getopt
 def parse(query):
 	query = query.strip()
-	query = re.sub("\("," ( ",query)
-	query = re.sub("\)"," ) ",query)
+	query = re.sub("\("," ( " ,query)
+	query = re.sub("\)"," ) " ,query)
+	query = re.sub("\""," \" ",query)
 	return parse_tokens(query.split())
 prec = {
-	'AND': 20,
-	'OR':20,
-	'NOT':30,
-	'(':100,
-	'^':200,
+	'AND'	: 20,
+	'OR'	: 20,
+	'NOT'	: 30,
+	'('		: 100,
+	'\"'	: 100,
+	'^'		: 200,
 }
 right = set(['NOT'])
 
@@ -41,8 +43,16 @@ def parse_tokens(tokens):
 	"""
 	output = []
 	op_stack = []
+	phrasal = []
 	for tok in tokens:
-		if tok == ')':
+		print output,op_stack,tok
+		if tok == "\"":
+			if op_stack and op_stack[-1] == "\"":
+				output.append(PhrasePostings(phrasal))
+				phrasal = []
+				op_stack.pop()
+			else: op_stack.append(tok)
+		elif tok == ')':
 			while op_stack[-1] != '(':apply_op(op_stack,output)
 			op_stack.pop()
 		elif tok in prec:
@@ -54,7 +64,10 @@ def parse_tokens(tokens):
 					apply_op(op_stack,output)
 			op_stack.append(tok)
 		else:
-			output.append(process_token(tok))
+			if op_stack[-1] == '\"':
+				phrasal.append(preprocess(tok))
+			else:
+				output.append(process_token(tok))
 	while op_stack: apply_op(op_stack,output)
 	return output[0]
 if __name__=='__main__':
@@ -74,7 +87,7 @@ if __name__=='__main__':
 			except Exception:
 				output_file.write('\n')
 	except KeyError:
-		print "Key in parameters -d -p -q -o"
+		print 'Key in parameters -d -p -q -o'
 	"""
 	for i in parse("billion AND dollar OR bill"):
 		print i

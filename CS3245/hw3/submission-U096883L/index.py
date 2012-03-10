@@ -45,4 +45,4 @@ if __name__ == "__main__":
 		index_dir(params['-i'],post_list)
 		post_list.write_skip_pointers_and_close()
 	except KeyError:
-		print "Key in parameters -i -d -p"
+		pass
