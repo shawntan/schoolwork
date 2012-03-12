@@ -13,14 +13,38 @@ _likely_ to be relevant. This would be a cost saving compared to
 indexing all of the stopwords just to enable using stopwords in
 phrasal queries.
 
-2.
-Before
-550535
+2. My implementation of dictionary as a string uses pointers
+written in plain text. Many of these are longer than 4 bytes and
+as such, the resulting size of the "compressed" dictionary is
+larger than the original. Here are the original values of the 
+dictionary.txt files in bytes.
 
-After
-476589
+Before "compression"	After "compression"
+510225					691801
+
+Since each of the files have 28073 entries, and there are 172727
+characters in the dictionary as a string, then there are an
+average of 6.152 characters per word. This means that, assuming
+we use 4 bytes per pointer, we can arrive at the actual
+compressed size of the dictionary from the original by:
+
+	 Original Size + No. of Lines * (4 - 6.152)
+
+This would give us about 449809.752 as the new size of the
+dictionary. Using these estimates, we can comeup with a table of
+estimated dictionary sizes given different types of compression:
 
 
+							Size		delta %		T%
+(a) Original				510225		
+(b) Dictionary as String	449810		11.8		11.8
+(c) Blocking				365571		18.7		28.4
+
+Here, the size of the dictionary using blocking was computed by
+subtracting the size of all the terms put together (172727) by
+the size of the original dictionary (510225), and then adding
+the size of new pointers: multiplying the number of entries
+with pointers (floor(28073/4)), by 4. This gives 365571.
 
 3. Having already implemented a prefix tree for the
 dictionary, I would traverse down the dictionary with the

@@ -17,6 +17,10 @@ def initialise(corpus,postings,dictionary):
 	DICTIONARY_FILE = dictionary
 	CORPUS_DIR = corpus
 
+def write_doclist(f):
+	doclist = os.listdir(CORPUS_DIR)
+	doclist.sort()
+	f.write(' '.join(doclist)+'\n')
 
 class WritePostings():
 	"""
@@ -25,6 +29,7 @@ class WritePostings():
 	def __init__(self):
 		self.filename = POSTINGS_FILE 
 		self.FILE = open(POSTINGS_FILE,'w')
+		write_doclist(self.FILE)
 		self.dic_file = DICTIONARY_FILE
 		self.dic = Dictionary()
 

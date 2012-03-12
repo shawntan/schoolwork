@@ -11,12 +11,15 @@ def initialise(post_file,dict_file):
 	global POSTINGS_FILE,DICTIONARY_FILE
 	POSTINGS_FILE = post_file
 	DICTIONARY_FILE = dict_file
+	load_doclist()
 	load_dict()
 
+def load_doclist():
+	global POSTINGS_FILE,doc_list
+	f = open(POSTINGS_FILE,'r')
+	doc_list = f.readline().split()
+	f.close()
 
-"""
-Take note of total filenmame list: You just deleted it.
-"""
 def load_dict():
 	#print "Loading dictionary"
 	global dictionary,DICTIONARY_FILE

@@ -45,7 +45,6 @@ def parse_tokens(tokens):
 	op_stack = []
 	phrasal = []
 	for tok in tokens:
-		print output,op_stack,tok
 		if tok == "\"":
 			if op_stack and op_stack[-1] == "\"":
 				output.append(PhrasePostings(phrasal))
@@ -64,7 +63,7 @@ def parse_tokens(tokens):
 					apply_op(op_stack,output)
 			op_stack.append(tok)
 		else:
-			if op_stack[-1] == '\"':
+			if op_stack and op_stack[-1] == '\"':
 				phrasal.append(preprocess(tok))
 			else:
 				output.append(process_token(tok))
@@ -79,12 +78,19 @@ if __name__=='__main__':
 		initialise(params['-p'],params['-d'])
 		all_postings = AllPostings()
 		output_file = open(params['-o'],'w')
+		prev = None
 		for query in open(params['-q'],'r'):
 			try:
-				res = [int(q[1]) for q in parse(query)]
+				res = []
+				for q in parse(query):
+					if prev != q[2]:
+						res.append(int(q[2]))
+						prev = q[2]
 				res.sort()
-				output_file.write(' '.join(str(i) for i in res) + '\n')
-			except Exception:
+				output_file.write(' '.join(str(i) for i in res))
+			except Exception as e:
+				print e
+			finally:
 				output_file.write('\n')
 	except KeyError:
 		print 'Key in parameters -d -p -q -o'
