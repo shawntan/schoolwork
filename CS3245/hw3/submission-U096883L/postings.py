@@ -32,7 +32,7 @@ class AllPostings():
 		self.word = '*'
 		self.est_size = len(doc_list)
 	def __iter__(self):
-		return ((None,i) for i in doc_list)
+		return ((None,0,i) for i in doc_list)
 	def estimate_size(self):
 		return self.est_size
 
