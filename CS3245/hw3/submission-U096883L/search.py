@@ -92,4 +92,3 @@ if __name__=='__main__':
 	for i in parse("billion AND dollar OR bill"):
 		print i
 	"""
-

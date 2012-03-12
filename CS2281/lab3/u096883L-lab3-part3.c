@@ -5,6 +5,12 @@
 #define DEFAULT_LINES (10)
 #define INIT_SIZE 32
 #define GROW_FACTOR 2
+
+/*
+ * Shawn Tan
+ * shawn.tan@nus.edu.sg
+ * U096883L
+ */
 void reverse_line(int); // prototype for your function
 void startprog(void);
 void endprog(void);
@@ -50,7 +56,6 @@ buffer_c* new_buffer()
 {
 	char *buf = (char *)malloc(INIT_SIZE);
 	buffer_c *b = (buffer_c *)malloc(sizeof(buffer_c));
-	printf("New Allocate %p\n",buf);
 	b->buf = buf;
 	b->len = INIT_SIZE;
 	return b;
@@ -58,7 +63,6 @@ buffer_c* new_buffer()
 void increase_buffer(buffer_c* b)
 {
 	char *buf = (char *)malloc(GROW_FACTOR * (b->len));
-	printf("Reallocate %p\n",buf);
 	memcpy(buf,b->buf,b->len);
 	free(b->buf);
 	b->buf = buf;
@@ -71,17 +75,11 @@ void truncate_buffer()
 {
 	unsigned int size = roundoff(curr_ptr+1);
 	if(curr_buf->len <= size) return;
-	printf("Truncating..");
 	char *buf = (char *)malloc(size);
-	printf("Allocate %p\n",buf);
 	memcpy(buf,curr_buf->buf,curr_ptr+1);
-	printf("Freeing %p\n",curr_buf->buf);
 	free(curr_buf->buf);
-	printf("Freed\n");
 	curr_buf->buf = buf;
 	curr_buf->len = size;
-	printf("%d\n",curr_ptr+1);
-	printf("%d\n",size);
 }
 void put_buffer(buffer_c* b)
 {

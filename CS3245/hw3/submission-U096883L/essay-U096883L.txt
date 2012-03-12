@@ -1,0 +1,38 @@
+1. We can continue to exclude stopwords during indexing, and
+then treat stopwords as 'invisible' words during search. For
+example, when searching "national university of singapore", the
+search would instead be for:
+
+("national",x) AND ("university",x+1) AND ("singapore",x+3)
+
+Where x is the positon for the term "national" within the
+document.
+
+This way, no extra space would be used, and results are
+_likely_ to be relevant. This would be a cost saving compared to
+indexing all of the stopwords just to enable using stopwords in
+phrasal queries.
+
+2.
+Before
+550535
+
+After
+476589
+
+
+
+3. Having already implemented a prefix tree for the
+dictionary, I would traverse down the dictionary with the
+characters a,u,t,o,m,a,t. An 'OR' operation between the 
+leaves of this sub-tree would then give us our result.
+
+4. I would have to enumerate through every item in the hash and
+check if the item begins with "automat". Using a prefix tree
+would be a more efficient search strategy, since using a hash
+table would require linear time in the dictionary size, while
+using a prefix tree, the lookup will be linear in the size of
+the search string.
+
+I would not recommend this data structure over a tree
+implementation.
