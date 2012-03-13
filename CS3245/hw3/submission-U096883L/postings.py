@@ -64,7 +64,11 @@ class PhrasePostings(AllPostings):
 	def __repr__(self):
 		return "\"%s\""%(' '.join(repr(i) for i in self.postings))
 	def __iter__(self):
-		return self.merged
+		prev = None
+		for i in self.merged:
+			if i[2] != prev:
+				yield i
+				prev = i[2]
 	def estimate_size(self):
 		return self.size
 
@@ -131,6 +135,7 @@ class Postings(MergePostings):
 		self.dic_file = dictionary 
 		(_,self.est_size,self.ptr),_,_ = dictionary[word]
 		self.word = word
+		self.prev = None
 	def __iter__(self):
 		if self.complement:
 			return merge(AllPostings(),self,False,True,False)
@@ -138,7 +143,11 @@ class Postings(MergePostings):
 			return self
 
 	def next(self):
-		return self.skip(self.ptr)
+		tup = self.skip(self.ptr)
+		while self.prev == tup[2]:
+			tup = self.skip(self.ptr)
+		self.prev = tup[2]
+		return tup
 
 	def skip(self,addr):
 		if(self.ptr != -1):

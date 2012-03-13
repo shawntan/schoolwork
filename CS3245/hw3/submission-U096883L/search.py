@@ -78,10 +78,10 @@ if __name__=='__main__':
 		initialise(params['-p'],params['-d'])
 		all_postings = AllPostings()
 		output_file = open(params['-o'],'w')
-		prev = None
 		for query in open(params['-q'],'r'):
 			try:
 				res = []
+				prev = None
 				for q in parse(query):
 					if prev != q[2]:
 						res.append(int(q[2]))
