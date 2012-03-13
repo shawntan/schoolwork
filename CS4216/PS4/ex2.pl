@@ -1,14 +1,17 @@
 :-lib(ic).
 :-lib(branch_and_bound).
+
 constraints(L,M,Tree,NewTree) :-
 	traverse(0,L,Tree,NewTree,VarList),
 	x_constraints(VarList,M,Width),
 	term_variables(VarList,Vars),
 	ic:max(Vars,Width),
 	minimize(search(Vars),Width).
+
 perm([],[]).
 perm(L,[H|T]) :- delete(H,L,R),perm(R,T).
-search(V) :-perm(V,VP), ( foreach(X,VP),param(VP) do write(VP),nl,get_min(X,X) ).
+search(V) :- perm(V,VP), ( foreach(X,VP),param(VP) do get_min(X,X) ).
+
 x_constraints(XList,M,Width) :-
 	(
 		foreach([H|T],XList),param(M,Width) do
@@ -24,6 +27,7 @@ x_constraints(XList,M,Width) :-
 		),
 		Last #=< Width
 	).
+
 traverse(Depth,L,Leaf,NewLeaf,[[X]]) :- atom(Leaf),Y is Depth*L, NewLeaf =.. [Leaf,X,Y].
 traverse(Depth,L,Tree,NewTree,XList) :-
 	Tree =.. [Node|Children],
@@ -48,7 +52,11 @@ align_center(X,Desc):-
 	Desc = [Children|_],
 	Children = [First|_],
 	append(_,[Last],Children),
-	X #= First + Last/2-First/2.
+	(First == Last ->
+		X = First;
+		2*MidChildWidth #= Last-First,
+		X #= First + MidChildWidth
+	).
 
 combine_list(Lists1,Lists2,CombList) :-
 	(
