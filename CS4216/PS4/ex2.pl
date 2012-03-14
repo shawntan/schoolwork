@@ -1,12 +1,17 @@
 :-lib(ic).
 :-lib(branch_and_bound).
-
 constraints(L,M,Tree,NewTree) :-
 	traverse(0,L,Tree,NewTree,VarList),
 	x_constraints(VarList,M,Width),
 	term_variables(VarList,Vars),
+	length(Vars,Len),
+	MaxWidth is Len * M,
+	Width :: 0..MaxWidth,
 	ic:max(Vars,Width),
-	minimize(search(Vars),Width).
+	write(NewTree),nl,
+	write(Vars),nl,
+	minimize(search(Vars,0,first_fail,indomain,complete,[]),Width).
+
 
 perm([],[]).
 perm(L,[H|T]) :- delete(H,L,R),perm(R,T).
@@ -52,10 +57,11 @@ align_center(X,Desc):-
 	Desc = [Children|_],
 	Children = [First|_],
 	append(_,[Last],Children),
+	First #=< X,
+	Last  #>= X,
 	(First == Last ->
-		X = First;
-		2*MidChildWidth #= Last-First,
-		X #= First + MidChildWidth
+		true;
+		X #= (First + Last)/2
 	).
 
 combine_list(Lists1,Lists2,CombList) :-
