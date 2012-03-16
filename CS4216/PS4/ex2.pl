@@ -1,3 +1,10 @@
+/*
+ * Collaborative work:
+ *		Benjamin Tan
+ *		Shawn Tan
+ *
+ */
+
 :-lib(ic).
 :-lib(branch_and_bound).
 constraints(L,M,Tree,NewTree) :-

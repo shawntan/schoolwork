@@ -1,0 +1,14 @@
+acuisition
+acuisition AND a
+billion AND dollar
+billion AND NOT dollar AND bill
+januari AND housing AND drop AND tuccillo
+national AND association AND of AND realtors
+national AND association AND of AND realtors AND NOT resales
+national AND association AND of AND realtors AND NOT mortgage
+(national AND association AND of AND realtors) AND NOT mortgage
+(national AND association AND of AND realtors) AND NOT (mortgage OR resales)
+billion AND dollar OR bill
+shares AND "donald trump"
+"bill gates"
+"arthur m. goldberg"
