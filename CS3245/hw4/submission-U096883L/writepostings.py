@@ -32,10 +32,19 @@ class WritePostings():
 		write_doclist(self.FILE)
 		self.dic_file = DICTIONARY_FILE
 		self.dic = Dictionary()
+	
 
+	words = None
+	curr_file_id = None
 	def add(self,word,word_pos,file_id):
 		pos = self.FILE.tell()
-		prev_pos = str(self.dic.set_ptr(word,pos))
+
+		if file_id != self.curr_file_id:
+			self.words = set()
+			self.curr_file_id = file_id
+		print file_id, word not in self.words
+		prev_pos = str(self.dic.set_ptr(word,pos,word not in self.words))
+		self.words.add(word)
 		word_pos = str(word_pos)
 
 		word		= word		+ (LEN_WORD		- len(word)		)*DELIM
@@ -46,13 +55,13 @@ class WritePostings():
 		skip_val	= LEN_FILE_ID*DELIM
 		skip_ph		= LEN_FILEPOS*DELIM
 		self.FILE.write(
-			word + DELIM +
-			word_pos + DELIM +
-			file_id + DELIM +
-			pointer_ph + DELIM +
-			skip_pos + DELIM +
-			skip_val + DELIM +
-			skip_ph + DELIM +
+			word		+ DELIM +
+			word_pos	+ DELIM +
+			file_id		+ DELIM +
+			pointer_ph	+ DELIM +
+			skip_pos	+ DELIM +
+			skip_val	+ DELIM +
+			skip_ph		+ DELIM +
 			"\n"
 		)
 

@@ -136,6 +136,7 @@ class Postings(MergePostings):
 		(_,self.est_size,self.ptr),_,_ = dictionary[word]
 		self.word = word
 		self.prev = None
+
 	def __iter__(self):
 		if self.complement:
 			return merge(AllPostings(),self,False,True,False)
@@ -144,10 +145,12 @@ class Postings(MergePostings):
 
 	def next(self):
 		tup = self.skip(self.ptr)
+		count = 1
 		while self.prev == tup[2]:
+			count += 1
 			tup = self.skip(self.ptr)
 		self.prev = tup[2]
-		return tup
+		return tup + (count,)
 
 	def skip(self,addr):
 		if(self.ptr != -1):
@@ -163,8 +166,10 @@ class Postings(MergePostings):
 		line =  self.FILE.readline()
 		tup = tuple(v for v in line.split())
 		return tup 
+
 	def __repr__(self):
 		return "<%s%s,%d>"%('NOT ' if self.complement else '',self.word,self.estimate_size())
+
 	def estimate_size(self):
 		return self.est_size if not self.complement else len(doc_list) - self.est_size
 
@@ -220,7 +225,7 @@ def doc_comp(doc1,tpos1,doc2,tpos2,term_comp):
 
 
 if __name__ == "__main__":
-	initialise('postings.txt','dictionary.txt')
-	p = PhrasePostings("donald trump said".split())
+	initialise("postings.txt","dictionary.txt")
+	p = Postings("money")
 	for i in p:
 		print i
