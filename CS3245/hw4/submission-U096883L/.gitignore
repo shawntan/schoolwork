@@ -1,5 +1,2 @@
 test_set
-*.pyca
-dict*.txt
-post*.txt
-
+*.pyc

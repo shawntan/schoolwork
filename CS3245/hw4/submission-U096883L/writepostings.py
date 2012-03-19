@@ -1,14 +1,13 @@
 import math,os
-from dictionary import *
 POSTINGS_FILE	= None
 DICTIONARY_FILE	= None
 CORPUS_DIR		= None
-LEN_WORD = 31
-LEN_FILE_ID = 15	#file id
-LEN_FILEPOS = 15	#pointer to the start of the list of words
-LEN_TERMPOS = 15	#position of the term in the file
+LEN_WORD	= 31
+LEN_FILE_ID	= 15
+LEN_TERM_FQ	= 15
+LEN_FILEPOS	= 15
 DELIM = ' '
-SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_TERMPOS + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS + len(DELIM)
+SKIP_PTR_OFFSET = LEN_WORD + len(DELIM) + LEN_FILE_ID + len(DELIM) +LEN_FILEPOS + len(DELIM) + LEN_TERM_FQ + len(DELIM)
 MIN_COUNT = 10
 
 def initialise(corpus,postings,dictionary):
@@ -17,11 +16,6 @@ def initialise(corpus,postings,dictionary):
 	DICTIONARY_FILE = dictionary
 	CORPUS_DIR = corpus
 
-def write_doclist(f):
-	doclist = os.listdir(CORPUS_DIR)
-	doclist.sort()
-	f.write(' '.join(doclist)+'\n')
-
 class WritePostings():
 	"""
 	Reversed storage on the file, files have to be added in reverse
@@ -29,63 +23,69 @@ class WritePostings():
 	def __init__(self):
 		self.filename = POSTINGS_FILE 
 		self.FILE = open(POSTINGS_FILE,'w')
-		write_doclist(self.FILE)
 		self.dic_file = DICTIONARY_FILE
-		self.dic = Dictionary()
-	
+		self.dic = {} 
+		self.word_freq = {}
 
-	words = None
-	curr_file_id = None
-	def add(self,word,word_pos,file_id):
+	def add(self,word,file_id,tf):
 		pos = self.FILE.tell()
+		if word not in self.dic:
+			self.word_freq[word] = 0
+			prev_pos = str(-1)
+		else:
+			prev_pos = str(self.dic[word])
 
-		if file_id != self.curr_file_id:
-			self.words = set()
-			self.curr_file_id = file_id
-		print file_id, word not in self.words
-		prev_pos = str(self.dic.set_ptr(word,pos,word not in self.words))
-		self.words.add(word)
-		word_pos = str(word_pos)
+		self.dic[word] = pos
+		self.word_freq[word] += 1
+		tf = str(tf)
 
-		word		= word		+ (LEN_WORD		- len(word)		)*DELIM
-		word_pos	= word_pos	+ (LEN_TERMPOS	- len(word_pos)	)*DELIM
-		file_id		= file_id	+ (LEN_FILE_ID	- len(file_id)	)*DELIM
-		pointer_ph	= prev_pos	+ (LEN_FILEPOS	- len(prev_pos)	)*DELIM
-		skip_pos	= LEN_TERMPOS*DELIM
-		skip_val	= LEN_FILE_ID*DELIM
-		skip_ph		= LEN_FILEPOS*DELIM
+		word		=	word		+ (LEN_WORD		- len(word))	*DELIM
+		file_id		=	file_id		+ (LEN_FILE_ID	- len(file_id))	*DELIM
+		pointer_ph	=	prev_pos	+ (LEN_FILEPOS	- len(prev_pos))*DELIM
+		tf			=	tf			+ (LEN_TERM_FQ	- len(tf))		*DELIM
+
+		skip_val = LEN_FILE_ID*DELIM
+		skip_ph = LEN_FILEPOS*DELIM
 		self.FILE.write(
 			word		+ DELIM +
-			word_pos	+ DELIM +
 			file_id		+ DELIM +
 			pointer_ph	+ DELIM +
-			skip_pos	+ DELIM +
+			tf			+ DELIM +
 			skip_val	+ DELIM +
 			skip_ph		+ DELIM +
 			"\n"
 		)
 
 	def save_dic(self):
-		self.dic.write(self.dic_file)
+		f = open(self.dic_file,'w')
+		doc_list = os.listdir(CORPUS_DIR)
+		doc_list.sort()
+		f.write(' '.join(doc_list))
+		f.write('\n')
+		for key in self.dic:
+			f.write(key)
+			f.write(DELIM)
+			f.write(str(self.word_freq[key]))
+			f.write(DELIM)
+			f.write(str(self.dic[key]))
+			f.write('\n')
+		f.close()
 
 	def write_skip_pointers_and_close(self):
-		for key,postcount,ptr in self.dic:
-			skipcount = int(math.sqrt(postcount))
-			if postcount > MIN_COUNT :
+		for key in self.dic:
+			postcount = self.word_freq[key]
+			skipcount = int(math.sqrt(self.word_freq[key]))
+			if postcount > MIN_COUNT:
 				prev_ptr = None
 				count = 0
-				addr = ptr
-				write_loc = addr + SKIP_PTR_OFFSET
-				for  tup in self.postings(key):
-					word,word_pos,file_id,ptr = tup
+				write_loc = self.dic[key]+ SKIP_PTR_OFFSET
+				for word,file_id,ptr,tf in self.postings(key):
 					count += 1
 					if count == skipcount+1:
 						self.FILE.seek(write_loc)
 						self.FILE.write(
-								word_pos	+ (LEN_TERMPOS - len(word_pos))	*DELIM + DELIM +
-								file_id		+ (LEN_FILE_ID - len(file_id))	*DELIM + DELIM +
-								prev_ptr	+ (LEN_FILEPOS - len(prev_ptr))	*DELIM + DELIM +
-								'\n'
+								file_id		+ (LEN_FILE_ID - len(file_id))	*DELIM +
+								prev_ptr	+ (LEN_FILEPOS - len(prev_ptr))	*DELIM
 						)
 						write_loc = int(prev_ptr) + SKIP_PTR_OFFSET
 						count = 0
@@ -95,18 +95,15 @@ class WritePostings():
 
 	def postings(self,word):
 		fil = open(self.filename,'r')
-		(_,freq,addr),_,_ = self.dic[word]
-		if freq:
+		if word in self.dic:
+			addr = self.dic[word]
 			while(addr != -1):
 				tup = self.readtuple(fil,addr)
-				#print tup
-				addr = int(tup[3])
+				addr = int(tup[2])
 				yield tup
-	
+
 	def readtuple(self,fil,addr):
 		fil.seek(addr)
 		line =  fil.readline()
-		#print line
 		tup = tuple(v for v in line.split())
 		return tup
-
