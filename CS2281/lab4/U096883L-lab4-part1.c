@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 /*
 char **tokenize(unsigned int c, char *input)
 {
@@ -18,19 +20,18 @@ char **tokenize(unsigned int c, char *input)
 	for(i=1;i<c;i++) 
 
 }*/
-
 int main(int argc,char** argv,char *envp[])
 {
-	int p=0;
 	FILE *f;
 	if(argc > 1) f = fopen(argv[1],"r");
 	else f = stdin;
 	char input[128];
+	int stat = 0;
 	while(fgets(input,sizeof(input),f)!=NULL)
 	{
 		unsigned int j = 0;
-		if(input[0] =='#') continue;
-		else
+		input[strlen(input)-1] = '\0';
+		if(input[0] !='#') 
 		{
 			char* toks[64];
 			char* token;
@@ -41,18 +42,24 @@ int main(int argc,char** argv,char *envp[])
 				token = strtok(NULL," ");
 			}
 			toks[j] = NULL;
-			int pid,status;
+			int pid;
 			switch(pid = fork())
 			{
 				case -1:
-					exit(-1);
+					exit(1);
 				case 0:
-					status = execve(toks[0],toks);
-					exit(status);
+					stat = execve(toks[0],toks,NULL);
+					exit(stat);
 				default:
-					wait(pid);
-					break;
+					waitpid(pid,&stat,0);
+			}
+			int exitstat = WEXITSTATUS(stat);
+			if (exitstat)
+			{
+				if(exitstat == 255) exit(1);
+				else exit(exitstat);
 			}
 		}
 	}
+	return 0;
 }
