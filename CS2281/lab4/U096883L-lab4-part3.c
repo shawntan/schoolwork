@@ -1,8 +1,10 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/time.h>
 
 char	ignore_errors	= 0;
 char	verbose			= 0;
@@ -88,6 +90,22 @@ char **append_args(int argc, char** argv)
 	return new_args;
 }
 
+int child_pid;
+void timeout_handler(int a)
+{
+	kill(child_pid,9);
+	printf("hihihi\n");
+}
+
+void milli_alarm(long int ms)
+{
+	struct itimerval old, new;
+	new.it_interval.tv_usec = 0;
+	new.it_interval.tv_sec = 0;
+	new.it_value.tv_sec = 0;
+	new.it_value.tv_usec = 1000*ms;
+	setitimer(ITIMER_VIRTUAL, &new,NULL);
+}
 
 FILE *f;
 int main(int argc,char** argv,char *envp[])
@@ -123,16 +141,19 @@ int main(int argc,char** argv,char *envp[])
 
 			if(verbose) print_argv(args);
 
-			int pid;
-			switch(pid = fork())
+			switch(child_pid = fork())
 			{
 				case -1:
 					exit(1);
 				case 0:
 					stat = execvp(args[0],args);
+					printf("hello\n");
 					exit(stat);
 				default:
-					waitpid(pid,&stat,0);
+					signal(SIGALRM,timeout_handler);
+					milli_alarm(1);
+					waitpid(child_pid,&stat,0);
+					printf("done\n");
 					if(argfile != NULL) free(args);
 			}
 
