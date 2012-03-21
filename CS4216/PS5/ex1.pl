@@ -4,7 +4,7 @@
 /*
  * Kirchoff's current rule
  */
-current(Circuit,AugCircuit,Points) :-
+preprocess(Circuit,AugCircuit,Points) :-
 	(
 		foreach(C,Circuit),
 		foreach((C,_),AugCircuit),
@@ -16,11 +16,13 @@ current(Circuit,AugCircuit,Points) :-
 			)
 	),
 	sort(PointsDup,Points).
-current_cons(Points,AugCircuit) :-
+current_cons(Points,AugCircuit,CurrList) :-
 	(
-		foreach(P,Points),param(AugCircuit) do
-		point_con(P,AugCircuit,Currs),
-		sum(Currs) $= 0
+		foreach(P,Points),
+		fromto([],ConsIn,ConsOut,CurrList),
+		param(AugCircuit) do
+			point_con(P,AugCircuit,Currs),
+			append(ConsIn,[Currs],ConsOut)
 	).
 point_con(Point,AugCircuit,Currs) :-
 	(
@@ -31,7 +33,9 @@ point_con(Point,AugCircuit,Currs) :-
 			CurOut = CurIn
 		)
 	).
-
+/*
+ *  Kirchoff's voltage rule
+ */
 loop((C,I),RestCircuit,[Val|Loop]) :-
 	C =.. [battery,A,B,Val],
 	(
@@ -54,13 +58,18 @@ loop((C,I),RestCircuit,[Val|Loop]) :-
 
 comp_volt(resistor,Val,I,-I*Val).
 comp_volt(battery,Val,_,Val).
-
-battery_cons(Bat,AugCircuit) :-
-	delete(Bat,AugCircuit,Circuit),
-	bagof(Loop,loop(Bat,Circuit,Loop),Cons),
+voltage_cons(AugCircuit,VoltList) :-
 	(
-		foreach(C,Cons) do
-		sum(C) $= 0
+		foreach(C,AugCircuit),
+		fromto([],ConsIn,ConsOut,VoltList),
+		param(AugCircuit) do
+			(C = (T,_), T =.. [battery|_] ->
+				writeln("hey!"),
+				delete(C,AugCircuit,Circuit),
+				bagof(Loop,loop(C,Circuit,Loop),Cons),
+				append(ConsIn,Cons,ConsOut);
+				ConsIn = ConsOut
+			)
 	).
 
 test_looper(Circuit,Cons,I1,I2,I3,I4,I5) :-
@@ -78,7 +87,19 @@ test_looper(Circuit,Cons,I1,I2,I3,I4,I5) :-
 	).
 
 test(Circuit,AugCircuit,Point):-
-	Circuit = [ground(a),battery(a,b,10),resistor(b,a,1),resistor(b,a,1)],
-	current(Circuit,AugCircuit,Points),
-	current_cons(Points,AugCircuit).
-
+	Circuit = [
+		ground(a),
+		battery(d,a,3),
+		resistor(d,a,10),
+		battery(a,b,3),
+		resistor(d,c,3),
+		resistor(c,b,5)
+	],
+	preprocess(Circuit,AugCircuit,Points),
+	current_cons(Points,AugCircuit,CurrList),
+	voltage_cons(AugCircuit,VoltList),
+	eplex_solver_setup(min(0)),
+	(foreach(C,CurrList) do sum(C) $= 0),
+	(foreach(C,VoltList) do sum(C) $= 0),
+	eplex_solve(_),
+	print_list(AugCircuit).
