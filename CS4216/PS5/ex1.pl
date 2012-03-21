@@ -32,6 +32,51 @@ point_con(Point,AugCircuit,Currs) :-
 		)
 	).
 
+loop((C,I),RestCircuit,[Val|Loop]) :-
+	C =.. [battery,A,B,Val],
+	(
+		fromto(
+			(B,  RestCircuit,Loop		),
+			(P1, InCirc,	[H|OutLoop]	),
+			(P2, OutCirc,	OutLoop		),
+			(A,  _,			[]			)
+		) do
+		delete((Seg,I),InCirc,OutCirc),
+		((
+			Seg =.. [C,P1,P2,V],
+			comp_volt(C,V,I,H)
+		);(
+			Seg =.. [C,P2,P1,V],
+			comp_volt(C,V,I,H1),
+			H = -H1
+		))
+	).
+
+comp_volt(resistor,Val,I,-I*Val).
+comp_volt(battery,Val,_,Val).
+
+battery_cons(Bat,AugCircuit) :-
+	delete(Bat,AugCircuit,Circuit),
+	bagof(Loop,loop(Bat,Circuit,Loop),Cons),
+	(
+		foreach(C,Cons) do
+		sum(C) $= 0
+	).
+
+test_looper(Circuit,Cons,I1,I2,I3,I4,I5) :-
+	Circuit = [
+		(resistor(c,b,2),I1),
+		(resistor(c,d,2),I2),
+		(resistor(d,a,2),I3),
+		(resistor(d,a,2),I4),
+		(resistor(d,a,3),I5)
+	],
+	bagof(Loop,loop((battery(a,b,1),II),Circuit,Loop),Cons),
+	(
+		foreach(C,Cons) do
+		sum(C) $= 0
+	).
+
 test(Circuit,AugCircuit,Point):-
 	Circuit = [ground(a),battery(a,b,10),resistor(b,a,1),resistor(b,a,1)],
 	current(Circuit,AugCircuit,Points),
