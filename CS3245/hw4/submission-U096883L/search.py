@@ -3,9 +3,18 @@ from postings import *
 import re,sys,getopt,math
 import heapq
 def parse(tokens):
-	merged = Postings(tokens[0])
-	for term in tokens[1:]:
-		merged = merge(merged,Postings(term))
+	first = 0
+	while True:
+		try:
+			merged = Postings(tokens[first])
+			break
+		except KeyError:
+			first += 1
+	for term in tokens[first+1:]:
+		try:
+			merged = merge(merged,Postings(term))
+		except KeyError:
+			pass
 	return merged
 
 def split_query(query):
@@ -21,23 +30,27 @@ if __name__=='__main__':
 	options = sys.argv[1:]
 	opts,_ = getopt.getopt(options,"d:p:q:o:")
 	params = dict(opts)
-	try:
-		initialise(params['-p'],params['-d'])
-		#initialise('postings.txt','dictionary.txt')
-		output_file = open(params['-o'],'w')
-		for query in open(params['-q'],'r'):
+	initialise(params['-p'],params['-d'])
+	#initialise('postings.txt','dictionary.txt')
+	output_file = open(params['-o'],'w')
+	for query in open(params['-q'],'r'):
+		try:
 			top = []
 			query = split_query(query)
 			for i in parse(query.keys()):
-				item = (cosine_sim(query,i[3]),i)
-				if len(top) > 10 :
+				item = (cosine_sim(query,i[3]),-1*int(i[1]),i)
+				if len(top) >= 10 :
 					heapq.heappushpop(top,item)
 				else:heapq.heappush(top,item)
+				
 			result = []
 			while top:result.append(heapq.heappop(top))
 			result.reverse()
-			output_file.write(' '.join(tup[1] for score,tup in result) + '\n')
-		#regards singapore
+			for i in result: print i
+			output_file.write(' '.join(tup[1] for score,_,tup in result) + '\n')
+		except Exception as ex:
+			print ex
+			output_file.write('\n')
 
 		
 		"""
@@ -51,8 +64,6 @@ if __name__=='__main__':
 			except Exception:
 				output_file.write('\n')
 		"""
-	except KeyError:
-		print "Key in parameters -d -p -q -o"
 	"""
 	for i in parse("billion AND dollar OR bill"):
 		print i

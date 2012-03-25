@@ -72,6 +72,7 @@ class WritePostings():
 		f.close()
 
 	def write_skip_pointers_and_close(self):
+		"""
 		for key in self.dic:
 			postcount = self.word_freq[key]
 			skipcount = int(math.sqrt(self.word_freq[key]))
@@ -84,12 +85,13 @@ class WritePostings():
 					if count == skipcount+1:
 						self.FILE.seek(write_loc)
 						self.FILE.write(
-								file_id		+ (LEN_FILE_ID - len(file_id))	*DELIM +
-								prev_ptr	+ (LEN_FILEPOS - len(prev_ptr))	*DELIM
+							file_id  + (LEN_FILE_ID - len(file_id))  * DELIM +
+							prev_ptr + (LEN_FILEPOS - len(prev_ptr)) * DELIM
 						)
 						write_loc = int(prev_ptr) + SKIP_PTR_OFFSET
 						count = 0
 					prev_ptr = ptr
+		"""
 		self.save_dic()
 		self.FILE.close()
 

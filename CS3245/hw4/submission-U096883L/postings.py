@@ -125,16 +125,15 @@ def cosine_sim(query,doc):
 	sqr_sum_d = 0
 	sum_prod = 0
 	for term in query:
-		pre_tf = doc.get(term,0)
-		tf_d = 1 + math.log(pre_tf) if pre_tf > 0 else 0
-		tf_q = 1 + math.log(query[term])
-		idf = math.log(N/word_freq[term])
-		tf_idf_q = tf_q*idf
-		
-		sqr_sum_q += tf_idf_q**2
-		sum_prod  += tf_idf_q*tf_d
-	return sum_prod/math.sqrt(sqr_sum_q)
-
+		if term in word_freq:
+			pre_tf = float(doc.get(term,0))
+			tf_d = ( 1 + math.log(pre_tf,10)      ) if pre_tf > 0 else 0
+			tf_q =   1 + math.log(float(query[term]),10)
+			idf = math.log(N/float(word_freq[term]))
+			tf_idf_q = tf_q*idf
+			sum_prod  += tf_idf_q*tf_d
+			sqr_sum_q += tf_idf_q**2
+	return float(sum_prod)/(math.sqrt(sqr_sum_q))
 if __name__ == "__main__":
 	import heapq
 	initialise("postings.txt","dictionary.txt")
