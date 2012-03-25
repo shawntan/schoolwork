@@ -21,7 +21,7 @@ constraints(N,Black,White) :-
 	QRes is floor(N*N)/2,
 	flatten_array(Black,BlackQueens),sum(BlackQueens) $=< QRes,
 	flatten_array(White,WhiteQueens), sum(WhiteQueens) $=< QRes,
-	sum(BlackQueens) $= sum(WhiteQueens).
+	sum(BlackQueens) #= sum(WhiteQueens).
 
 
 cell_constraints(N,I,J,Grid1,Grid2) :-
