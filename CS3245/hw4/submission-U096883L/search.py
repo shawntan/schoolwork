@@ -46,10 +46,8 @@ if __name__=='__main__':
 			result = []
 			while top:result.append(heapq.heappop(top))
 			result.reverse()
-			for i in result: print i
 			output_file.write(' '.join(tup[1] for score,_,tup in result) + '\n')
 		except Exception as ex:
-			print ex
 			output_file.write('\n')
 
 		

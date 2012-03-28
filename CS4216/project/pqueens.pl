@@ -22,9 +22,9 @@ constraints(N,Black,White) :-
 	QRes is floor(N*N)/4,
 	flatten_array(Black,BlackQueens),sum(BlackQueens) $=< QRes,
 	flatten_array(White,WhiteQueens), sum(WhiteQueens) $=< QRes,
-	sum(BlackQueens) #= sum(WhiteQueens),
-	sum(BlackQueens) #>= 1,
-	sum(WhiteQueens) #>= 1.
+	sum(BlackQueens) $= sum(WhiteQueens),
+	sum(BlackQueens) $>= N-2,
+	sum(WhiteQueens) $>= N-2.
 
 
 cell_constraints(N,I,J,Grid1,Grid2) :-
@@ -32,13 +32,13 @@ cell_constraints(N,I,J,Grid1,Grid2) :-
 	(count(K,1,N),param(N,Cell,I,J,Grid2) do
 		subscript(Grid2,[I,K],OR),
 		subscript(Grid2,[K,J],OC),
-		%(Cell #= 1 and OR #= 0) or Cell #= 0,
-		%(Cell #= 1 and OC #= 0) or Cell #= 0,
-		Cell + OR #=<1,
-		Cell + OC #=<1,
+		%(Cell $= 1 and OR $= 0) or Cell $= 0,
+		%(Cell $= 1 and OC $= 0) or Cell $= 0,
+		Cell + OR $=<1,
+		Cell + OC $=<1,
 		DJ is K - J,
-		(I + DJ > 0, I + DJ < N+1 -> Cell + Grid2[I + DJ,K] #=< 1;true),
-		(I - DJ > 0, I - DJ < N+1 -> Cell + Grid2[I - DJ,K] #=< 1;true)
+		(I + DJ > 0, I + DJ < N+1 -> Cell + Grid2[I + DJ,K] $=< 1;true),
+		(I - DJ > 0, I - DJ < N+1 -> Cell + Grid2[I - DJ,K] $=< 1;true)
 	).
 
 
@@ -46,12 +46,15 @@ cell_constraints(N,I,J,Grid1,Grid2) :-
 
 test(N,B,W) :-
 	setup(N,B,W),
+	%eplex_solver_setup(min(0)),
 	constraints(N,B,W),
 	flatten_array([](B,W),Comb),
-	Cost #= N*N - sum(Comb),
-	Cost #>= 0,
+	Cost $= N*N - sum(Comb),
+	Cost $>= 0,
 	%minimize(labeling(Comb),Cost),
-	minimize(search(Comb,0,first_fail,indomain_max,complete,[]),Cost),
+	%minimize(search(Comb,0,first_fail,indomain_max,complete,[]),Cost),
+	search(Comb,0,first_fail,indomain_max,complete,[]),
+	%eplex_solve(Cost),
 	print_grid(N,B,W).
 
 print_grid(N,Black,White) :-
