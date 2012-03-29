@@ -15,12 +15,13 @@ void print_procinfo(char *filename,psinfo_t *psinf)
 
 	fread(&psinfo,sizeof(psinfo_t),1,fd);
 	struct passwd *user_p = getpwuid(psinfo.pr_uid);
+	time_t t = (time_t)psinfo.pr_start.tv_sec;
 
-	printf("%8s %5d %16s %d\n",
+	printf("%8s %5d %16s %0.24s\n",
 			user_p->pw_name,
 			psinfo.pr_pid,
 			psinfo.pr_fname,
-			psinfo.pr_start.tv_sec
+			ctime(&t)
 	);
 }
 
@@ -33,6 +34,7 @@ int main()
 	char buf[128];
 	if (dp != NULL)
 	{
+		printf("%8s %5s %16s %0.24s\n","UID","PID","FNAME","STIME");
 		while (ep = readdir (dp))
 		{
 			if(ep->d_name[0] >= '0' && ep->d_name[0] <= '9')
