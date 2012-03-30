@@ -4,25 +4,27 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <pwd.h>
-#define DEBUG 1
+#define DEBUG 0
 
 void print_procinfo(char *filename,psinfo_t *psinf)
 {
-//	if(DEBUG) printf("%s\n",filename);
+	if(DEBUG) printf("%s\n",filename);
 	FILE *fd = fopen(filename,"r");
-	psinfo_t psinfo;
+	if (fd > 0)
+	{
+		psinfo_t psinfo;
+		fread(&psinfo,sizeof(psinfo_t),1,fd);
+		struct passwd *user_p = getpwuid(psinfo.pr_uid);
+		time_t t = (time_t)psinfo.pr_start.tv_sec;
 
-
-	fread(&psinfo,sizeof(psinfo_t),1,fd);
-	struct passwd *user_p = getpwuid(psinfo.pr_uid);
-	time_t t = (time_t)psinfo.pr_start.tv_sec;
-
-	printf("%8s %5d %16s %0.24s\n",
-			user_p->pw_name,
-			psinfo.pr_pid,
-			psinfo.pr_fname,
-			ctime(&t)
-	);
+		printf("%8s %5d %16s %0.24s\n",
+				user_p->pw_name,
+				psinfo.pr_pid,
+				psinfo.pr_fname,
+				ctime(&t)
+		);
+		fclose(fd);
+	}
 }
 
 int main()
