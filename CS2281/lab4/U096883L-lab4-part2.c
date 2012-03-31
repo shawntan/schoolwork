@@ -15,8 +15,8 @@ int		fa_argc;
 void print_argv(char **args)
 {
 	int i=0;
-	while(args[i]) printf("%s ",args[i++]);
-	printf("\n");
+	while(args[i]) fprintf(stderr,"%s ",args[i++]);
+	fprintf(stderr,"\n");
 }
 
 int set_opts(int argc, char** argv)

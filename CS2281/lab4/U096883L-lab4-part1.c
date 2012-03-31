@@ -3,23 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-/*
-char **tokenize(unsigned int c, char *input)
-{
-	unsigned int i=0;
-	unsigned int tok_cnt = 1;
-	for(i=0;i<c;i++)
-	{
-		if(input[i]==' ')
-		{
-			input[i] = '\0';
-			tok_cnt++;
-		}
-	}
-	input[c] = '\0';
-	for(i=1;i<c;i++) 
 
-}*/
 int main(int argc,char** argv,char *envp[])
 {
 	FILE *f;

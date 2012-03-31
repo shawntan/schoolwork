@@ -1,5 +1,5 @@
 #!./a.out
-/bin/ls /
+ls /
 # nonsenese
-/bin/echo hihi 
-/bin/ls .
+/bin/echo hihi
+sleep 5

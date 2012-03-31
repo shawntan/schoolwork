@@ -90,22 +90,7 @@ char **append_args(int argc, char** argv)
 	return new_args;
 }
 
-int child_pid;
-void timeout_handler(int a)
-{
-	kill(child_pid,9);
-	printf("hihihi\n");
-}
 
-void milli_alarm(long int ms)
-{
-	struct itimerval old, new;
-	new.it_interval.tv_usec = 0;
-	new.it_interval.tv_sec = 0;
-	new.it_value.tv_sec = 0;
-	new.it_value.tv_usec = 1000*ms;
-	setitimer(ITIMER_VIRTUAL, &new,NULL);
-}
 
 FILE *f;
 int main(int argc,char** argv,char *envp[])
