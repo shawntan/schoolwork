@@ -110,13 +110,20 @@ void read_file(char *argfile)
 char **append_args(int argc, char** argv)
 {
 	char **new_args = (char **)malloc(sizeof(char **) * (argc + fa_argc + 1));
-	//printf("%d %d %d\n",argc,fa_argc,argc+fa_argc);
-	memcpy(new_args,		argv,	argc*sizeof(char **));
-	memcpy(new_args + argc,	fa_argv,fa_argc*sizeof(char**));
+	memcpy(new_args,        argv,    argc*sizeof(char **));
+	memcpy(new_args + argc, fa_argv, fa_argc*sizeof(char**));
 	new_args[argc+fa_argc] = NULL;
 	return new_args;
 }
 
+void find_first_comment(char *command)
+{
+	int i=0;
+	while( command[i] != '\n'
+		&& command[i] !=  '#'
+	) i++;
+	command[i] = '\0';
+}
 
 FILE *f;
 int main(int argc,char** argv,char *envp[])
@@ -126,60 +133,57 @@ int main(int argc,char** argv,char *envp[])
 	if((a = set_opts(argc,argv)) < argc) f = fopen(argv[a],"r");
 
 	if(argfile != NULL) read_file(argfile);
-
 	//printf("%d %d %s\n",ignore_errors,verbose,argfile);
 	char input[128];
 	while(fgets(input,sizeof(input),f)!=NULL)
 	{
 		unsigned int j = 0;
-		input[strlen(input)-1] = '\0';
-		if(input[0] !='#') 
+		//input[strlen(input)-1] = '\0';
+		find_first_comment(input);
+		char* toks[64];
+		char* token;
+		token = strtok(input," ");
+		while(token !=NULL)
 		{
-			char* toks[64];
-			char* token;
-			token = strtok(input," ");
-			while(token !=NULL)
-			{
-				toks[j++] = token;
-				token = strtok(NULL," ");
-			}
-			toks[j] = NULL;
+			toks[j++] = token;
+			token = strtok(NULL," ");
+		}
+		toks[j] = NULL;
 
-			char **args;
-			if(argfile != NULL) args = append_args(j,toks);
-			else args = toks;
+		char **args;
+		if(argfile != NULL) args = append_args(j,toks);
+		else args = toks;
 
-			if(verbose) print_argv(args);
-			int exitstat;
-			switch(child_pid = fork())
-			{
-				case -1:
-					exit(1);
-				case 0:
-					child_stat = execvp(args[0],args);
-					exit(child_stat);
-				default:
-					if (timeout)
-					{
-						exitstat = th(0);
-						milliseconds = 0;
-					}
-					else
-					{
-						waitpid(child_pid, &child_stat,0);
-						exitstat = WEXITSTATUS(child_stat);
-					}
-					if(argfile != NULL) free(args);
-			}
-
-			if (exitstat)
-			{
-				if(ignore_errors) error_seen = 1;
-				else 
-				{	
-					if(exitstat == -2) exit(2);
-					else exit(1);
+		if(verbose) print_argv(args);
+		int exitstat;
+		switch(child_pid = fork())
+		{
+			case -1:
+				exit(1);
+			case 0:
+				child_stat = execvp(args[0],args);
+				exit(child_stat);
+			default:
+				if (timeout)
+				{
+					exitstat = th(0);
+					milliseconds = 0;
 				}
+				else
+				{
+					waitpid(child_pid, &child_stat,0);
+					exitstat = WEXITSTATUS(child_stat);
+				}
+				if(argfile != NULL) free(args);
+		}
+
+		if (exitstat)
+		{
+			if(ignore_errors) error_seen = 1;
+			else 
+			{	
+				if(exitstat == -2) exit(2);
+				else exit(1);
 			}
 		}
 	}
