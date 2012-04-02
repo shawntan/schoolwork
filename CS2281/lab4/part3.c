@@ -9,7 +9,7 @@
 char	ignore_errors	= 0;
 char	verbose			= 0;
 char	*argfile		= NULL;
-long int timeout		= 3000;
+long int timeout		= 1000;
 
 
 char	error_seen		= 0;
@@ -47,8 +47,8 @@ int set_opts(int argc, char** argv)
 	while((c = getopt(argc,argv,"iva:")) != -1)
 		switch(c)
 		{
-			case 'i': ignore_errors = 1;	break;
-			case 'v': verbose = 1;			break;
+			case 'i': ignore_errors = 1; break;
+			case 'v': verbose = 1;       break;
 			case 'a':
 				argfile = optarg;
 				break;

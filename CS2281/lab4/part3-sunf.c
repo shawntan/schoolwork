@@ -37,7 +37,7 @@ int th(int a)
 		{
 			if (milliseconds < timeout)
 			{
-				usleep(100);
+				usleep(1000);
 				milliseconds++;
 			}
 			else

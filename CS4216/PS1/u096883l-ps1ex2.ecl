@@ -73,8 +73,8 @@ normalise([Expr = N |Rest],[NExpr = N|NRest],Uniqs) :-
 	sort(Uniqs1,Uniqs).
 
 normalise_eq(Y,N*Y1,[Y1]) :- normalise_coeff(Y,N,Y1).
-normalise_eq(Expr - Y,Expr1 + K*Y1,[Y1|L]) :- 	normalise_eq(Expr,Expr1,L),normalise_coeff(Y,N,Y1), K is -N.
-normalise_eq(Expr + Y,Expr1 + N*Y1,[Y1|L]) :- 		normalise_eq(Expr,Expr1,L),normalise_coeff(Y,N,Y1).
+normalise_eq(Expr - Y,Expr1 + K*Y1,[Y1|L]) :- normalise_eq(Expr,Expr1,L),normalise_coeff(Y,N,Y1), K is -N.
+normalise_eq(Expr + Y,Expr1 + N*Y1,[Y1|L]) :- normalise_eq(Expr,Expr1,L),normalise_coeff(Y,N,Y1).
 normalise_coeff(X,1,X) :- var(X).
 normalise_coeff(-X,-1,X) :- var(X).
 normalise_coeff(X*N,N,X) :- number(N).
