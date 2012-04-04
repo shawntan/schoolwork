@@ -41,8 +41,8 @@ if __name__=='__main__':
 
 	FILE = open(params['-o'],'w')
 	for i in tp:
-		precision = float(tp[i])/float(tp[i] + fp[i])
-		recall = float(tp[i])/float(tp[i] + fn[i])
+		precision = 100*float(tp[i])/float(tp[i] + fp[i])
+		recall = 100*float(tp[i])/float(tp[i] + fn[i])
 		FILE.write("Precision of %s: %02.2f\n" % (i,precision))
 		FILE.write("Recall of %s: %02.2f\n" % (i,precision))
 		FILE.write("F1 of %s: %2.2f\n" % (i, 2*(precision*recall/(precision+recall))))
