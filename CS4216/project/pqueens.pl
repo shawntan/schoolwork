@@ -1,6 +1,5 @@
 :-lib(ic).
 :-lib(branch_and_bound).
-:-lib(ic_sbds).
 
 setup(N,Black,White) :-
 	dim(Black,[N,N]),
@@ -59,13 +58,13 @@ test(N,B,W) :-
 	%bb_min(search(Comb,0,input_order,sbds_indomain,sbds,[]),Cost,_),
 	%eplex_solve(Cost),
 	generate_cells(N,L),
-	%bb_min(
+	bb_min(
 		(
 			search(N,B,L,[]),
-			retract(seen(_)),
-			search(Whites,0,first_fail,indomain_max,complete,[])
+			retractall(seen(_)),
+			labeling(Whites)
 		),
-	%Cost,_),
+	Cost,_),
 	print_grid(N,B,W).
 
 print_grid(N,Black,White) :-
@@ -96,10 +95,8 @@ search(N,B,[H|T],Ass):-
 	(seen(Ass1) ->
 		fail;
 		search(N,B,T,Ass1),
-		write(H),write(Var),nl,
 		assert_sym(N,Ass1)
 	).
-
 
 %	search(_,[],_).
 %	search(B,Coords,Pos) :-
