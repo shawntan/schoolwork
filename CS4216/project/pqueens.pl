@@ -45,6 +45,7 @@ cell_constraints(N,I,J,Grid1,Grid2) :-
 
 
 test(N,B,W) :-
+	retractall(seen(_,_)),
 	setup(N,B,W),
 	%eplex_solver_setup(min(0)),
 	constraints(N,B,W),
@@ -61,7 +62,6 @@ test(N,B,W) :-
 	bb_min(
 		(
 			search(N,B,L,[]),
-			retractall(seen(_)),
 			labeling(Whites)
 		),
 	Cost,_),
@@ -86,44 +86,32 @@ generate_cells(N,L):-
 	findall([I,J],(indomain(I),indomain(J)),L).
 
 
-:-dynamic seen/1.
+:-dynamic seen/2.
 search(_,_,[],_) :- !.
 search(N,B,[H|T],Ass):-
 	subscript(B,H,Var),
 	indomain(Var,max),
+	%(Var = 1;Var = 0),
 	(Var =:= 1 -> sort([H|Ass],Ass1) ; Ass1=Ass),
-	(seen(Ass1) ->
+	length(Ass1,Len),
+	%search(N,B,T,Ass1),
+	%assert_sym(N,Ass1).
+	(seen(Len,Ass1) ->
 		fail;
 		search(N,B,T,Ass1),
 		assert_sym(N,Ass1)
 	).
 
-%	search(_,[],_).
-%	search(B,Coords,Pos) :-
-%		writeln(Pos),
-%		(foreach(C,Coords),param(B,Pos,Coords) do
-%			subscript(B,C,Val),
-%			(ground(Val),Val =:= 1 -> Pos1 = [C|Pos]; Pos1 = Pos),
-%			(var(Val) ->
-%				(
-%					(indomain(Val),
-%					delete(C,Coords,Coords1),
-%					search(B,Coords1,Pos1));
-%					true
-%				);
-%				true
-%			)
-%		).
-
 %assert all rotations of current state of assignment
 assert_sym(_,[]) :- !.
 assert_sym(N,Ass) :-
-	assert(seen(Ass)),
+	length(Ass,Len),
+	assert(seen(Len,Ass)),
 	SymPos = [x,y,d1,d2,r1,r2,r3],
-	(foreach(F,SymPos),param(N,Ass) do
+	(foreach(F,SymPos),param(N,Ass,Len) do
 		(foreach(C,Ass),foreach(D,RotAss),param(N,F) do get_sym(F,N,C,D)),
 		sort(RotAss,SRotAss),
-		assert(seen(SRotAss))
+		(seen(Len,SRotAss)-> true;assert(seen(Len,SRotAss)))
 	).
 
 remove_sym(N,H,T,Result) :-
