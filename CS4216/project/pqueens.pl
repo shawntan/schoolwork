@@ -23,8 +23,11 @@ constraints(N,Black,White) :-
 	flatten_array(Black,BlackQueens),4*sum(BlackQueens) #=< QRes,
 	flatten_array(White,WhiteQueens), 4*sum(WhiteQueens) #=< QRes,
 	sum(BlackQueens) #= sum(WhiteQueens),
-	8*sum(BlackQueens) #>= N*N,
-	8*sum(WhiteQueens) #>= N*N.
+	(N > 3 ->
+		8*sum(BlackQueens) #>= N*N,
+		8*sum(WhiteQueens) #>= N*N;
+		true
+	).
 
 
 cell_constraints(N,I,J,Grid1,Grid2) :-
@@ -96,9 +99,10 @@ generate_cells(N,L):-
 search(_,_,[],_) :- !.
 search(N,B,[H|T],Ass):-
 	subscript(B,H,Var),
+	%write(Var),write(H),write(Ass),nl,
 	indomain(Var,max),
 	%(Var = 1;Var = 0),
-	(Var =:= 1 -> sort([H|Ass],Ass1) ; Ass1=Ass),
+	(Var =:= 1 -> sort([H|Ass],Ass1); Ass1=Ass),
 	length(Ass1,Len),
 	%search(N,B,T,Ass1),
 	%assert_sym(N,Ass1).
