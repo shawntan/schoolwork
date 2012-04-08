@@ -1,0 +1,32 @@
+Question 1:
+The other method of averaging would take into account the exact
+number of incorrectly classified instances per class, then using
+this to calculate the actual percentage for precision and
+recall. This gives equal weight to each document rather than
+to each category.
+
+For example, if there are only two categories and one has
+siginificantly fewer instances, the average precision and recall
+would be closer to that of the category with more instances.
+However, if macro averaging is used, both categories would be
+given equal weightage.
+
+Question 2:
+In this case, we should use a weighted metric when performing
+the averaging. This, however, should be done after normalising
+the values by finding first the precision and recall. A weighted
+average should then be taken.
+
+One possibility is to give "News" twice the importance of
+"Sports" or "Arts" by calculating the average as follows:
+
+		2*News + Sports + Arts
+		----------------------
+				   4
+for the precision, recall and F1 values, performing a macro
+weighted-average. 
+
+Question 3:
+Using interpolated precision, the F-measure would non-decreasing.
+The interpolated precision simulates a patient user who is willing
+to click through multiple pages to get a relevant result.

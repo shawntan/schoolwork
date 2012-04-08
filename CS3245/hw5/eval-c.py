@@ -37,12 +37,20 @@ if __name__=='__main__':
 	read_gold_standard(params['-g'])
 	read_classes(params['-c'])
 	read_predictions(params['-p'])
-
-
+	psum = rsum = fsum = 0
 	FILE = open(params['-o'],'w')
 	for i in tp:
 		precision = 100*float(tp[i])/float(tp[i] + fp[i])
 		recall = 100*float(tp[i])/float(tp[i] + fn[i])
-		FILE.write("Precision of %s: %02.2f\n" % (i,precision))
-		FILE.write("Recall of %s: %02.2f\n" % (i,precision))
-		FILE.write("F1 of %s: %2.2f\n" % (i, 2*(precision*recall/(precision+recall))))
+		f_measure = 2*(precision*recall/(precision+recall))
+		psum += precision
+		rsum += recall
+		fsum += f_measure
+		FILE.write("Precision of %s: %2.2f\n" % (i,precision))
+		FILE.write("Recall of %s: %2.2f\n" % (i,recall))
+		FILE.write("F1 of %s: %2.2f\n" % (i,f_measure))
+	classes = len(tp)
+	FILE.write("Average Precision: %02.2f\n" % (psum/classes))
+	FILE.write("Average Recall: %02.2f\n" % (rsum/classes))
+	FILE.write("Average F1: %02.2f\n" % (fsum/classes))
+	FILE.close()
