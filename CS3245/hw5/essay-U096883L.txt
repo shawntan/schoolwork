@@ -29,4 +29,7 @@ weighted-average.
 Question 3:
 Using interpolated precision, the F-measure would non-decreasing.
 The interpolated precision simulates a patient user who is willing
-to click through multiple pages to get a relevant result.
+to click through multiple pages to get a relevant result. As
+such, our results would definitely be different if we used
+average actual precision, and it would not be indicative of the
+quality of our results.
