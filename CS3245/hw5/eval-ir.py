@@ -8,7 +8,7 @@ def get_lines(l,gs_file,pred_file):
 	return gs,pd
 
 def evaluate(gs,pd):
-	total = len(pd)
+	total = len(gs)
 	retrieved = 0
 	relevant  = 0
 
@@ -39,6 +39,6 @@ if __name__=='__main__':
 	for r,p in result:
 		FILE.write("Precision at Rank %d: %2.2f\n" % (i,p))
 		FILE.write("Recall at Rank %d: %2.2f\n" % (i,r))
-		FILE.write("F1 at Rank %d: %2.2f\n" % (i, 2*(p*r/(p+r))))
+#		FILE.write("F1 at Rank %d: %2.2f\n" % (i, 2*(p*r/(p+r))))
 		i+=1
 	FILE.close()
