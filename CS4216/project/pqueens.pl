@@ -126,13 +126,17 @@ test(N,B,W) :-
 	Cost #>= N*N - UpperBound,
 	writeln(Cost),
 	generate_cells(N,L),
-	bb_min(
-		(
+	Q #= sum(Blacks),
+	%bb_min(
+	%findall(_,(
+	minimize((
 			search(N,B,L,[]),
-			labeling(Whites)
-		),
-	Cost,_),
-	print_grid(N,B,W).
+			labeling(Whites),
+			print_grid(N,B,W),
+			writeln(Q)
+	),Cost).
+	%),_).
+	%Cost,_),
 
 print_grid(N,Black,White) :-
 	(count(I,1,N),param(White,Black,N) do
@@ -146,6 +150,9 @@ print_grid(N,Black,White) :-
 				); write('?')
 			),write(' ')
 		),nl
-	).
+	),nl.
+
+:-test(9,B,W).
+:-halt.
 
 

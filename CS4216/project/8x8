@@ -1,0 +1,24 @@
+_152462{32 .. 48}
+B B B B _ _ _ _ 
+_ B B B _ _ _ _ 
+_ _ _ _ _ _ W W 
+_ _ _ B _ _ _ _ 
+_ _ _ _ _ _ _ _ 
+_ _ _ _ W _ _ _ 
+_ _ _ _ W W _ _ 
+_ _ _ _ W W W _ 
+
+8
+Found a solution with cost 48
+_ _ B B B _ _ B 
+_ _ B B _ _ _ B 
+_ _ _ _ _ _ _ B 
+_ _ _ _ B _ _ _ 
+_ W _ _ _ _ _ _ 
+W W _ _ _ W _ _ 
+W _ _ _ _ W W _ 
+_ _ _ _ _ W W _ 
+
+9
+Found a solution with cost 46
+Found no solution with cost 32.0 .. 45.0
