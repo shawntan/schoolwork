@@ -1,0 +1,299 @@
+Question 1
+==========
+No. There is to little information within the URL to be able to make an
+accurate classification using token-based n-grams. Moreover, webmasters
+typically use acronyms in order to keep URLs short. As such, unless a database
+of acronyms is readily available, a classifier would not be able to make a
+good inference of which category the URL belongs to.
+
+I would convert all numbers to a special <NUMBER> token, since numbers
+are usually used as IDs. Ignoring them would result in loss of valuable
+information, but keeping them as-is would result in that token having a low
+probability for any class. I would tokenise the given URL as such:
+www cnn com us <NUMBER> <NUMBER> hot hot hot video html
+
+Question 2
+==========
+More data would give a wider distribution of probability of the ngrams. This
+is assuming an even distribution of new data from various different sites. If
+this extra data is available, then the learned model would be able to make a
+better classification.
+
+Having more data for Arts may cause the learned classifier to be biased, and
+classify more instances as Arts. This is because the number of instances of
+Arts URLs observed are higher, increasing the ngram counts for certain ngrams.
+This might then result in a higher probability for these ngrams, and cause the
+probabilty for a given URL to be classified as an Arts URL to be higher
+
+Question 3
+==========
+Some improvement should be seen. For example, consider a URL with the words
+'all-stars' in them. This may be seen at another site with another method of
+dealing with spaces in their URLs -- 'all_stars' for example. These URLs are
+likely to belong to the Sports category, but before stripping out such
+punctuation, these would exist as different N-grams in the model: 'all-s',...
+and 'all_s' ... Stripping them out would combine number of observations of
+'allst','llsta',... N-grams, and as a result improve the classifiers accuracy.
+
+The same idea applies also to bringing down all characters to the lower case.
+Using the same example, "AllStars" and "allstars" would again be seen as
+separate N-grams.
+
+
+Question 4
+==========
+Increasing or decreasing the N-gram may result in a poorer language model,
+since decreasing N would result in short character sequences of 2-3 or even
+one that are not significant enough to determine the source of a given URL.
+Increasing N, may result in overfitting to the dataset - the language model
+would only contain N-grams seen during training, and would see new instances
+to be classified as new, and equally likely to have come from either source.
+
+
+Please write your answers to the essay questions in this file.
+
+If you have supporting evidence from any experiments that you
+conducted, remember to document them here and leave the code (suitably
+commented out) in the actual *.py files.  You may receive a small
+number bonus points if you do so.
+
+1. You will observe that a large portion of the terms in the
+   dictionary are numbers. However, we normally do not use numbers as
+   query terms to search. Do you think it is a good idea to remove
+   these number entries from the dictionary and the postings lists?
+   Can you propose methods to normalize these numbers? How many
+   percentage of reduction in disk storage do you observe after
+   removing/normalizing these numbers?
+
+	Due to the many different possible combinations of numbers, and the
+generally low frequency with which a unique number appears, storing numbers
+would take up a significant amount of storage space given a large corpus.
+
+	On the other hand, removing numbers may remove important details that
+users may want to search for, like product model numbers, or when users want
+to do a "reverse-lookup" of a phone number they have.
+
+	One possible way of normalising numbers might be to convert any occurrence
+of a number to a '#'. This will still cause loss of information, but
+formatting of numbers can be kept. For example, a phone number like +65
+6123-4567 would be converted to +## ####-####. Any search for phone numbers in
+that format would give that site.
+
+Below are the experimental results for the different ways of indexing (sizes
+in KB):
+
+							Dictionary	Postings List	
+	No removal of numbers	550			43521
+	No numbers				395			37338
+	Replacing with '#'		397			39331
+
+The dictionary sees a 30% drop when we remove occurrences of numbers, while
+only 9% in the postings list. This shows that the number of occurences of each
+number is not great, and the unique number of numerical occurences in
+proportion to the rest of the vocabulary is pretty significant. The results
+also show that replacing numerical occurences with '#' does not increase the
+dictionary or the postings list by much.
+
+Another way of dealing with numerical occurences is to sort them into bins
+with ranges of equal occurrence frequencies, and index using these bins. This
+may take more computation during indexing, but users would be able to look up
+numbers close to their query.
+
+2. What do you think will happen if we remove stop words from the
+   dictionary and postings file? How does it affect the searching
+   phase?
+
+	Removal of stopwords will only affect the dictionary by a factor of the
+size of the stopword list. However, since stopwords are commonly occuring
+words that appear frequently, we should expect to see a dramatic decrease in
+the size of the postings list.
+
+Below are the results when we tried removing AND not removing stopwords (sizes
+in KB):
+							Dictionary	Postings List
+	No removal of stopwords	548			53708
+	Stopwords removed		544			42552
+
+The postings list has a 20% decrease in disk space size, while the change in
+dictionary size was about 4KB, a small proportion of the dictionary size. This
+confirms our earlier hypothesis.
+	
+3. The NLTK tokenizer may not correctly tokenize all terms. What do
+   you observe from the resulting terms produced by sent_tokenize()
+   and word_tokenize()? Can you propose rules to further refine these
+   results?
+ sent_tokenize() assumes text between periods are sentences, and therefore
+parses terms like Mr. or acronyms like W.H.O. wrongly. This could be solved by
+having a threshold minimum value for sentence length, or having a list of
+terms to ignore as sentence-enders.
+
+word_tokenize() does not tokenize hyphenated words. This may pose problems
+during indexing as terms such as US-Japan should be tokenized into separate
+terms. A simple fix would be to include '-' as a delimiter as well, but this
+might result in hyphenated words like co-operate being split.
+1. We can continue to exclude stopwords during indexing, and
+then treat stopwords as 'invisible' words during search. For
+example, when searching "national university of singapore", the
+search would instead be for:
+
+("national",x) AND ("university",x+1) AND ("singapore",x+3)
+
+Where x is the positon for the term "national" within the
+document.
+
+This way, no extra space would be used, and results are
+_likely_ to be relevant. This would be a cost saving compared to
+indexing all of the stopwords just to enable using stopwords in
+phrasal queries.
+
+2. My implementation of dictionary as a string uses pointers
+written in plain text. Many of these are longer than 4 bytes and
+as such, the resulting size of the "compressed" dictionary is
+larger than the original. Here are the original values of the 
+dictionary.txt files in bytes.
+
+Before "compression"	After "compression"
+510225					691801
+
+Since each of the files have 28073 entries, and there are 172727
+characters in the dictionary as a string, then there are an
+average of 6.152 characters per word. This means that, assuming
+we use 4 bytes per pointer, we can arrive at the actual
+compressed size of the dictionary from the original by:
+
+	 Original Size + No. of Lines * (4 - 6.152)
+
+This would give us about 449809.752 as the new size of the
+dictionary. Using these estimates, we can comeup with a table of
+estimated dictionary sizes given different types of compression:
+
+
+							Size		delta %		T%
+(a) Original				510225		
+(b) Dictionary as String	449810		11.8		11.8
+(c) Blocking				365571		18.7		28.4
+
+Here, the size of the dictionary using blocking was computed by
+subtracting the size of all the terms put together (172727) by
+the size of the original dictionary (510225), and then adding
+the size of new pointers: multiplying the number of entries
+with pointers (floor(28073/4)), by 4. This gives 365571.
+
+3. Having already implemented a prefix tree for the
+dictionary, I would traverse down the dictionary with the
+characters a,u,t,o,m,a,t. An 'OR' operation between the 
+leaves of this sub-tree would then give us our result.
+
+4. I would have to enumerate through every item in the hash and
+check if the item begins with "automat". Using a prefix tree
+would be a more efficient search strategy, since using a hash
+table would require linear time in the dictionary size, while
+using a prefix tree, the lookup will be linear in the size of
+the search string.
+
+I would not recommend this data structure over a tree
+implementation.
+1. In this assignment, we didn't ask you to support phrasal
+queries, which is a feature that is typically supported in web
+search engines. Describe how you would support phrasal search in
+conjunction with the VSM model. A sketch of the algorithm is
+sufficient. (For those of you who like a challenge, please go
+ahead and implement this feature in your submission but clearly
+demarcate it in your code and allow this feature to be turned on
+or off using the command line switch "-x" (where "-x" means to
+turn on the extended processing of phrasal queries). We will
+give a small bonus to submissions that achieve this
+functionality correctly).
+
+One possible way of implementing phrasal search would be the
+following:
+
+	1. Treat the phrasal part of the query as another term
+	in the query.
+
+	2. Evaluate the number of files that have the phrase.
+	   This will be the df_t
+
+	3. After OR-ing the different terms, perform the same kind of
+	evaluation as before, still treating the phrasal query as a
+	single term.
+
+	4. Since we have the tf_t, and the df_t, it is possible to
+	compute the cosine similarity of the query and the document, and
+	so we can again compute the score for each document
+
+This method, however, does not allow for any variation in the
+phrases. For example, a document with "Singapore's National
+University", would not be considered with a query of "National
+University of Singapore". One possible way to rectify this, is
+to retrieve the document as we normally would, but then give a
+penalty when we see missing words or permutations of the
+original phrase. One possibility would be to check the squared
+error of the term positions, based on the first term in the
+phrase.
+
+Query :		"National University of Singapore"
+Document:	"Singapore's National University"
+
+after preprocessing
+
+Query :		"national university singapore"
+Document:	"singapore national university"
+
+first word is national, so for a national at position i,
+university should be at i+1, and document should be at i + 2.
+In this case, "singapore" is at i-1, so cost incurred:
+
+	error = ((i+2) - (i-1))^2 = 9
+
+This should then be subject to some type of tunable coefficient
+to get better ranking results based on user feedback.
+
+	score = cosine_sim - coeff*Error
+
+
+2. Describe how your search engine reacts to long documents and
+long queries as compared to short documents and queries. Is the
+normalization you use sufficient to address the problems (see
+Section 6.4.4 for a hint)? In your judgement, is the lnc.ltc
+scheme (n.b., not the ranking scheme you were asked to
+implement) sufficient for retrieving documents from the
+Reuters-21578 collection?
+
+Longer documents and long queries tend to be ranked higher than
+short queries and short documents. This is due to the fact that
+the longer documents tend to have a higher number of occurences
+of query terms. Shorter terms with shorter queries mean that
+each term in the query has a higher weightage as well. The
+normalisation used is insufficient, as it has a bias towards
+longer documents.
+
+For the Reuters corpus, many of the articles are of a single
+topic, and the terms tend to be homogeneous throughout the
+document. This tends to mean that the number of unique terms per
+document are fairly standard, and since lnc.ltc normalises the
+word occurences based on the vector length, this has already
+been accounted for. As such, I believe that the lnc.ltc scheme
+is sufficient.
+
+
+3. Do you think zone or field parametric indices would be useful
+for practical search in the Reuters collection? Note: the
+Reuters collection does have metadata for each article but the
+quality of the metadata is not uniform, nor are the metadata
+classifications uniformly applied (some documents have it, some
+don't).
+
+If we make the assumption that a search through the Reuters
+corpora is to find _every_ occurence of a certain search term,
+then using parametric indeces on a corpus like this with
+incomplete metadata is potentially dangerous, as important
+information may not be retrieved.
+
+However, if the search need not be complete, and the corpus has
+a relatively high percentage of documents with the metadata in
+question, and document retrieval is not expected to be a 100%,
+then indexing the corpus may prove to be useful in narrowing down
+search queries.
+
+

@@ -1,0 +1,1 @@
+for i in {3..8}; do echo "test($i,B,W),halt." | ../eclipse -b pqueens.pl > results/$i; done

@@ -1,0 +1,196 @@
+\documentclass[a4paper,landscape]{article}
+\pagestyle{empty}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage[left=0cm,top=0.2cm,right=0cm,bottom=0.2cm,nohead,nofoot]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{beramono}
+\usepackage[bookmarksopen,bookmarksdepth=20]{hyperref}
+\definecolor{pgcolor}{HTML}{F5F5F5}
+\definecolor{headingcolor}{HTML}{080808}
+\pagecolor{pgcolor}
+\begin{document}
+\setlength\LTleft\parindent
+\setlength\LTright\fill
+\setlength{\LTpre}{-10pt}
+\textcolor{headingcolor}{\textbf{\texttt{../lab4/U096883L-lab4-part3.c}}}\\
+\textcolor{headingcolor}{\rule{\linewidth}{1.0mm}}\\
+\newcolumntype{C}{>{\color[HTML]{080808}\columncolor[HTML]{F5F5F5}}l}
+\newcolumntype{N}{>{\color[HTML]{000000}\columncolor[HTML]{7496CF}}l}
+\begin{longtable}{NC}
+\texttt{   1 }&\mbox{\texttt{ }}\\
+\texttt{   2 }&\mbox{\texttt{ \#include\hspace{1ex}<stdlib.h>}}\\
+\texttt{   3 }&\mbox{\texttt{ \#include\hspace{1ex}<stdio.h>}}\\
+\texttt{   4 }&\mbox{\texttt{ \#include\hspace{1ex}<{\color[HTML]{A71D5D}\textit{string}}.h>}}\\
+\texttt{   5 }&\mbox{\texttt{ \#include\hspace{1ex}<unistd.h>}}\\
+\texttt{   6 }&\mbox{\texttt{ \#include\hspace{1ex}<sys/wait.h>}}\\
+\texttt{   7 }&\mbox{\texttt{ \#include\hspace{1ex}<sys/time.h>}}\\
+\texttt{   8 }&\mbox{\texttt{ }}\\
+\texttt{   9 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{3ex}ignore\_errors\hspace{3ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  10 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{3ex}verbose\hspace{3ex}\hspace{3ex}\hspace{3ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  11 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{3ex}*argfile\hspace{3ex}\hspace{3ex}=\hspace{1ex}NULL;}}\\
+\texttt{  12 }&\mbox{\texttt{ }}\\
+\texttt{  13 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{3ex}error\_seen\hspace{3ex}\hspace{3ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  14 }&\mbox{\texttt{ }}\\
+\texttt{  15 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{3ex}**fa\_argv;}}\\
+\texttt{  16 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{int}}\hspace{3ex}\hspace{3ex}fa\_argc;}}\\
+\texttt{  17 }&\mbox{\texttt{ {\color[HTML]{794938}void}\hspace{1ex}print\_argv({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**args)}}\\
+\texttt{  18 }&\mbox{\texttt{ \{}}\\
+\texttt{  19 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}i={\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  20 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}while}(args[i])\hspace{1ex}printf(''\%s\hspace{1ex}'',args[i++]);}}\\
+\texttt{  21 }&\mbox{\texttt{ \hspace{3ex}printf(''{\color[HTML]{696969}\textbf{$\backslash$n}}'');}}\\
+\texttt{  22 }&\mbox{\texttt{ \}}}\\
+\texttt{  23 }&\mbox{\texttt{ }}\\
+\texttt{  24 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}set\_opts({\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}argc,\hspace{1ex}{\color[HTML]{A71D5D}\textit{char}}**\hspace{1ex}argv)}}\\
+\texttt{  25 }&\mbox{\texttt{ \{}}\\
+\texttt{  26 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}i={\color[HTML]{811F24}\textbf{1}};}}\\
+\texttt{  27 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}while}(i<argc)}}\\
+\texttt{  28 }&\mbox{\texttt{ \hspace{3ex}\{}}\\
+\texttt{  29 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(argv[i][{\color[HTML]{811F24}\textbf{0}}]\hspace{1ex}==\hspace{1ex}'-')}}\\
+\texttt{  30 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{  31 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}pos\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{1}},\hspace{1ex}len\hspace{1ex}=\hspace{1ex}strlen(argv[i]);}}\\
+\texttt{  32 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}while}(pos\hspace{1ex}\&\&\hspace{1ex}pos\hspace{1ex}<\hspace{1ex}len)}}\\
+\texttt{  33 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{  34 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}o\hspace{1ex}=\hspace{1ex}argv[i][pos];}}\\
+\texttt{  35 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{5A525F}\textit{{\color[HTML]{5A525F}\textit{//}}printf(''\hspace{1ex}\%c\hspace{1ex}'',o);}}}}\\
+\texttt{  36 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}switch}(o)}}\\
+\texttt{  37 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{  38 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}case}\hspace{1ex}'i':}}\\
+\texttt{  39 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}ignore\_errors\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{1}};}}\\
+\texttt{  40 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}pos++;}}\\
+\texttt{  41 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}break};}}\\
+\texttt{  42 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}case}\hspace{1ex}'v':}}\\
+\texttt{  43 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}verbose\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{1}};}}\\
+\texttt{  44 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}pos++;}}\\
+\texttt{  45 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}break};}}\\
+\texttt{  46 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}case}\hspace{1ex}'a':}}\\
+\texttt{  47 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}argfile\hspace{1ex}=\hspace{1ex}argv[++i];}}\\
+\texttt{  48 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}pos={\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  49 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}break};}}\\
+\texttt{  50 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}default}:}}\\
+\texttt{  51 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}printf(''Unknown\hspace{1ex}option\hspace{1ex}\%c{\color[HTML]{696969}\textbf{$\backslash$n}}'',o);}}\\
+\texttt{  52 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}exit({\color[HTML]{811F24}\textbf{1}});}}\\
+\texttt{  53 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}break};}}\\
+\texttt{  54 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{  55 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{  56 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{  57 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}{\color[HTML]{794938}else}\hspace{1ex}{\color[HTML]{794938}return}\hspace{1ex}i;}}\\
+\texttt{  58 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}i++;}}\\
+\texttt{  59 }&\mbox{\texttt{ \hspace{3ex}\}}}\\
+\texttt{  60 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}return}\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  61 }&\mbox{\texttt{ \}}}\\
+\texttt{  62 }&\mbox{\texttt{ }}\\
+\texttt{  63 }&\mbox{\texttt{ {\color[HTML]{794938}void}\hspace{1ex}read\_file({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}*argfile)}}\\
+\texttt{  64 }&\mbox{\texttt{ \{}}\\
+\texttt{  65 }&\mbox{\texttt{ \hspace{3ex}FILE\hspace{1ex}*af\hspace{1ex}=\hspace{1ex}fopen(argfile,''r'');}}\\
+\texttt{  66 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**args\hspace{1ex}=\hspace{1ex}({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**)malloc({\color[HTML]{794938}sizeof}({\color[HTML]{A71D5D}\textit{char}}**)*{\color[HTML]{811F24}\textbf{64}});}}\\
+\texttt{  67 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}argc\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{  68 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}buf[{\color[HTML]{811F24}\textbf{128}}];}}\\
+\texttt{  69 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}while}((fscanf(af,''\%s'',buf))!=EOF)}}\\
+\texttt{  70 }&\mbox{\texttt{ \hspace{3ex}\{}}\\
+\texttt{  71 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}unsigned\hspace{1ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}size\hspace{1ex}=\hspace{1ex}strlen(buf);}}\\
+\texttt{  72 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}*arg\hspace{1ex}=\hspace{1ex}({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}*)malloc(size);}}\\
+\texttt{  73 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}strncpy(arg,buf,size);}}\\
+\texttt{  74 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}args[argc++]\hspace{1ex}=\hspace{1ex}arg;}}\\
+\texttt{  75 }&\mbox{\texttt{ \hspace{3ex}\}}}\\
+\texttt{  76 }&\mbox{\texttt{ \hspace{3ex}args[argc]\hspace{1ex}=\hspace{1ex}NULL;\hspace{3ex}}}\\
+\texttt{  77 }&\mbox{\texttt{ \hspace{3ex}fa\_argv\hspace{1ex}=\hspace{1ex}args;}}\\
+\texttt{  78 }&\mbox{\texttt{ \hspace{3ex}fa\_argc\hspace{1ex}=\hspace{1ex}argc;}}\\
+\texttt{  79 }&\mbox{\texttt{ \}}}\\
+\texttt{  80 }&\mbox{\texttt{ }}\\
+\texttt{  81 }&\mbox{\texttt{ }}\\
+\texttt{  82 }&\mbox{\texttt{ }}\\
+\texttt{  83 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**append\_args({\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}argc,\hspace{1ex}{\color[HTML]{A71D5D}\textit{char}}**\hspace{1ex}argv)}}\\
+\texttt{  84 }&\mbox{\texttt{ \{}}\\
+\texttt{  85 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**new\_args\hspace{1ex}=\hspace{1ex}({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**)malloc({\color[HTML]{794938}sizeof}({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**)\hspace{1ex}*\hspace{1ex}(argc\hspace{1ex}+\hspace{1ex}fa\_argc\hspace{1ex}+\hspace{1ex}{\color[HTML]{811F24}\textbf{1}}));}}\\
+\texttt{  86 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{5A525F}\textit{{\color[HTML]{5A525F}\textit{//}}printf(''\%d\hspace{1ex}\%d\hspace{1ex}\%d$\backslash$n'',argc,fa\_argc,argc+fa\_argc);}}}}\\
+\texttt{  87 }&\mbox{\texttt{ \hspace{3ex}memcpy(new\_args,\hspace{3ex}\hspace{3ex}argv,\hspace{3ex}argc*{\color[HTML]{794938}sizeof}({\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**));}}\\
+\texttt{  88 }&\mbox{\texttt{ \hspace{3ex}memcpy(new\_args\hspace{1ex}+\hspace{1ex}argc,\hspace{3ex}fa\_argv,fa\_argc*{\color[HTML]{794938}sizeof}({\color[HTML]{A71D5D}\textit{char}}**));}}\\
+\texttt{  89 }&\mbox{\texttt{ \hspace{3ex}new\_args[argc+fa\_argc]\hspace{1ex}=\hspace{1ex}NULL;}}\\
+\texttt{  90 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}return}\hspace{1ex}new\_args;}}\\
+\texttt{  91 }&\mbox{\texttt{ \}}}\\
+\texttt{  92 }&\mbox{\texttt{ }}\\
+\texttt{  93 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}child\_pid;}}\\
+\texttt{  94 }&\mbox{\texttt{ {\color[HTML]{794938}void}\hspace{1ex}timeout\_handler({\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}a)}}\\
+\texttt{  95 }&\mbox{\texttt{ \{}}\\
+\texttt{  96 }&\mbox{\texttt{ \hspace{3ex}kill(child\_pid,{\color[HTML]{811F24}\textbf{9}});}}\\
+\texttt{  97 }&\mbox{\texttt{ \hspace{3ex}printf(''hihihi{\color[HTML]{696969}\textbf{$\backslash$n}}'');}}\\
+\texttt{  98 }&\mbox{\texttt{ \}}}\\
+\texttt{  99 }&\mbox{\texttt{ }}\\
+\texttt{ 100 }&\mbox{\texttt{ {\color[HTML]{794938}void}\hspace{1ex}milli\_alarm({\color[HTML]{A71D5D}\textit{long}}\hspace{1ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}ms)}}\\
+\texttt{ 101 }&\mbox{\texttt{ \{}}\\
+\texttt{ 102 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{struct}}\hspace{1ex}itimerval\hspace{1ex}old,\hspace{1ex}{\color[HTML]{794938}new};}}\\
+\texttt{ 103 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}new}.it\_interval.tv\_usec\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 104 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}new}.it\_interval.tv\_sec\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 105 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}new}.it\_value.tv\_sec\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 106 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}new}.it\_value.tv\_usec\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{1000}}*ms;}}\\
+\texttt{ 107 }&\mbox{\texttt{ \hspace{3ex}setitimer(ITIMER\_VIRTUAL,\hspace{1ex}\&{\color[HTML]{794938}new},NULL);}}\\
+\texttt{ 108 }&\mbox{\texttt{ \}}}\\
+\texttt{ 109 }&\mbox{\texttt{ }}\\
+\texttt{ 110 }&\mbox{\texttt{ FILE\hspace{1ex}*f;}}\\
+\texttt{ 111 }&\mbox{\texttt{ {\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}main({\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}argc,{\color[HTML]{A71D5D}\textit{char}}**\hspace{1ex}argv,{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}*envp[])}}\\
+\texttt{ 112 }&\mbox{\texttt{ \{}}\\
+\texttt{ 113 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}a;}}\\
+\texttt{ 114 }&\mbox{\texttt{ \hspace{3ex}f\hspace{1ex}=\hspace{1ex}stdin;}}\\
+\texttt{ 115 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}if}((a\hspace{1ex}=\hspace{1ex}set\_opts(argc,argv)))\hspace{1ex}f\hspace{1ex}=\hspace{1ex}fopen(argv[a],''r'');}}\\
+\texttt{ 116 }&\mbox{\texttt{ }}\\
+\texttt{ 117 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}if}(argfile\hspace{1ex}!=\hspace{1ex}NULL)\hspace{1ex}read\_file(argfile);}}\\
+\texttt{ 118 }&\mbox{\texttt{ }}\\
+\texttt{ 119 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{5A525F}\textit{{\color[HTML]{5A525F}\textit{//}}printf(''\%d\hspace{1ex}\%d\hspace{1ex}\%s$\backslash$n'',ignore\_errors,verbose,argfile);}}}}\\
+\texttt{ 120 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}input[{\color[HTML]{811F24}\textbf{128}}];}}\\
+\texttt{ 121 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}stat\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 122 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}while}(fgets(input,{\color[HTML]{794938}sizeof}(input),f)!=NULL)}}\\
+\texttt{ 123 }&\mbox{\texttt{ \hspace{3ex}\{}}\\
+\texttt{ 124 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}unsigned\hspace{1ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}j\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 125 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}input[strlen(input)-{\color[HTML]{811F24}\textbf{1}}]\hspace{1ex}=\hspace{1ex}'{\color[HTML]{696969}\textbf{$\backslash$0}}';}}\\
+\texttt{ 126 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(input[{\color[HTML]{811F24}\textbf{0}}]\hspace{1ex}!='\#')\hspace{1ex}}}\\
+\texttt{ 127 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{ 128 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}*\hspace{1ex}toks[{\color[HTML]{811F24}\textbf{64}}];}}\\
+\texttt{ 129 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}*\hspace{1ex}token;}}\\
+\texttt{ 130 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}token\hspace{1ex}=\hspace{1ex}strtok(input,''\hspace{1ex}'');}}\\
+\texttt{ 131 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}while}(token\hspace{1ex}!=NULL)}}\\
+\texttt{ 132 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{ 133 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}toks[j++]\hspace{1ex}=\hspace{1ex}token;}}\\
+\texttt{ 134 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}token\hspace{1ex}=\hspace{1ex}strtok(NULL,''\hspace{1ex}'');}}\\
+\texttt{ 135 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{ 136 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}toks[j]\hspace{1ex}=\hspace{1ex}NULL;}}\\
+\texttt{ 137 }&\mbox{\texttt{ }}\\
+\texttt{ 138 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{char}}\hspace{1ex}**args;}}\\
+\texttt{ 139 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(argfile\hspace{1ex}!=\hspace{1ex}NULL)\hspace{1ex}args\hspace{1ex}=\hspace{1ex}append\_args(j,toks);}}\\
+\texttt{ 140 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}else}\hspace{1ex}args\hspace{1ex}=\hspace{1ex}toks;}}\\
+\texttt{ 141 }&\mbox{\texttt{ }}\\
+\texttt{ 142 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(verbose)\hspace{1ex}print\_argv(args);}}\\
+\texttt{ 143 }&\mbox{\texttt{ }}\\
+\texttt{ 144 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}switch}(child\_pid\hspace{1ex}=\hspace{1ex}fork())}}\\
+\texttt{ 145 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{ 146 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}case}\hspace{1ex}-{\color[HTML]{811F24}\textbf{1}}:}}\\
+\texttt{ 147 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}exit({\color[HTML]{811F24}\textbf{1}});}}\\
+\texttt{ 148 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}case}\hspace{1ex}{\color[HTML]{811F24}\textbf{0}}:}}\\
+\texttt{ 149 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}stat\hspace{1ex}=\hspace{1ex}execvp(args[{\color[HTML]{811F24}\textbf{0}}],args);}}\\
+\texttt{ 150 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}printf(''hello{\color[HTML]{696969}\textbf{$\backslash$n}}'');}}\\
+\texttt{ 151 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}exit(stat);}}\\
+\texttt{ 152 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}default}:}}\\
+\texttt{ 153 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}signal(SIGALRM,timeout\_handler);}}\\
+\texttt{ 154 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}milli\_alarm({\color[HTML]{811F24}\textbf{1}});}}\\
+\texttt{ 155 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}waitpid(child\_pid,\&stat,{\color[HTML]{811F24}\textbf{0}});}}\\
+\texttt{ 156 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}printf(''done{\color[HTML]{696969}\textbf{$\backslash$n}}'');}}\\
+\texttt{ 157 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(argfile\hspace{1ex}!=\hspace{1ex}NULL)\hspace{1ex}free(args);}}\\
+\texttt{ 158 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{ 159 }&\mbox{\texttt{ }}\\
+\texttt{ 160 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{A71D5D}\textit{int}}\hspace{1ex}exitstat\hspace{1ex}=\hspace{1ex}WEXITSTATUS(stat);}}\\
+\texttt{ 161 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}\hspace{1ex}(exitstat)}}\\
+\texttt{ 162 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{ 163 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(ignore\_errors)\hspace{1ex}error\_seen\hspace{1ex}=\hspace{1ex}{\color[HTML]{811F24}\textbf{1}};}}\\
+\texttt{ 164 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}else}}}\\
+\texttt{ 165 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\{}}\\
+\texttt{ 166 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}if}(exitstat\hspace{1ex}==\hspace{1ex}{\color[HTML]{811F24}\textbf{255}})\hspace{1ex}exit({\color[HTML]{811F24}\textbf{1}});}}\\
+\texttt{ 167 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}{\color[HTML]{794938}else}\hspace{1ex}exit({\color[HTML]{811F24}\textbf{1}});}}\\
+\texttt{ 168 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{ 169 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{ 170 }&\mbox{\texttt{ \hspace{3ex}\hspace{3ex}\}}}\\
+\texttt{ 171 }&\mbox{\texttt{ \hspace{3ex}\}}}\\
+\texttt{ 172 }&\mbox{\texttt{ \hspace{3ex}{\color[HTML]{794938}return}\hspace{1ex}{\color[HTML]{811F24}\textbf{0}};}}\\
+\texttt{ 173 }&\mbox{\texttt{ \}}}\\
+\end{longtable}
+\end{document}

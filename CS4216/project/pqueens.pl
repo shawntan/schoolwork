@@ -12,7 +12,8 @@ constraints(N,Black,White) :-
 	(
 		foreacharg(BR,Black),
 		foreacharg(WR,White),
-		count(I,1,N),param(N,White,Black) do
+		count(I,1,N),
+		param(N,White,Black) do
 			(foreacharg(BC,BR),
 				foreacharg(WC,WR),
 				count(J,1,N),param(N,I,White,Black) do
@@ -26,6 +27,14 @@ constraints(N,Black,White) :-
 	
 	
 	/* restricting minimum and maximum no. of queens */
+	sym_cons(N,Black),
+	transpose(Black,TBlack),
+	sym_cons(N,TBlack),
+	sym_dcons(Black),
+	vflip(Black,FBlack),
+	sym_dcons(FBlack),
+	
+
 
 	flatten_array(Black,BlackQueens),4*sum(BlackQueens) #=< QRes,
 	flatten_array(White,WhiteQueens), 4*sum(WhiteQueens) #=< QRes,
@@ -35,6 +44,31 @@ constraints(N,Black,White) :-
 		8*sum(WhiteQueens) #>= N*N;
 		true
 	).
+
+sym_cons(N,Grid) :-
+	(foreacharg(BR,Grid),
+	 fromto(([],[]),(TRowIn,BRowIn),(TRowOut,BRowOut),(TopSum,BotSum)),
+	 count(I,1,N),param(N) do
+	flatten_array(BR,RList),
+	(I < N/2 ->
+		append(TRowIn,RList,TRowOut),BRowOut = BRowIn;
+		(I > N/2 ->
+			append(BRowIn,RList,BRowOut),TRowOut = TRowIn;
+			BRowOut = BRowIn,TRowOut = TRowIn
+		)
+	)),
+	sum(TopSum) #>= sum(BotSum).
+sym_dcons(Grid) :-
+	(foreachelem(E,Grid,[I,J]),fromto(([],[]),(TRIn,BLIn),(TROut,BLOut),(TRSum,BLSum)) do
+		(I < J ->
+			TROut = [E|TRIn], BLOut = BLIn;
+			(I > J ->
+				BLOut = [E|BLIn], TROut = TRIn;
+				BLOut = BLIn, TROut = TRIn
+			)
+		)
+	),
+	sum(TRSum) #>= sum(BLSum).
 
 /* 3. setting up horizontal, vertical and diagonal constraints (across both boards) */
 cell_constraints(N,I,J,Grid1,Grid2) :-
@@ -74,8 +108,8 @@ search(N,B,[H|T],Ass):-
 
 	(seen(Len,Ass1) ->
 		fail;
-		search(N,B,T,Ass1),
-		assert_sym(N,Ass1)
+		search(N,B,T,Ass1)
+		%,assert_sym(N,Ass1)
 	).
 
 /*assert all rotations of current state of assignment (ugghh)*/
@@ -89,6 +123,18 @@ assert_sym(N,Ass) :-
 		sort(RotAss,SRotAss),
 		(seen(Len,SRotAss)-> true;assert(seen(Len,SRotAss)))
 	).
+
+transpose(Matrix, Transpose) :- 
+	dim(Matrix,[N,N]),dim(Transpose,[N,N]),
+	(foreachelem(E,Matrix,[I,J]),param(Transpose) do
+		subscript(Transpose,[J,I],E)).
+
+vflip(Matrix,Flipped) :-
+	dim(Matrix,[N,N]),dim(Flipped,[N,N]),
+	(foreachelem(E,Matrix,[I,J]),param(N,Flipped) do
+		J1 is N-J + 1,
+		subscript(Flipped,[I,J1],E)).
+
 
 
 /*Different rotation predicates*/
@@ -118,25 +164,19 @@ test(N,B,W) :-
 	flatten_array(B,Blacks),
 	flatten_array(W,Whites),
 	Cost #= N*N - sum(Blacks) - sum(Whites),
-	LB is 2*(N*N/8),
-	fix(LB,LowerBound),
+	LB is 2*(N*N/7),fix(LB,LowerBound),
+	UB is 2*(N*N/4),fix(UB,UpperBound),
 	Cost #=< N*N - LowerBound,
-	UB is 2*(N*N/4),
-	fix(UB,UpperBound),
 	Cost #>= N*N - UpperBound,
 	writeln(Cost),
 	generate_cells(N,L),
 	Q #= sum(Blacks),
-	%bb_min(
-	%findall(_,(
-	minimize((
+	findall(_,(
 			search(N,B,L,[]),
 			labeling(Whites),
 			print_grid(N,B,W),
 			writeln(Q)
-	),Cost).
-	%),_).
-	%Cost,_),
+	),_).
 
 print_grid(N,Black,White) :-
 	(count(I,1,N),param(White,Black,N) do
@@ -151,8 +191,4 @@ print_grid(N,Black,White) :-
 			),write(' ')
 		),nl
 	),nl.
-
-:-test(9,B,W).
-:-halt.
-
 
