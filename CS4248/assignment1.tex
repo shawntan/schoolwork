@@ -1,0 +1,63 @@
+\documentclass[]{homework}
+\begin{document}
+\header{CS4248}{Assignment 1}{U096883L Shawn Tan}
+
+\begin{enumerate}
+	\item 
+		\begin{align*}
+			\P{k} &= \frac{\displaystyle {n \choose k}}{\displaystyle {N \choose n}} =
+				\frac{n!}{k!(n-k)!} \frac{N!(N-n)!}{n!}\\
+				&= \frac{N!(N-n)!}{k!(n-k)!}
+		\end{align*}
+	\item Some Witten-Bell smoothing shit.\\
+		\begin{tabular}{| l | l | l |}
+			\hline
+					&	$P_{WB}(w | c_1)$	&	$P_{WB}(w | c_2)$ 	\\
+			\hline
+			body		&						&						\\
+			fun			&						&						\\
+			is			&						&						\\
+			jogging		&						&						\\
+			John		&						&						\\
+			loves		&						&						\\
+			Mary		&						&						\\
+			our			&						&						\\
+			strengthens	&						&						\\
+			swimming	&						&						\\
+			\hline
+		\end{tabular}
+	\item 
+		Table for edit distance.\\
+		\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			p &	5	& 4	& 3	& 4	& 3	& 4 \\
+			a &	4	& 3	& 2	& 3	& 4	& 5	\\
+			e &	3	& 2	& 1	& 2	& 3	& 4	\\
+			h &	2	& 1	& 2	& 3	& 4	& 5	\\
+			c &	1	& 2	& 3	& 4	& 5	& 6	\\
+			  &	0	& 1	& 2	& 3	& 4	& 5	\\
+			\hline
+			  &		& h	& e	& l	& p	& s	\\
+			\hline
+		\end{tabular}
+		\end{center}
+	\item
+		\begin{align*}
+			\fun{H}{X,Y}
+			&= -\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log \P{x,y}\\
+				&= -\sum_{x \in X} \sum_{y \in Y}\P{x,y} \left(\log\P{y}{x}\P{x}\right) \\
+				&= -\sum_{x \in X} \sum_{y \in Y}\P{x,y} \left(\log \P{y}{x} + \log \P{x} \right) \\
+				&= -\left(\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log	\P{y}{x} + 
+						\sum_{x \in X} \sum_{y \in Y} \P{x,y} \log \P{x} \right)\\
+				&= -\left(\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log	\P{y}{x} + 
+						\sum_{x \in X} \log \P{x}\sum_{y \in Y} \P{x,y}  \right)\\
+		\intertext{Marginalising over $y$,}
+		&= -\left(\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log{\P{y}{x}} + 
+						\sum_{x \in X} \P{x}\log \P{x}  \right)\\
+				&= \left(-\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log\P{y}{x}\right) +
+						\left(-\sum_{x \in X} \P{x}\log \P{x}  \right)\\
+				&= \fun{H}{Y\,\middle|\, X} + \fun{H}{X}
+		\end{align*}
+\end{enumerate}
+\end{document}

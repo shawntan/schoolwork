@@ -3,4 +3,6 @@
 *.swp
 *.pyc
 *.zip
+*.aux
+*.log
 __*

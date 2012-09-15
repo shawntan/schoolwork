@@ -1,0 +1,1 @@
+/home/shawn/latex/homework.cls

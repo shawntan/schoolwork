@@ -1,0 +1,56 @@
+\documentclass[12 pt]{article}
+\usepackage{amsmath}
+\title{CS4248 \\ AY 2012/13 Semester 1\\ Problem Set 1}
+\author{Shawn Tan}
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+	\item $(ab(a+\epsilon))+$
+	\item Let the DFA be $M = (Q,\Sigma,\delta,q_0,F)$.
+\begin{align*}
+	Q &= \{\\
+			&q_0, &\quad\text{both even}\\
+			&q_1, &\quad\text{0s odd}\\
+			&q_2, &\quad\text{1s odd}\\
+			&q_3  &\quad\text{both odd}\\
+		\} \\
+	F &= \{q_0\} \\
+	\delta(q_0,0) &= q_1 \\
+	\delta(q_0,1) &= q_2 \\
+	\delta(q_1,0) &= q_0 \\
+	\delta(q_1,1) &= q_3 \\
+	\delta(q_2,0) &= q_3 \\
+	\delta(q_2,1) &= q_0 \\
+	\delta(q_3,0) &= q_2 \\
+	\delta(q_3,1) &= q_1
+\end{align*}
+
+\item Let $M' = (Q,\Sigma,\delta,q_0,F')$ be the DFA that produces the complement of $L(M)$, then $F' = Q - F$.
+
+
+\item
+	\begin{enumerate}
+		\item
+		\begin{align*}
+			\left\{ \begin{matrix} a \\ b \\ c \\ e \\ f \\ g \end{matrix}\right\}
+				&\rightarrow 
+			\left\{ \begin{matrix} a \\ b \\ c \\ e \\ f \\ g \end{matrix}\right\}
+				/ \_ \Sigma
+			\\
+			\left\{ \begin{matrix} a \\ e \end{matrix}\right\}
+				&\rightarrow \epsilon / \Sigma \textunderscore \Sigma \\
+		\end{align*}
+		
+		\item
+			\begin{align*}
+				b &\rightarrow 1 / \Sigma \_ \Sigma \\
+				c &\rightarrow 1 / \Sigma \_ \Sigma \\
+				f &\rightarrow 2 / \Sigma \_ \Sigma \\
+				g &\rightarrow 2 / \Sigma \_ \Sigma \\
+			\end{align*}
+		\item $x \rightarrow \epsilon / x\_\Sigma$
+	\end{enumerate}
+\end{enumerate}
+
+\end{document}
