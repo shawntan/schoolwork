@@ -1,30 +1,66 @@
 \documentclass[]{homework}
+\usepackage{multirow}
 \begin{document}
 \header{CS4248}{Assignment 1}{U096883L Shawn Tan}
-
 \begin{enumerate}
 	\item 
 		\begin{align*}
 			\P{k} &= \frac{\displaystyle {n \choose k}}{\displaystyle {N \choose n}} =
 				\frac{n!}{k!(n-k)!} \frac{N!(N-n)!}{N!}\\
 		\end{align*}
-	\item Some Witten-Bell smoothing shit.\\
-		\begin{tabular}{| l | l | l |}
+	\item 
+		\[
+			\fun{P_{WB}}{w \,\middle|\, c_i} = \left\{\begin{array}{c l}
+					\dfrac{\fun{C}{c_i,w}}{\fun{C}{c_i} + \fun{T}{c_i}} &
+					\text{if } \fun{C}{c_i,w} > 0\\
+					\dfrac{\fun{T}{c_i}}{\fun{Z}{c_i}(\fun{C}{c_i} + \fun{T}{c_i})}&
+					\text{if } \fun{C}{c_i,w} = 0
+			\end{array}\right.
+		\]
+		\begin{align*}
+			\begin{array}{r l}
+				\fun{C}{c_1} &= 7 \\
+				\fun{T}{c_1} &= 6 \\
+				\fun{Z}{c_1} &= 4 \\
+				\fun{P_{WB}}{w \,\middle|\, c_1} &= \dfrac{6}{4\cdot(7+6)} \\
+							&\approx 0.1154
+			\end{array}
+			&
+			\begin{array}{r l}
+				\fun{C}{c_2} &= 6 \\
+				\fun{T}{c_2} &= 5 \\
+				\fun{Z}{c_2} &= 5 \\
+				\fun{P_{WB}}{w \,\middle|\, c_2} &= \dfrac{5}{5\cdot(6+5)} \\
+							&\approx 0.0909
+			\end{array}
+		\end{align*}
+		\begin{center}
+		\begin{tabular}{| l | c | l | c | l |}
 			\hline
-					&	$P_{WB}(w | c_1)$	&	$P_{WB}(w | c_2)$ 	\\
+			&
+			\multicolumn{2}{|c|}{$P_{WB}(w|c_1)$} & 
+			\multicolumn{2}{c|}{$P_{WB}(w|c_2)$} \\
 			\hline
-			body		&						&						\\
-			fun			&						&						\\
-			is			&						&						\\
-			jogging		&						&						\\
-			John		&						&						\\
-			loves		&						&						\\
-			Mary		&						&						\\
-			our			&						&						\\
-			strengthens	&						&						\\
-			swimming	&						&						\\
+			Total &
+			\multicolumn{2}{|c|}{7} & 
+			\multicolumn{2}{c|}{6} \\
+			\hline
+			& $\fun{C}{c_1,w}$	& $\fun{P_{WB}}{w \,\middle|\, c_1}$	&
+			  $\fun{C}{c_2,w}$ 	& $\fun{P_{WB}}{w \,\middle|\, c_2}$	\\
+			\hline
+			body		& 1			&	1/13	& 0			&	0.0909	\\
+			fun			& 0			&	0.1154	& 1			&	1/11	\\
+			is			& 0			&	0.1154	& 1			&	1/11	\\
+			jogging		& 0			&	0.1154	& 2			&	2/11	\\
+			John		& 1			&	1/13	& 0			&	0.0909	\\
+			loves		& 1			&	1/13	& 1			&	1/11	\\
+			Mary		& 0			&	0.1154	& 1			&	1/11	\\
+			our			& 1			&	1/13	& 0			&	0.0909	\\
+			strengthens	& 1			&	1/13	& 0			&	0.0909	\\
+			swimming	& 2			&	2/13	& 0			&	0.0909	\\
 			\hline
 		\end{tabular}
+		\end{center}
 	\item 
 		Table for edit distance.\\
 		\begin{center}
@@ -51,7 +87,7 @@
 						\sum_{x \in X} \sum_{y \in Y} \P{x,y} \log \P{x} \right)\\
 				&= -\left(\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log	\P{y}{x} + 
 						\sum_{x \in X} \log \P{x}\sum_{y \in Y} \P{x,y}  \right)\\
-		\intertext{Marginalising over $y$,}
+		\intertext{Marginalising out $y$,}
 		&= -\left(\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log{\P{y}{x}} + 
 						\sum_{x \in X} \P{x}\log \P{x}  \right)\\
 				&= \left(-\sum_{x \in X} \sum_{y \in Y}\P{x,y} \log\P{y}{x}\right) +
